@@ -9,4 +9,5 @@ public class Product {
     private String containerColor; // to define if it remains as a java enum
     private String lidMaterial; // to define if it remains as a java enum
     private String lidColor; // to define if it remains as a java enum
+
 }

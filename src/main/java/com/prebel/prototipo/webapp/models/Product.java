@@ -15,17 +15,17 @@ public class Product {
     private String formulaNumber;
     private String projectCode;
     private String projectName;
-    private Person customer;
+    private User customer;
     private String brand;
     private String studyType;
     private int consecutive;
     private String justification;
     private String qualification;
     private String establishedValidity;
-    private Person responsibleChemist;
-    private Person responsibleEngineer;
-    private Person responsibleAnalyst;
-    private Person technicianInCharge;
+    private User responsibleChemist;
+    private User responsibleEngineer;
+    private User responsibleAnalyst;
+    private User technicianInCharge;
     private int studyDuration; //In months
     private Date startDate;
     private Date finishDate;

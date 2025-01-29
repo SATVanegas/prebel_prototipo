@@ -14,8 +14,8 @@ public class Test {
     private FungiYeastCount fungiYeastCount;
     private Pathogens pathogens;
     private Storage storage;
-    private Person personOrganolepticTests;
-    private Person personPhysicochemicalTests;
+    private User userOrganolepticTests;
+    private User userPhysicochemicalTests;
     private String observations;
     private String conclusion;
 

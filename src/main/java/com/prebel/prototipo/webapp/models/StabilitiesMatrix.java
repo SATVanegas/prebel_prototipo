@@ -21,7 +21,7 @@ public class StabilitiesMatrix {
     private String coverMaterial;
     private String coverColor;
     private String supplier;
-    private Person customer;
+    private User customer;
     private String category;
     private String cosmeticForm;
     private String studyJustification;
@@ -38,8 +38,8 @@ public class StabilitiesMatrix {
     private String qualification;
     private int validity;
     private String justificationRating;
-    private Person chemical;
-    private Person engineer;
+    private User chemical;
+    private User engineer;
 
 
 }

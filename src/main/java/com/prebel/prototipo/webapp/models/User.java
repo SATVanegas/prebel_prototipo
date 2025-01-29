@@ -1,18 +1,32 @@
 package com.prebel.prototipo.webapp.models;
 
+import jakarta.persistence.*;
+
+import java.util.HashMap;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String password;
     private String name;
     private String number;
     private String email;
+    private List<Role> roles;
 
-    public User(long id, String password, String name, String number, String email) {
+    public User(long id, String password, String name, String number, String email, List<Role> roles) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.number = number;
         this.email = email;
+        this.roles = roles;
+    }
+
+    public User() {
     }
 
     public long getId() {
@@ -53,5 +67,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

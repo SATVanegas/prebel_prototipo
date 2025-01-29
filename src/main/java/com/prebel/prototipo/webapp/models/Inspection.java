@@ -1,12 +1,7 @@
 package com.prebel.prototipo.webapp.models;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import java.util.Date;
 
-@Entity
-@Table(name = "inspections")
+
 public class Inspection {
     private Long id;
     private Date expectedDate;
@@ -20,6 +15,7 @@ public class Inspection {
     private int fridge;
     private int photolysis;
 
+
     public Inspection(Long id, Date expectedDate, Date realDate, int responseTime, int aerosolStove, int inOut, int stove, int hrStove, int environment, int fridge, int photolysis) {
         this.id = id;
         this.expectedDate = expectedDate;
@@ -32,6 +28,9 @@ public class Inspection {
         this.environment = environment;
         this.fridge = fridge;
         this.photolysis = photolysis;
+    }
+
+    public Inspection() {
     }
 
     public Long getId() {

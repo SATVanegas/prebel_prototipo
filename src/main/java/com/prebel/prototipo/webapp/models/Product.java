@@ -1,9 +1,11 @@
 package com.prebel.prototipo.webapp.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product {
 
+    private Long id;
     private String productDescription;
     private String reference;
     private String batch;
@@ -29,5 +31,5 @@ public class Product {
     private int studyDuration; //In months
     private Date startDate;
     private Date finishDate;
-    private Test[] test;
+    private List<Test> test;
 }

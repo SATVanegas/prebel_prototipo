@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.models;
 import com.prebel.prototipo.webapp.models.tests.*;
 
 public class Test {
+    private long id;
     private Temperature temperature;
     private Color color;
     private Odor odor;

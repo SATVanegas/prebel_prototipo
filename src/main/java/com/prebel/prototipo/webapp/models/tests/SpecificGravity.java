@@ -1,6 +1,8 @@
 package com.prebel.prototipo.webapp.models.tests;
 
 public class SpecificGravity {
+
+    private long id;
     private String unit;
     private String specification;
     private String method;

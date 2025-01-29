@@ -1,15 +1,18 @@
 package com.prebel.prototipo.webapp.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class StabilitiesMatrix {
+
+    private Long id;
     private String projectCode;
     private String formulaCode;
     private String PtReference;
     private String bulkReference;
     private Product product;
     private String StudyDescription;
-    private int locationEnvrionment;
+    private int locationEnvironment;
     private int locationOven;
     private int locationFridge;
     private int locationPhotolysisChamber;
@@ -34,7 +37,7 @@ public class StabilitiesMatrix {
     private Date endDate;
     private int endMonth;
     private int endYear;
-    private Inspection[] inspections;
+    private List<Inspection> inspections;
     private String qualification;
     private int validity;
     private String justificationRating;

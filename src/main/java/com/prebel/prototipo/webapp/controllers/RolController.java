@@ -137,7 +137,7 @@ public class RolController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("No se puede eliminar el rol porque está asignado a uno o más usuarios");
         }
-        
+
         roleRepository.delete(role);
 
         return ResponseEntity.ok("Rol eliminado correctamente");

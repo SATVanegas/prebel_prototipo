@@ -26,4 +26,35 @@ public class Role {
     }
 
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Roles getRoleEnum() {
+        return roleEnum;
+    }
+
+    public void setRoleEnum(Roles roleEnum) {
+        this.roleEnum = roleEnum;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
 }

@@ -1,6 +1,7 @@
 package com.prebel.prototipo.webapp.models;
 
 import com.prebel.prototipo.webapp.models.tests.*;
+import jakarta.persistence.OneToOne;
 
 public class Test {
     private long id;

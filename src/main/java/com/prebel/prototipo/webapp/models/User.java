@@ -13,6 +13,7 @@ public class User {
     private String name;
     private String number;
     private String email;
+    private String resetCode;
 
     // Relación ManyToOne, ya que un usuario tiene un solo rol
     @ManyToOne
@@ -78,4 +79,8 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public String getResetCode() {return resetCode;}
+
+    public void setResetCode(String resetCode) {this.resetCode = resetCode;}
 }

@@ -2,9 +2,6 @@ package com.prebel.prototipo.webapp.models;
 
 import jakarta.persistence.*;
 
-import java.util.HashMap;
-import java.util.List;
-
 @Entity
 @Table(name = "users")
 public class User {

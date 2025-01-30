@@ -1,9 +1,16 @@
 package com.prebel.prototipo.webapp.models;
+
 import java.util.Date;
+import jakarta.persistence.*;
 
-
+@Entity
+@Table(name = "inspections")
 public class Inspection {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Date expectedDate;
     private Date realDate;
     private int responseTime;
@@ -15,9 +22,11 @@ public class Inspection {
     private int fridge;
     private int photolysis;
 
+    @ManyToOne
+    @JoinColumn(name = "stabilities_matrix_id")
+    private StabilitiesMatrix stabilitiesMatrix;
 
-    public Inspection(Long id, Date expectedDate, Date realDate, int responseTime, int aerosolStove, int inOut, int stove, int hrStove, int environment, int fridge, int photolysis) {
-        this.id = id;
+    public Inspection(Date expectedDate, Date realDate, int responseTime, int aerosolStove, int inOut, int stove, int hrStove, int environment, int fridge, int photolysis) {
         this.expectedDate = expectedDate;
         this.realDate = realDate;
         this.responseTime = responseTime;

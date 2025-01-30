@@ -1,28 +1,78 @@
 package com.prebel.prototipo.webapp.models;
 
 import com.prebel.prototipo.webapp.models.tests.*;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "tests")
 public class Test {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "temperature_id", referencedColumnName = "id")
     private Temperature temperature;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color color;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "odor_id", referencedColumnName = "id")
     private Odor odor;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "appearance_id", referencedColumnName = "id")
     private Appearance appearance;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ph_id", referencedColumnName = "id")
     private pH ph;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "viscosity_id", referencedColumnName = "id")
     private Viscosity viscosity;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "specific_gravity_id", referencedColumnName = "id")
     private SpecificGravity specificGravity;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "total_bacteria_count_id", referencedColumnName = "id")
     private TotalBacteriaCount totalBacteriaCount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fungi_yeast_count_id", referencedColumnName = "id")
     private FungiYeastCount fungiYeastCount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pathogens_id", referencedColumnName = "id")
     private Pathogens pathogens;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "storage_id", referencedColumnName = "id")
     private Storage storage;
+
+    @ManyToOne
+    @JoinColumn(name = "user_organoleptic_tests_id")
     private User userOrganolepticTests;
+
+    @ManyToOne
+    @JoinColumn(name = "user_physicochemical_tests_id")
     private User userPhysicochemicalTests;
+
+
     private String observations;
     private String conclusion;
 
-    public Test(long id, Temperature temperature, Color color, Odor odor, Appearance appearance, pH ph, Viscosity viscosity, SpecificGravity specificGravity, TotalBacteriaCount totalBacteriaCount, FungiYeastCount fungiYeastCount, Pathogens pathogens, Storage storage, User userOrganolepticTests, User userPhysicochemicalTests, String observations, String conclusion) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+
+    public Test(Temperature temperature, Color color, Odor odor, Appearance appearance, pH ph, Viscosity viscosity, SpecificGravity specificGravity, TotalBacteriaCount totalBacteriaCount, FungiYeastCount fungiYeastCount, Pathogens pathogens, Storage storage, User userOrganolepticTests, User userPhysicochemicalTests, String observations, String conclusion) {
         this.temperature = temperature;
         this.color = color;
         this.odor = odor;
@@ -38,6 +88,9 @@ public class Test {
         this.userPhysicochemicalTests = userPhysicochemicalTests;
         this.observations = observations;
         this.conclusion = conclusion;
+    }
+
+    public Test() {
     }
 
     public long getId() {

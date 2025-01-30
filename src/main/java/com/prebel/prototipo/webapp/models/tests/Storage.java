@@ -1,19 +1,28 @@
 package com.prebel.prototipo.webapp.models.tests;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "storages")
 public class Storage {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private int maxTemperature; //In Celcius
     private int minTemperature; //In Celcius
     private String equipmentCode;
     private String description;
 
-    public Storage(long id, int maxTemperature, int minTemperature, String equipmentCode, String description) {
-        this.id = id;
+    public Storage(int maxTemperature, int minTemperature, String equipmentCode, String description) {
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.equipmentCode = equipmentCode;
         this.description = description;
+    }
+
+    public Storage() {
     }
 
     public long getId() {

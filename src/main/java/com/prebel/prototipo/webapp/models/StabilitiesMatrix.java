@@ -2,15 +2,25 @@ package com.prebel.prototipo.webapp.models;
 
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "stabilities_matrix")
 public class StabilitiesMatrix {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String projectCode;
     private String formulaCode;
     private String PtReference;
     private String bulkReference;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
+
     private String StudyDescription;
     private int locationEnvironment;
     private int locationOven;
@@ -24,7 +34,11 @@ public class StabilitiesMatrix {
     private String coverMaterial;
     private String coverColor;
     private String supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private User customer;
+
     private String category;
     private String cosmeticForm;
     private String studyJustification;
@@ -37,12 +51,64 @@ public class StabilitiesMatrix {
     private Date endDate;
     private int endMonth;
     private int endYear;
+
+    @OneToMany(mappedBy = "stabilitiesMatrix", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Inspection> inspections;
+
     private String qualification;
     private int validity;
     private String justificationRating;
+
+    @ManyToOne
+    @JoinColumn(name = "chemical_id")
     private User chemical;
+
+    @ManyToOne
+    @JoinColumn(name = "engineer_id")
     private User engineer;
+
+    public StabilitiesMatrix() {
+    }
+
+    public StabilitiesMatrix(String projectCode, String formulaCode, String ptReference, String bulkReference, Product product, String studyDescription, int locationEnvironment, int locationOven, int locationFridge, int locationPhotolysisChamber, String batch, String container, String dosage, String packagingMaterial, String containerColor, String coverMaterial, String coverColor, String supplier, User customer, String category, String cosmeticForm, String studyJustification, String studyTipe, Date deliveryDatePt, Date dateStartFormat, Date startDate, int startMonth, int startYear, Date endDate, int endMonth, int endYear, List<Inspection> inspections, String qualification, int validity, String justificationRating, User chemical, User engineer) {
+        this.projectCode = projectCode;
+        this.formulaCode = formulaCode;
+        this.PtReference = ptReference;
+        this.bulkReference = bulkReference;
+        this.product = product;
+        this.StudyDescription = studyDescription;
+        this.locationEnvironment = locationEnvironment;
+        this.locationOven = locationOven;
+        this.locationFridge = locationFridge;
+        this.locationPhotolysisChamber = locationPhotolysisChamber;
+        this.batch = batch;
+        this.container = container;
+        this.dosage = dosage;
+        this.packagingMaterial = packagingMaterial;
+        this.containerColor = containerColor;
+        this.coverMaterial = coverMaterial;
+        this.coverColor = coverColor;
+        this.supplier = supplier;
+        this.customer = customer;
+        this.category = category;
+        this.cosmeticForm = cosmeticForm;
+        this.studyJustification = studyJustification;
+        this.studyTipe = studyTipe;
+        this.deliveryDatePt = deliveryDatePt;
+        this.dateStartFormat = dateStartFormat;
+        this.startDate = startDate;
+        this.startMonth = startMonth;
+        this.startYear = startYear;
+        this.endDate = endDate;
+        this.endMonth = endMonth;
+        this.endYear = endYear;
+        this.inspections = inspections;
+        this.qualification = qualification;
+        this.validity = validity;
+        this.justificationRating = justificationRating;
+        this.chemical = chemical;
+        this.engineer = engineer;
+    }
 
     public Long getId() {
         return id;

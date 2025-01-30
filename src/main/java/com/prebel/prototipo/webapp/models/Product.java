@@ -2,10 +2,16 @@ package com.prebel.prototipo.webapp.models;
 
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "products")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String productDescription;
     private String reference;
     private String batch;
@@ -17,24 +23,42 @@ public class Product {
     private String formulaNumber;
     private String projectCode;
     private String projectName;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private User customer;
+
     private String brand;
     private String studyType;
     private int consecutive;
     private String justification;
     private String qualification;
     private String establishedValidity;
+
+    @ManyToOne
+    @JoinColumn(name = "responsible_chemist_id")
     private User responsibleChemist;
+
+    @ManyToOne
+    @JoinColumn(name = "responsible_engineer_id")
     private User responsibleEngineer;
+
+    @ManyToOne
+    @JoinColumn(name = "responsible_analyst_id")
     private User responsibleAnalyst;
+
+    @ManyToOne
+    @JoinColumn(name = "technician_in_charge_id")
     private User technicianInCharge;
+
     private int studyDuration; //In months
     private Date startDate;
     private Date finishDate;
-    private List<Test> test;
 
-    public Product(Long id, String productDescription, String reference, String batch, String packagingType, String packagingMaterial, String containerColor, String lidMaterial, String lidColor, String formulaNumber, String projectCode, String projectName, User customer, String brand, String studyType, int consecutive, String justification, String qualification, String establishedValidity, User responsibleChemist, User responsibleEngineer, User responsibleAnalyst, User technicianInCharge, int studyDuration, Date startDate, Date finishDate, List<Test> test) {
-        this.id = id;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Test> tests;
+
+    public Product(String productDescription, String reference, String batch, String packagingType, String packagingMaterial, String containerColor, String lidMaterial, String lidColor, String formulaNumber, String projectCode, String projectName, User customer, String brand, String studyType, int consecutive, String justification, String qualification, String establishedValidity, User responsibleChemist, User responsibleEngineer, User responsibleAnalyst, User technicianInCharge, int studyDuration, Date startDate, Date finishDate, List<Test> test) {
         this.productDescription = productDescription;
         this.reference = reference;
         this.batch = batch;
@@ -60,8 +84,12 @@ public class Product {
         this.studyDuration = studyDuration;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.test = test;
+        this.tests = test;
     }
+
+    public Product() {
+    }
+
 
     public Long getId() {
         return id;
@@ -272,10 +300,10 @@ public class Product {
     }
 
     public List<Test> getTest() {
-        return test;
+        return tests;
     }
 
     public void setTest(List<Test> test) {
-        this.test = test;
+        this.tests = test;
     }
 }

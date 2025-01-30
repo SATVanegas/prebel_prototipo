@@ -1,8 +1,15 @@
 package com.prebel.prototipo.webapp.models.tests;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "appearances")
 public class Appearance {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String unit;
     private String specification;
     private String method;
@@ -11,8 +18,7 @@ public class Appearance {
     private int time; // In weeks
     private int equipment;
 
-    public Appearance(long id, String unit, String specification, String method, String initialResultsDevelopmentLaboratory, String initialResultsStabilityLaboratory, int time, int equipment) {
-        this.id = id;
+    public Appearance(String unit, String specification, String method, String initialResultsDevelopmentLaboratory, String initialResultsStabilityLaboratory, int time, int equipment) {
         this.unit = unit;
         this.specification = specification;
         this.method = method;
@@ -20,6 +26,9 @@ public class Appearance {
         this.initialResultsStabilityLaboratory = initialResultsStabilityLaboratory;
         this.time = time;
         this.equipment = equipment;
+    }
+
+    public Appearance() {
     }
 
     public long getId() {

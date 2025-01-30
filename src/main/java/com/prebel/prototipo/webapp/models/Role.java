@@ -10,30 +10,20 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = false, nullable = false)
-    private String name; // "ADMIN", "USER", "GUEST"
+    @Enumerated(EnumType.STRING)
+    private  Roles roleEnum; // "ADMIN", "USER", "GUEST"
+    private String description;
+    private String permissions;
 
     public Role() {
     }
 
-    public Role(long id, String name) {
+    public Role(long id, Roles roleEnum, String description, String permissions) {
         this.id = id;
-        this.name = name;
+        this.roleEnum = roleEnum;
+        this.description = roleEnum.getDescription();
+        this.permissions = roleEnum.getPermissions();
     }
 
-    public Role(String name) {
-        this.name = name;
-    }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

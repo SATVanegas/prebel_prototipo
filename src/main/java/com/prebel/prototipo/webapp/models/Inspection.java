@@ -133,6 +133,22 @@ public class Inspection {
     public void setPhotolysis(int photolysis) {
         this.photolysis = photolysis;
     }
+
+    public StabilitiesMatrix getStabilitiesMatrix() {
+        return stabilitiesMatrix;
+    }
+
+    public void setStabilitiesMatrix(StabilitiesMatrix stabilitiesMatrix) {
+        this.stabilitiesMatrix = stabilitiesMatrix;
+    }
+
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
 }
 
 

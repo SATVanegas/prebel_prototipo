@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.permissions.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         // Verificar si el email ya está registrado
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El email ya está registrado");
         }
@@ -33,7 +33,4 @@ public class UserController {
         // Devolver una respuesta HTTP 201 (CREATED) con el usuario guardado
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models;
 
+import com.prebel.prototipo.webapp.models.permissions.User;
 import com.prebel.prototipo.webapp.models.tests.*;
 import jakarta.persistence.*;
 

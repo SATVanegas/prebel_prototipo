@@ -1,10 +1,12 @@
 package com.prebel.prototipo.webapp.repositories;
 
-import com.prebel.prototipo.webapp.models.Role;
-import com.prebel.prototipo.webapp.models.Roles;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.prebel.prototipo.webapp.models.permissions.Role;
+import com.prebel.prototipo.webapp.models.permissions.Roles;
+import org.springframework.data.repository.CrudRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findByRoleEnum(Roles roleEnum);
+import java.util.Optional;
+
+public interface RoleRepository extends CrudRepository<Role, Long> {
+    Optional<Role> findByRoleEnum(Roles roleEnum);
 }
 

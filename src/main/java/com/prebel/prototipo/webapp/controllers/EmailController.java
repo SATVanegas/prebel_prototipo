@@ -1,13 +1,15 @@
 package com.prebel.prototipo.webapp.controllers;
 
 import com.prebel.prototipo.webapp.models.EmailService;
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.permissions.User;
 import com.prebel.prototipo.webapp.models.UserService;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/email")
@@ -51,22 +53,23 @@ public class EmailController {
             @PathVariable String code,
             @PathVariable String newPassword) {
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
+
+        User user = optionalUser.get();
 
         // Validar código de recuperación
         if (!code.equals(user.getResetCode())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Código de recuperación incorrecto");
         }
 
-        // Cambiar contraseña y borrar el código de recuperación
+        // Cambiar la contraseña y borrar el código de recuperación
         user.setPassword(newPassword);
         user.setResetCode(null);
         userRepository.save(user);
 
         return ResponseEntity.ok("Contraseña cambiada correctamente");
     }
-
 }

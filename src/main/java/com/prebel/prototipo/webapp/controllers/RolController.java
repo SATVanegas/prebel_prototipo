@@ -1,13 +1,15 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.Role;
-import com.prebel.prototipo.webapp.models.Roles;
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.permissions.*;
+import com.prebel.prototipo.webapp.models.permissions.Module;
+import com.prebel.prototipo.webapp.repositories.ModuleRepository;
+import com.prebel.prototipo.webapp.repositories.RoleModuleRepository;
 import com.prebel.prototipo.webapp.repositories.RoleRepository;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,32 +19,40 @@ public class RolController {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final ModuleRepository moduleRepository;
+    private final RoleModuleRepository roleModuleRepository;
 
-    public RolController(RoleRepository roleRepository, UserRepository userRepository) {
+    public RolController(
+            RoleRepository roleRepository,
+            UserRepository userRepository,
+            ModuleRepository moduleRepository,
+            RoleModuleRepository roleModuleRepository
+    ) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.moduleRepository = moduleRepository;
+        this.roleModuleRepository = roleModuleRepository;
     }
 
     @PostMapping
-    public ResponseEntity<?> createRole(@RequestBody Role role) {
-        // Verificar si el rol ya existe
-        if (roleRepository.findByRoleEnum(role.getRoleEnum()) != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("El rol ya existe");
-        }
+    public ResponseEntity<Role> createRole(@RequestBody RoleRequest request) {
+        Role role = new Role();
+        role.setRoleEnum(request.getRoleEnum());
+        roleRepository.save(role);
 
-        // Validar que el rol tenga permisos y descripción
-        if (role.getPermissions() == null || role.getPermissions().isEmpty() ||
-                role.getDescription() == null || role.getDescription().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Los permisos y la descripción son obligatorios");
-        }
+        // Asignar módulos y permisos
+        request.getModules().forEach(rmRequest -> {
+            Module module = moduleRepository.findById(rmRequest.getModuleId())
+                    .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
 
-        // Guardar el nuevo rol en la base de datos
-        Role savedRole = roleRepository.save(role);
+            RoleModule roleModule = new RoleModule();
+            roleModule.setRole(role);
+            roleModule.setModule(module);
+            roleModule.setPermissions(rmRequest.getPermissions());
+            roleModuleRepository.save(roleModule);
+        });
 
-        // Devolver una respuesta HTTP 201 (CREATED) con el rol guardado
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedRole);
+        return ResponseEntity.status(HttpStatus.CREATED).body(role);
     }
 
     @PutMapping("/{id}")
@@ -55,17 +65,9 @@ public class RolController {
         }
 
         Role role = roleOptional.get();
-
-        if (roleDetails.getPermissions() != null && !roleDetails.getPermissions().isEmpty()) {
-            role.setPermissions(roleDetails.getPermissions());
-        }
-        if (roleDetails.getDescription() != null && !roleDetails.getDescription().isEmpty()) {
-            role.setDescription(roleDetails.getDescription());
-        }
-
-        Role updatedRole = roleRepository.save(role);
-
-        return ResponseEntity.ok(updatedRole);
+        role.setRoleEnum(roleDetails.getRoleEnum());
+        roleRepository.save(role);
+        return ResponseEntity.ok("Rol actualizado correctamente");
     }
 
     @GetMapping("/user/{userId}")
@@ -86,12 +88,17 @@ public class RolController {
                     .body("El usuario no tiene un rol asignado");
         }
 
-        return ResponseEntity.ok(role.getPermissions());
+        List<RoleModule> roleModule = role.getRoleModules();
+
+        List<RoleModuleDTO> modulesWithPermissions = roleModule.stream()
+                .map(rm -> new RoleModuleDTO(rm.getModule().getName(), rm.getPermissions()))
+                .toList();
+        return ResponseEntity.ok(modulesWithPermissions);
     }
 
     @GetMapping
     public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> roles = roleRepository.findAll();
+        List<Role> roles = (List<Role>) roleRepository.findAll();
         return ResponseEntity.ok(roles);
     }
 
@@ -120,26 +127,4 @@ public class RolController {
         return ResponseEntity.ok("Rol asignado correctamente al usuario");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRole(@PathVariable long id) {
-        Optional<Role> roleOptional = roleRepository.findById(id);
-
-        if (roleOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Rol no encontrado");
-        }
-
-        Role role = roleOptional.get();
-
-        List<User> usersWithRole = userRepository.findByRole(role);
-
-        if (!usersWithRole.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("No se puede eliminar el rol porque está asignado a uno o más usuarios");
-        }
-
-        roleRepository.delete(role);
-
-        return ResponseEntity.ok("Rol eliminado correctamente");
-    }
 }

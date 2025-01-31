@@ -26,6 +26,10 @@ public class Inspection {
     @JoinColumn(name = "stabilities_matrix_id")
     private StabilitiesMatrix stabilitiesMatrix;
 
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
+
     public Inspection(Date expectedDate, Date realDate, int responseTime, int aerosolStove, int inOut, int stove, int hrStove, int environment, int fridge, int photolysis) {
         this.expectedDate = expectedDate;
         this.realDate = realDate;

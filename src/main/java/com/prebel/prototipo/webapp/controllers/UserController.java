@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.permissions.Role;
-import com.prebel.prototipo.webapp.models.permissions.User;
-import com.prebel.prototipo.webapp.models.permissions.UserRegistrationDTO;
+import com.prebel.prototipo.webapp.models.role_module.Role;
+import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.dtos.UserRegistrationDTO;
 import com.prebel.prototipo.webapp.repositories.RoleRepository;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -51,7 +51,7 @@ public class UserController {
         user.setEmail(request.getEmail());
         user.setRole(roleOptional.get());
 
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado exitosamente");
     }

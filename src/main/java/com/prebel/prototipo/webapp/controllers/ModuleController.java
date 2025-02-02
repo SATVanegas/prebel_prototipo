@@ -4,18 +4,16 @@ import com.prebel.prototipo.webapp.repositories.ModuleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.prebel.prototipo.webapp.models.permissions.Module;
+import com.prebel.prototipo.webapp.models.role_module.Module;
 
 @RestController
 @RequestMapping("/api/modules")
 public class ModuleController {
-
     ModuleRepository moduleRepository;
 
     public ModuleController(ModuleRepository moduleRepository) {
         this.moduleRepository = moduleRepository;
     }
-
 
     @PostMapping()
     public ResponseEntity<Module> createModule(@RequestBody Module request) {
@@ -30,8 +28,4 @@ public class ModuleController {
     public ResponseEntity<Iterable<Module>> getModules() {
         return ResponseEntity.ok(moduleRepository.findAll());
     }
-
-
-
-
 }

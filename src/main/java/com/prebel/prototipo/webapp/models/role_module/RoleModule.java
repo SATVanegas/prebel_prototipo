@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.models.permissions;
+package com.prebel.prototipo.webapp.models.role_module;
 
 import com.prebel.prototipo.webapp.services.StringListConverter;
 import jakarta.persistence.*;

@@ -1,7 +1,11 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.permissions.*;
-import com.prebel.prototipo.webapp.models.permissions.Module;
+import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.dtos.RoleModuleDTO;
+import com.prebel.prototipo.webapp.models.dtos.RoleModuleRequestDTO;
+import com.prebel.prototipo.webapp.models.dtos.RoleRequestDTO;
+import com.prebel.prototipo.webapp.models.role_module.*;
+import com.prebel.prototipo.webapp.models.role_module.Module;
 import com.prebel.prototipo.webapp.repositories.ModuleRepository;
 import com.prebel.prototipo.webapp.repositories.RoleModuleRepository;
 import com.prebel.prototipo.webapp.repositories.RoleRepository;
@@ -35,7 +39,7 @@ public class RolController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody RoleRequest request) {
+    public ResponseEntity<Role> createRole(@RequestBody RoleRequestDTO request) {
         Role role = new Role();
         role.setRoleEnum(request.getRoleEnum());
         roleRepository.save(role);
@@ -56,7 +60,7 @@ public class RolController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRole(@PathVariable long id, @RequestBody RoleRequest roleDetails) {
+    public ResponseEntity<?> updateRole(@PathVariable long id, @RequestBody RoleRequestDTO roleDetails) {
         Optional<Role> roleOptional = roleRepository.findById(id);
 
         if (roleOptional.isEmpty()) {
@@ -69,7 +73,7 @@ public class RolController {
 
         List<RoleModule> existingRoleModules = role.getRoleModules();
 
-        for (RoleModuleRequest rmRequest : roleDetails.getModules()) {
+        for (RoleModuleRequestDTO rmRequest : roleDetails.getModules()) {
             Optional<RoleModule> existingRoleModuleOpt = existingRoleModules.stream()
                     .filter(rm -> rm.getModule().getId().equals(rmRequest.getModuleId()))
                     .findFirst();
@@ -90,7 +94,7 @@ public class RolController {
         }
 
         List<Long> moduleIdsInRequest = roleDetails.getModules().stream()
-                .map(RoleModuleRequest::getModuleId)
+                .map(RoleModuleRequestDTO::getModuleId)
                 .toList();
 
         existingRoleModules.removeIf(rm -> !moduleIdsInRequest.contains(rm.getModule().getId()));

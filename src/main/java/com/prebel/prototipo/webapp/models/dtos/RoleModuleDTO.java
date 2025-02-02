@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.models.permissions;
+package com.prebel.prototipo.webapp.models.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

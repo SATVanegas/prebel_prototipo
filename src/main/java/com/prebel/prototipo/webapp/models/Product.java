@@ -3,7 +3,6 @@ package com.prebel.prototipo.webapp.models;
 import java.util.Date;
 import java.util.List;
 
-import com.prebel.prototipo.webapp.models.permissions.User;
 import jakarta.persistence.*;
 
 @Entity

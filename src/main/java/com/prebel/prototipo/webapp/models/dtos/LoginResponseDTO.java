@@ -1,5 +1,6 @@
-package com.prebel.prototipo.webapp.models.permissions;
+package com.prebel.prototipo.webapp.models.dtos;
 
+import com.prebel.prototipo.webapp.models.role_module.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.repositories;
 
-import com.prebel.prototipo.webapp.models.permissions.User;
+import com.prebel.prototipo.webapp.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

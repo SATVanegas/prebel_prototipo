@@ -1,11 +1,11 @@
-package com.prebel.prototipo.webapp.models.permissions;
+package com.prebel.prototipo.webapp.models.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleModuleRequest {
+public class RoleModuleRequestDTO {
     private Long moduleId;
     private String[] permissions;
 }

@@ -1,6 +1,6 @@
-package com.prebel.prototipo.webapp.models;
+package com.prebel.prototipo.webapp.services;
 
-import com.prebel.prototipo.webapp.models.permissions.User;
+import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,17 +1,13 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.permissions.LoginResponseDTO;
-import com.prebel.prototipo.webapp.models.permissions.RoleModuleDTO;
-import com.prebel.prototipo.webapp.models.permissions.Roles;
-import com.prebel.prototipo.webapp.models.permissions.User;
+import com.prebel.prototipo.webapp.models.dtos.LoginResponseDTO;
+import com.prebel.prototipo.webapp.models.role_module.Roles;
+import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

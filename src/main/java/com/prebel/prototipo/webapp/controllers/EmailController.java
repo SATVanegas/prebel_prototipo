@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.EmailService;
-import com.prebel.prototipo.webapp.models.permissions.User;
-import com.prebel.prototipo.webapp.models.UserService;
+import com.prebel.prototipo.webapp.services.EmailService;
+import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.services.UserService;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

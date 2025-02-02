@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -128,8 +127,8 @@ public class RolController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Role>> getAllRoles() {
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-        return ResponseEntity.ok(roles);
+    public ResponseEntity<List<Roles>> getAllRoles() {
+        List<Roles> roleEnums = ((List<Role>) roleRepository.findAll()).stream().map(Role::getRoleEnum).toList();
+        return ResponseEntity.ok(roleEnums);
     }
 }

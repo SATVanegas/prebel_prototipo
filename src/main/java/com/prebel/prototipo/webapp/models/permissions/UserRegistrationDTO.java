@@ -10,5 +10,5 @@ public class UserRegistrationDTO {
     private String name;
     private String number;
     private String email;
-    private Long roleId;
+    private Roles roleEnum;
 }

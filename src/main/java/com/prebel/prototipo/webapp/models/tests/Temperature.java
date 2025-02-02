@@ -30,4 +30,28 @@ public class Temperature {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(int equipment) {
+        this.equipment = equipment;
+    }
 }

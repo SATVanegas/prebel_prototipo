@@ -1,9 +1,9 @@
 package com.prebel.prototipo.webapp.controllers;
 
 import com.prebel.prototipo.webapp.models.User;
-import com.prebel.prototipo.webapp.models.dtos.RoleModuleDTO;
-import com.prebel.prototipo.webapp.models.dtos.RoleModuleRequestDTO;
-import com.prebel.prototipo.webapp.models.dtos.RoleRequestDTO;
+import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
+import com.prebel.prototipo.webapp.dtos.RoleModuleRequestDTO;
+import com.prebel.prototipo.webapp.dtos.RoleRequestDTO;
 import com.prebel.prototipo.webapp.models.role_module.*;
 import com.prebel.prototipo.webapp.models.role_module.Module;
 import com.prebel.prototipo.webapp.repositories.ModuleRepository;

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers;
 
-import com.prebel.prototipo.webapp.models.dtos.LoginResponseDTO;
+import com.prebel.prototipo.webapp.dtos.LoginResponseDTO;
 import com.prebel.prototipo.webapp.models.role_module.Roles;
 import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;

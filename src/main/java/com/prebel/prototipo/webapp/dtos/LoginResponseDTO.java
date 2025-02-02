@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.models.dtos;
+package com.prebel.prototipo.webapp.dtos;
 
 import com.prebel.prototipo.webapp.models.role_module.Roles;
 import lombok.AllArgsConstructor;

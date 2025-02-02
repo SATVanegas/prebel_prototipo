@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.models.dtos;
+package com.prebel.prototipo.webapp.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

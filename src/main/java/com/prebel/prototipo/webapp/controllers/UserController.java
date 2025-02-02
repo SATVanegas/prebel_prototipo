@@ -2,7 +2,7 @@ package com.prebel.prototipo.webapp.controllers;
 
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.User;
-import com.prebel.prototipo.webapp.models.dtos.UserRegistrationDTO;
+import com.prebel.prototipo.webapp.dtos.UserRegistrationDTO;
 import com.prebel.prototipo.webapp.repositories.RoleRepository;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;

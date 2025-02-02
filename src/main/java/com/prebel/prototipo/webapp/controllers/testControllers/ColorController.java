@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/test/colors")
+@RequestMapping("/api/test/color")
 public class ColorController {
 
     @Autowired

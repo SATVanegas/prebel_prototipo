@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -56,7 +57,7 @@ public class RolController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRole(@PathVariable long id, @RequestBody Role roleDetails) {
+    public ResponseEntity<?> updateRole(@PathVariable long id, @RequestBody RoleRequest roleDetails) {
         Optional<Role> roleOptional = roleRepository.findById(id);
 
         if (roleOptional.isEmpty()) {
@@ -66,7 +67,37 @@ public class RolController {
 
         Role role = roleOptional.get();
         role.setRoleEnum(roleDetails.getRoleEnum());
+
+        List<RoleModule> existingRoleModules = role.getRoleModules();
+
+        for (RoleModuleRequest rmRequest : roleDetails.getModules()) {
+            Optional<RoleModule> existingRoleModuleOpt = existingRoleModules.stream()
+                    .filter(rm -> rm.getModule().getId().equals(rmRequest.getModuleId()))
+                    .findFirst();
+
+            if (existingRoleModuleOpt.isPresent()) {
+                RoleModule existingRoleModule = existingRoleModuleOpt.get();
+                existingRoleModule.setPermissions(rmRequest.getPermissions());
+            } else {
+                Module module = moduleRepository.findById(rmRequest.getModuleId())
+                        .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
+
+                RoleModule newRoleModule = new RoleModule();
+                newRoleModule.setRole(role);
+                newRoleModule.setModule(module);
+                newRoleModule.setPermissions(rmRequest.getPermissions());
+                existingRoleModules.add(newRoleModule);
+            }
+        }
+
+        List<Long> moduleIdsInRequest = roleDetails.getModules().stream()
+                .map(RoleModuleRequest::getModuleId)
+                .toList();
+
+        existingRoleModules.removeIf(rm -> !moduleIdsInRequest.contains(rm.getModule().getId()));
+        
         roleRepository.save(role);
+
         return ResponseEntity.ok("Rol actualizado correctamente");
     }
 

@@ -23,7 +23,7 @@ public class OdorController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // 📌 Crear un nuevo Odor
+    // Crear un nuevo Odor
     @PostMapping
     public ResponseEntity<Odor> createOdor(@RequestBody Odor odor) {
         if (odor.getUnit() == null) {

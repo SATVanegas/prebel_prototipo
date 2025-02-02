@@ -132,30 +132,4 @@ public class RolController {
         List<Role> roles = (List<Role>) roleRepository.findAll();
         return ResponseEntity.ok(roles);
     }
-
-    @PostMapping("/assign-role/{userId}/{roleId}")
-    public ResponseEntity<?> assignRoleToUser(@PathVariable long userId, @PathVariable long roleId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Usuario no encontrado");
-        }
-
-        Optional<Role> roleOptional = roleRepository.findById(roleId);
-
-        if (roleOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Rol no encontrado");
-        }
-
-        User user = userOptional.get();
-        Role role = roleOptional.get();
-
-        user.setRole(role);
-        userRepository.save(user);
-
-        return ResponseEntity.ok("Rol asignado correctamente al usuario");
-    }
-
 }

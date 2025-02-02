@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RoleModuleDTO {
+public class  RoleModuleDTO {
     private String module;
     private String[] permissions;
 }

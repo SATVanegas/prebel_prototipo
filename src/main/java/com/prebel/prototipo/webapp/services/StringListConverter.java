@@ -6,15 +6,16 @@ import java.util.Arrays;
 import java.util.List;
 
 @Converter
-public class StringListConverter implements AttributeConverter<List<String>, String> {
+public class StringListConverter implements AttributeConverter<String[], String> {
 
     @Override
-    public String convertToDatabaseColumn(List<String> attribute) {
+    public String convertToDatabaseColumn(String[] attribute) {
         return attribute == null ? null : String.join(",", attribute);
     }
 
     @Override
-    public List<String> convertToEntityAttribute(String dbData) {
-        return dbData == null || dbData.isEmpty() ? null : Arrays.asList(dbData.split(","));
+    public String[] convertToEntityAttribute(String dbData) {
+        return dbData == null || dbData.isEmpty() ? null : dbData.split(",");
     }
 }
+

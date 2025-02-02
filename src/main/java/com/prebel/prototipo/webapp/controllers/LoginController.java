@@ -1,6 +1,8 @@
 package com.prebel.prototipo.webapp.controllers;
 
+import com.prebel.prototipo.webapp.models.permissions.LoginResponseDTO;
 import com.prebel.prototipo.webapp.models.permissions.RoleModuleDTO;
+import com.prebel.prototipo.webapp.models.permissions.Roles;
 import com.prebel.prototipo.webapp.models.permissions.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,10 @@ public class LoginController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña incorrecta");
         }
 
-        List<RoleModuleDTO> modulesWithPermissions = user.getRole().getRoleModules().stream()
-                .map(rm -> new RoleModuleDTO(rm.getModule().getName(), rm.getPermissions()))
-                .collect(Collectors.toList());
+        Roles roleEnum = user.getRole().getRoleEnum();
+        String name = user.getName();
 
-        return ResponseEntity.ok(modulesWithPermissions);
+        return ResponseEntity.ok(new LoginResponseDTO(roleEnum, name));
     }
 }
 

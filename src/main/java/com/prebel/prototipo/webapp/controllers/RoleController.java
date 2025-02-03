@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers;
 
+import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.UserRoleResponseDTO;
 import com.prebel.prototipo.webapp.models.User;
-import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.RoleRequestDTO;
 import com.prebel.prototipo.webapp.models.role_module.*;
 import com.prebel.prototipo.webapp.models.role_module.Module;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
@@ -63,6 +64,50 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(role);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<?> updateRoleModules(@RequestBody RoleRequestDTO request) {
+        // Retrieve the role to update
+        Role role = roleRepository.findByRoleName(request.getRoleName())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+        // Handle adding/updating modules with permissions
+        request.getModules().forEach(rmRequest -> {
+            Module module = moduleRepository.findByName(rmRequest.getModuleName())
+                    .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
+
+            Optional<RoleModule> existingRoleModule = role.getRoleModules().stream()
+                    .filter(rm -> rm.getModule().equals(module))
+                    .findFirst();
+
+            if (existingRoleModule.isPresent()) {
+                // Update permissions of an existing module
+                RoleModule roleModule = existingRoleModule.get();
+                roleModule.setPermissions(rmRequest.getPermissions());
+                roleModuleRepository.save(roleModule);
+            } else {
+                // Add a new module to the role
+                RoleModule roleModule = new RoleModule();
+                roleModule.setRole(role);
+                roleModule.setModule(module);
+                roleModule.setPermissions(rmRequest.getPermissions());
+                roleModuleRepository.save(roleModule);
+            }
+        });
+
+        // Handle removing modules
+        if (request.getModulesToRemove() != null) {
+            request.getModulesToRemove().forEach(moduleName -> {
+                Module module = moduleRepository.findByName(moduleName)
+                        .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
+
+                roleModuleRepository.findByRoleAndModule(role, module)
+                        .ifPresent(roleModuleRepository::delete);
+            });
+        }
+
+        return ResponseEntity.ok("Rol actualizado correctamente");
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserPermissions(@PathVariable long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -98,4 +143,16 @@ public class RoleController {
                 .toList();
         return ResponseEntity.ok(roleNames);
     }
+
+    @PostMapping("/role_modules")
+    public ResponseEntity<List<String>> getModulesFromRole(@RequestBody String roleName) {
+        Role role = roleRepository.findByRoleName(roleName)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+        List<String> roleModules = roleModuleRepository.findByRole(role).stream()
+                .map(rm -> rm.getModule().getName())  // Asegúrate de obtener el nombre del módulo
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roleModules);
+    }
+
 }

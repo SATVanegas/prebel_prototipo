@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class  RoleModuleDTO {
-    private String module;
+    private String moduleName;
     private String[] permissions;
 }

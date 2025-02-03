@@ -10,5 +10,6 @@ import java.util.List;
 public class RoleRequestDTO {
     private String roleName;
     private String description;
-    private List<RoleModuleRequestDTO> modules;
+    private List<RoleModuleDTO> modules;
+    private List<String> modulesToRemove;
 }

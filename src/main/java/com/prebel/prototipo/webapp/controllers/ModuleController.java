@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.prebel.prototipo.webapp.models.role_module.Module;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/modules")
 public class ModuleController {
@@ -24,8 +26,12 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(module);
     }
 
-    @GetMapping()
-    public ResponseEntity<Iterable<Module>> getModules() {
-        return ResponseEntity.ok(moduleRepository.findAll());
+    @GetMapping
+    public ResponseEntity<List<String>> getAllModules() {
+        List<String> modulos = ((List<Module>) moduleRepository.findAll())
+                .stream()
+                .map(Module::getName)
+                .toList();
+        return ResponseEntity.ok(modulos);
     }
 }

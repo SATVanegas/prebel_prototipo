@@ -20,8 +20,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    private Roles roleEnum;
+    @Column(nullable = false, unique = true)
+    private String roleName;
     private String description;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)

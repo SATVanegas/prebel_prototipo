@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.controllers;
 
+import com.prebel.prototipo.webapp.dtos.UserRoleResponseDTO;
 import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.RoleModuleRequestDTO;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/roles")
@@ -41,12 +43,12 @@ public class RolController {
     @PostMapping
     public ResponseEntity<Role> createRole(@RequestBody RoleRequestDTO request) {
         Role role = new Role();
-        role.setRoleEnum(request.getRoleEnum());
+        role.setRoleName(request.getRoleName());
         roleRepository.save(role);
 
         // Asignar módulos y permisos
         request.getModules().forEach(rmRequest -> {
-            Module module = moduleRepository.findById(rmRequest.getModuleId())
+            Module module = moduleRepository.findByName(rmRequest.getModuleName())
                     .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
 
             RoleModule roleModule = new RoleModule();
@@ -57,51 +59,6 @@ public class RolController {
         });
 
         return ResponseEntity.status(HttpStatus.CREATED).body(role);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateRole(@PathVariable long id, @RequestBody RoleRequestDTO roleDetails) {
-        Optional<Role> roleOptional = roleRepository.findById(id);
-
-        if (roleOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Rol no encontrado");
-        }
-
-        Role role = roleOptional.get();
-        role.setRoleEnum(roleDetails.getRoleEnum());
-
-        List<RoleModule> existingRoleModules = role.getRoleModules();
-
-        for (RoleModuleRequestDTO rmRequest : roleDetails.getModules()) {
-            Optional<RoleModule> existingRoleModuleOpt = existingRoleModules.stream()
-                    .filter(rm -> rm.getModule().getId().equals(rmRequest.getModuleId()))
-                    .findFirst();
-
-            if (existingRoleModuleOpt.isPresent()) {
-                RoleModule existingRoleModule = existingRoleModuleOpt.get();
-                existingRoleModule.setPermissions(rmRequest.getPermissions());
-            } else {
-                Module module = moduleRepository.findById(rmRequest.getModuleId())
-                        .orElseThrow(() -> new RuntimeException("Módulo no encontrado"));
-
-                RoleModule newRoleModule = new RoleModule();
-                newRoleModule.setRole(role);
-                newRoleModule.setModule(module);
-                newRoleModule.setPermissions(rmRequest.getPermissions());
-                existingRoleModules.add(newRoleModule);
-            }
-        }
-
-        List<Long> moduleIdsInRequest = roleDetails.getModules().stream()
-                .map(RoleModuleRequestDTO::getModuleId)
-                .toList();
-
-        existingRoleModules.removeIf(rm -> !moduleIdsInRequest.contains(rm.getModule().getId()));
-        
-        roleRepository.save(role);
-
-        return ResponseEntity.ok("Rol actualizado correctamente");
     }
 
     @GetMapping("/user/{userId}")
@@ -122,17 +79,22 @@ public class RolController {
                     .body("El usuario no tiene un rol asignado");
         }
 
-        List<RoleModule> roleModule = role.getRoleModules();
+        List<RoleModule> roleModules = role.getRoleModules();
 
-        List<RoleModuleDTO> modulesWithPermissions = roleModule.stream()
+        List<RoleModuleDTO> modulesWithPermissions = roleModules.stream()
                 .map(rm -> new RoleModuleDTO(rm.getModule().getName(), rm.getPermissions()))
                 .toList();
-        return ResponseEntity.ok(modulesWithPermissions);
+
+        // Crear respuesta JSON con el usuario y el nombre del rol
+        return ResponseEntity.ok(new UserRoleResponseDTO(user.getName(), role.getRoleName(), modulesWithPermissions));
     }
 
+
     @GetMapping
-    public ResponseEntity<List<Roles>> getAllRoles() {
-        List<Roles> roleEnums = ((List<Role>) roleRepository.findAll()).stream().map(Role::getRoleEnum).toList();
-        return ResponseEntity.ok(roleEnums);
+    public ResponseEntity<List<String>> getAllRoles() {
+        List<String> roleNames = StreamSupport.stream(roleRepository.findAll().spliterator(), false)
+                .map(Role::getRoleName)
+                .toList();
+        return ResponseEntity.ok(roleNames);
     }
 }

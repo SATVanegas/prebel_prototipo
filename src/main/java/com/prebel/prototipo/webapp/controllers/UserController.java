@@ -32,12 +32,12 @@ public class UserController {
         }
 
         // Validar si el rol existe
-        if (request.getRoleEnum() == null) {
+        if (request.getRoleName() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El rol es obligatorio");
         }
 
-        Optional<Role> roleOptional = roleRepository.findByRoleEnum(request.getRoleEnum());
+        Optional<Role> roleOptional = roleRepository.findByRoleName(request.getRoleName());
         if (roleOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Rol no encontrado");

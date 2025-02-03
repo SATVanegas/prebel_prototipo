@@ -25,7 +25,7 @@ public class User {
     private String resetCode;
 
     // Relación ManyToOne, ya que un usuario tiene un solo rol
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")  // La columna "role_id" se crea en la tabla "users"
     private Role role;
 }

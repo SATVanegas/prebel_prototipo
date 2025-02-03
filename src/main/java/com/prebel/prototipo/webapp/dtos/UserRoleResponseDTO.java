@@ -1,14 +1,16 @@
 package com.prebel.prototipo.webapp.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class UserRegistrationDTO {
-    private String password;
+@AllArgsConstructor
+public class UserRoleResponseDTO {
     private String name;
-    private String number;
-    private String email;
     private String roleName;
+    private List<RoleModuleDTO> permissions;
 }

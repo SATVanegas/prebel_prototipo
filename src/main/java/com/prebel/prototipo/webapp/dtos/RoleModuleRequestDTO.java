@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoleModuleRequestDTO {
-    private Long moduleId;
+    private String moduleName;
     private String[] permissions;
 }
 

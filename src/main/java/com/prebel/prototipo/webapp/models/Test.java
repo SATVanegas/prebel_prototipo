@@ -220,4 +220,8 @@ public class Test {
     public void setConclusion(String conclusion) {
         this.conclusion = conclusion;
     }
+
+    public Product getProduct() {return product;}
+
+    public void setProduct(Product product) {this.product = product;}
 }

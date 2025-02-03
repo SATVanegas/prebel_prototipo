@@ -9,5 +9,6 @@ import java.util.List;
 @Setter
 public class RoleRequestDTO {
     private String roleName;
+    private String description;
     private List<RoleModuleRequestDTO> modules;
 }

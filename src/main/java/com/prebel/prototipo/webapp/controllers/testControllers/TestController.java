@@ -25,12 +25,5 @@ public class TestController {
     }
 
     // Crear un nuevo Test
-    @PostMapping
-    public ResponseEntity<Test> createTest(@RequestBody Test test) {
-        if (test.getProduct() == null || test.getUserOrganolepticTests() == null || test.getUserPhysicochemicalTests() == null) {
-            return ResponseEntity.badRequest().build();  // Validaciones básicas
-        }
-        Test savedTest = testRepository.save(test);
-        return ResponseEntity.ok(savedTest);
-    }
+    
 }

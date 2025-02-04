@@ -2,6 +2,7 @@ package com.prebel.prototipo.webapp.controllers.testControllers;
 
 
 import com.prebel.prototipo.webapp.models.Test;
+import com.prebel.prototipo.webapp.repositories.ProductRepository;
 import com.prebel.prototipo.webapp.repositories.testRepositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class TestController {
     private final TemperatureRepository temperatureRepository;
     private final TotalBacteriaCountRepository totalBacteriaCountRepository;
     private final ViscosityRepository viscosityRepository;
+    private final ProductRepository productRepository;
 
 
     public TestController(TestRepository testRepository, AppearanceRepository appearanceRepository,
@@ -34,7 +36,7 @@ public class TestController {
                           pHRepository phRepository, SpecificGravityRepository specificGravityRepository,
                           StorageRepository storageRepository, TemperatureRepository temperatureRepository,
                           TotalBacteriaCountRepository totalBacteriaCountRepository,
-                          ViscosityRepository viscosityRepository) {
+                          ViscosityRepository viscosityRepository, ProductRepository productRepository) {
         this.testRepository = testRepository;
         this.appearanceRepository = appearanceRepository;
         this.colorRepository = colorRepository;
@@ -47,6 +49,7 @@ public class TestController {
         this.temperatureRepository = temperatureRepository;
         this.totalBacteriaCountRepository = totalBacteriaCountRepository;
         this.viscosityRepository = viscosityRepository;
+        this.productRepository = productRepository;
     }
 
     // Buscar un Test por ID
@@ -57,7 +60,7 @@ public class TestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo Test
+
 // Crear un nuevo Test
     @PostMapping
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
@@ -72,6 +75,7 @@ public class TestController {
         test.setTemperature(temperatureRepository.findById(test.getTemperature().getId()).orElse(null));
         test.setTotalBacteriaCount(totalBacteriaCountRepository.findById(test.getTotalBacteriaCount().getId()).orElse(null));
         test.setViscosity(viscosityRepository.findById(test.getViscosity().getId()).orElse(null));
+        test.setProduct(productRepository.findById(test.getProduct().getId()).orElse(null));
 
         Test savedTest = testRepository.save(test);
         return ResponseEntity.ok(savedTest);

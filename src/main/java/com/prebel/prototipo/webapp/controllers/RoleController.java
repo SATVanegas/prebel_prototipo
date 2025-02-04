@@ -41,7 +41,12 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody RoleRequestDTO request) {
+    public ResponseEntity<String> createRole(@RequestBody RoleRequestDTO request) {
+        // Validar si el rol ya existe
+        if (roleRepository.findByRoleName(request.getRoleName()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El rol ya existe");
+        }
         Role role = new Role();
         role.setRoleName(request.getRoleName());
         if (request.getDescription() != null) {
@@ -61,7 +66,7 @@ public class RoleController {
             roleModuleRepository.save(roleModule);
         });
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(role);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Rol creado exitosamente");
     }
 
     @PutMapping("/update")

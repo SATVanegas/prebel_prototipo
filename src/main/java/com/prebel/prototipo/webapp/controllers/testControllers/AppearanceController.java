@@ -12,8 +12,11 @@ import java.util.Optional;
 @RequestMapping("/api/test/appearances")
 public class AppearanceController {
 
-    @Autowired
-    private AppearanceRepository appearanceRepository;
+    private final AppearanceRepository appearanceRepository;
+
+    public AppearanceController(AppearanceRepository appearanceRepository) {
+        this.appearanceRepository = appearanceRepository;
+    }
 
     // Buscar por ID
     @GetMapping("/{id}")
@@ -22,6 +25,8 @@ public class AppearanceController {
         return appearance.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
     // Crear una nueva Appearance
     @PostMapping

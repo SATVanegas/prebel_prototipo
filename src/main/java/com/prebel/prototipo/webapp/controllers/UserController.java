@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -54,5 +55,14 @@ public class UserController {
         userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado exitosamente");
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<String>> getUsers() {
+        List<String> users = ((List<User>) userRepository.findAll())
+                .stream()
+                .map(User::getName)
+                .toList();
+        return ResponseEntity.ok(users);
     }
 }

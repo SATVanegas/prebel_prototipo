@@ -80,12 +80,10 @@ public class RoleController {
                     .findFirst();
 
             if (existingRoleModule.isPresent()) {
-                // Update permissions of an existing module
                 RoleModule roleModule = existingRoleModule.get();
                 roleModule.setPermissions(rmRequest.getPermissions());
                 roleModuleRepository.save(roleModule);
             } else {
-                // Add a new module to the role
                 RoleModule roleModule = new RoleModule();
                 roleModule.setRole(role);
                 roleModule.setModule(module);
@@ -94,7 +92,6 @@ public class RoleController {
             }
         });
 
-        // Handle removing modules
         if (request.getModulesToRemove() != null) {
             request.getModulesToRemove().forEach(moduleName -> {
                 Module module = moduleRepository.findByName(moduleName)
@@ -108,9 +105,9 @@ public class RoleController {
         return ResponseEntity.ok("Rol actualizado correctamente");
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserPermissions(@PathVariable long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    @PostMapping("/user")
+    public ResponseEntity<?> getUserPermissions(@RequestBody String userName) {
+        Optional<User> userOptional = userRepository.findByName(userName);
 
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -132,7 +129,6 @@ public class RoleController {
                 .map(rm -> new RoleModuleDTO(rm.getModule().getName(), rm.getPermissions()))
                 .toList();
 
-        // Crear respuesta JSON con el usuario y el nombre del rol
         return ResponseEntity.ok(new UserRoleResponseDTO(user.getName(), role.getRoleName(), modulesWithPermissions));
     }
 
@@ -150,9 +146,8 @@ public class RoleController {
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
         List<String> roleModules = roleModuleRepository.findByRole(role).stream()
-                .map(rm -> rm.getModule().getName())  // Asegúrate de obtener el nombre del módulo
+                .map(rm -> rm.getModule().getName())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(roleModules);
     }
-
 }

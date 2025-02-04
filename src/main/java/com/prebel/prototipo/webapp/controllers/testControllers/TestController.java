@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.controllers.testControllers;
 
 import com.prebel.prototipo.webapp.models.Test;
 import com.prebel.prototipo.webapp.repositories.ProductRepository;
+import com.prebel.prototipo.webapp.repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.testRepositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class TestController {
     private final TotalBacteriaCountRepository totalBacteriaCountRepository;
     private final ViscosityRepository viscosityRepository;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
 
     public TestController(TestRepository testRepository, AppearanceRepository appearanceRepository,
@@ -36,7 +38,7 @@ public class TestController {
                           pHRepository phRepository, SpecificGravityRepository specificGravityRepository,
                           StorageRepository storageRepository, TemperatureRepository temperatureRepository,
                           TotalBacteriaCountRepository totalBacteriaCountRepository,
-                          ViscosityRepository viscosityRepository, ProductRepository productRepository) {
+                          ViscosityRepository viscosityRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.testRepository = testRepository;
         this.appearanceRepository = appearanceRepository;
         this.colorRepository = colorRepository;
@@ -50,6 +52,7 @@ public class TestController {
         this.totalBacteriaCountRepository = totalBacteriaCountRepository;
         this.viscosityRepository = viscosityRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     // Buscar un Test por ID
@@ -76,6 +79,8 @@ public class TestController {
         test.setTotalBacteriaCount(totalBacteriaCountRepository.findById(test.getTotalBacteriaCount().getId()).orElse(null));
         test.setViscosity(viscosityRepository.findById(test.getViscosity().getId()).orElse(null));
         test.setProduct(productRepository.findById(test.getProduct().getId()).orElse(null));
+        test.setUserOrganolepticTests(userRepository.findById(test.getUserOrganolepticTests().getId()).orElse(null));
+        test.setUserPhysicochemicalTests(userRepository.findById(test.getUserPhysicochemicalTests().getId()).orElse(null));
 
         Test savedTest = testRepository.save(test);
         return ResponseEntity.ok(savedTest);

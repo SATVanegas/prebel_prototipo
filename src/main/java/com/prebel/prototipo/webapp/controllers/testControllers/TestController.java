@@ -1,11 +1,13 @@
 package com.prebel.prototipo.webapp.controllers.testControllers;
 
 
+import com.prebel.prototipo.webapp.models.Product;
 import com.prebel.prototipo.webapp.models.Test;
+import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.repositories.ProductRepository;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.testRepositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +68,7 @@ public class TestController {
 
 // Crear un nuevo Test
     @PostMapping
-    public ResponseEntity<Test> createTest(@RequestBody Test test) {
+    public ResponseEntity<?> createTest(@RequestBody Test test) {
         test.setAppearance(appearanceRepository.findById(test.getAppearance().getId()).orElse(null));
         test.setColor(colorRepository.findById(test.getColor().getId()).orElse(null));
         test.setFungiYeastCount(fungiYeastCountRepository.findById(test.getFungiYeastCount().getId()).orElse(null));
@@ -78,9 +80,32 @@ public class TestController {
         test.setTemperature(temperatureRepository.findById(test.getTemperature().getId()).orElse(null));
         test.setTotalBacteriaCount(totalBacteriaCountRepository.findById(test.getTotalBacteriaCount().getId()).orElse(null));
         test.setViscosity(viscosityRepository.findById(test.getViscosity().getId()).orElse(null));
-        test.setProduct(productRepository.findById(test.getProduct().getId()).orElse(null));
-        test.setUserOrganolepticTests(userRepository.findById(test.getUserOrganolepticTests().getId()).orElse(null));
-        test.setUserPhysicochemicalTests(userRepository.findById(test.getUserPhysicochemicalTests().getId()).orElse(null));
+
+        // Validar si el producto existe
+        Optional<Product> productOptional = productRepository.findById(test.getProduct().getId());
+        if (productOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El producto especificado no existe.");
+        }
+
+        // Validar si el usuario de pruebas organolépticas existe
+        Optional<User> userOrganolepticOptional = userRepository.findById(test.getUserOrganolepticTests().getId());
+        if (userOrganolepticOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El usuario de pruebas organolépticas no existe.");
+        }
+
+        // Validar si el usuario de pruebas fisicoquímicas existe
+        Optional<User> userPhysicochemicalOptional = userRepository.findById(test.getUserPhysicochemicalTests().getId());
+        if (userPhysicochemicalOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El usuario de pruebas fisicoquímicas no existe.");
+        }
+
+        // Asignar los valores validados
+        test.setProduct(productOptional.get());
+        test.setUserOrganolepticTests(userOrganolepticOptional.get());
+        test.setUserPhysicochemicalTests(userPhysicochemicalOptional.get());
 
         Test savedTest = testRepository.save(test);
         return ResponseEntity.ok(savedTest);

@@ -1,9 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
 import com.prebel.prototipo.webapp.models.User;
-import com.prebel.prototipo.webapp.models.weekly_planner.TechniciansSchedule;
+import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
-import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechniciansScheduleRepository;
+import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechnicianScheduleRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +12,27 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/weeklyplanner/techniciansschedule")
-public class TechniciansScheduleController {
+public class TechnicianScheduleController {
 
-    private final TechniciansScheduleRepository techniciansScheduleRepository;
+    private final TechnicianScheduleRepository technicianScheduleRepository;
     private final UserRepository userRepository;
 
-    public TechniciansScheduleController(TechniciansScheduleRepository techniciansScheduleRepository, UserRepository userRepository) {
-        this.techniciansScheduleRepository = techniciansScheduleRepository;
+    public TechnicianScheduleController(TechnicianScheduleRepository technicianScheduleRepository, UserRepository userRepository) {
+        this.technicianScheduleRepository = technicianScheduleRepository;
         this.userRepository = userRepository;
     }
 
-    // Obtener un TechniciansSchedule por ID
+    // Obtener un TechnicianSchedule por ID
     @GetMapping("/{id}")
-    public ResponseEntity<TechniciansSchedule> getTechniciansScheduleById(@PathVariable Long id) {
-        Optional<TechniciansSchedule> schedule = techniciansScheduleRepository.findById(id);
+    public ResponseEntity<TechnicianSchedule> getTechniciansScheduleById(@PathVariable Long id) {
+        Optional<TechnicianSchedule> schedule = technicianScheduleRepository.findById(id);
         return schedule.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo TechniciansSchedule
+    // Crear un nuevo TechnicianSchedule
     @PostMapping
-    public ResponseEntity<?> createTechniciansSchedule(@RequestBody TechniciansSchedule techniciansSchedule) {
+    public ResponseEntity<?> createTechniciansSchedule(@RequestBody TechnicianSchedule techniciansSchedule) {
         Optional<User> technicianOptional = userRepository.findById(techniciansSchedule.getTechnician().getId());
         if (technicianOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -40,7 +40,7 @@ public class TechniciansScheduleController {
         }
 
         techniciansSchedule.setTechnician(technicianOptional.get());
-        TechniciansSchedule savedSchedule = techniciansScheduleRepository.save(techniciansSchedule);
+        TechnicianSchedule savedSchedule = technicianScheduleRepository.save(techniciansSchedule);
         return ResponseEntity.ok(savedSchedule);
     }
 }

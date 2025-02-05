@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "weekly_calendar")
@@ -19,10 +20,25 @@ public class WeeklyCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    private Date StartDate;
+    private Date FinishDate;
 
-    @ManyToOne
-    @JoinColumn(name = "technicians_schedule_id")
-    private TechniciansSchedule techniciansSchedule;
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> MondayTechniciansSchedule;
+
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> TuesdayTechniciansSchedule;
+
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> WednesdayTechniciansSchedule;
+
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> ThursdayTechniciansSchedule;
+
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> FridayTechniciansSchedule;
+
+    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> SaturdayTechniciansSchedule;
 
 }

@@ -9,7 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+/*
+FUNCIONES:
+    -POR SEMANA:
+        Obtener el calendario semanal por id
+        Crear un nuevo calendario semanal
+        Actualizar la programacion de un calendario semanal(Completo)
+        Eliminar un calendario semanal(Completo)
+    -POR DIA:
+        Obtener la programacion de un dia de la semana
+        Actualizar la programacion de un dia del calendario semanal
+        Eliminar la programacion de un dia de la semana
+ */
 @RestController
 @RequestMapping("/api/weeklycalendar")
 public class WeeklyCalendarController {
@@ -28,6 +39,7 @@ public class WeeklyCalendarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    //Obtener la programacion de un dia de la semana
     @GetMapping("/viewday/{day}")
     public ResponseEntity<List<TechnicianSchedule>> getDayTasks(@PathVariable String day) {
         Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(1L); // Supongamos que 1L es el id del calendario actual
@@ -67,6 +79,7 @@ public class WeeklyCalendarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Actualizar un dia del calendario semanal
     @PutMapping("/updateday/{id}/{day}")
     public ResponseEntity<WeeklyCalendar> updateDayTask(@PathVariable Long id, @PathVariable String day, @RequestBody List<TechnicianSchedule> updatedSchedules) {
         Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);

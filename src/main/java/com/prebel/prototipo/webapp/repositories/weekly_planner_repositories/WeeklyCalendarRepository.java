@@ -3,8 +3,6 @@ package com.prebel.prototipo.webapp.repositories.weekly_planner_repositories;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

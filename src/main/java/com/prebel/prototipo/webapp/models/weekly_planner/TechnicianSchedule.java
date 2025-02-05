@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
+import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,10 @@ public class TechnicianSchedule {
     @ManyToOne
     @JoinColumn(name = "technician_id",nullable = false)
     private User technician;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role assignedRole;
 
     private String schedule;
     private String info;

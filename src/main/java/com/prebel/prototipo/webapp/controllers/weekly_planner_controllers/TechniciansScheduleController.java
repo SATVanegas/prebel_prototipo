@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechniciansSchedule;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechniciansScheduleRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;

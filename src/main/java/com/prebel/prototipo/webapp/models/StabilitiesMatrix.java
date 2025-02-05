@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.prebel.prototipo.webapp.controllers;
+package com.prebel.prototipo.webapp.controllers.role_module_controllers;
 
-import com.prebel.prototipo.webapp.repositories.ModuleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.ModuleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

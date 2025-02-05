@@ -1,9 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.login_controllers;
 
 import com.prebel.prototipo.webapp.services.EmailService;
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.services.UserService;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

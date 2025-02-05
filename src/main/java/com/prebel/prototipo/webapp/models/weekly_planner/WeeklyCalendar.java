@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

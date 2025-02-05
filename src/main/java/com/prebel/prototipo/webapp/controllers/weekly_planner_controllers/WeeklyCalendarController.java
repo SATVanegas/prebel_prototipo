@@ -1,10 +1,10 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
-import com.prebel.prototipo.webapp.repositories.RoleRepository;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.WeeklyCalendarRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -41,7 +41,7 @@ public class EmailController {
             userService.sendPasswordResetCode(email);
             return ResponseEntity.ok("Código de recuperación enviado a " + email);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
 

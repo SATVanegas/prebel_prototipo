@@ -21,6 +21,9 @@ public class TechnicianSchedule {
 
     private Date date;
 
+    @Enumerated(EnumType.STRING)
+    private DayWeek day;
+
     @ManyToOne
     @JoinColumn(name = "technician_id",nullable = false)
     private User technician;
@@ -35,4 +38,14 @@ public class TechnicianSchedule {
     @ManyToOne
     @JoinColumn(name = "weekly_calendar_id")
     private WeeklyCalendar weekly_calendar;
+
+    public void setDayFromString(String dayName) {
+        for (DayWeek d : DayWeek.values()) {
+            if (d.toString().equalsIgnoreCase(dayName)) {
+                this.day = d;
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Nombre de día inválido: " + dayName);
+    }
 }

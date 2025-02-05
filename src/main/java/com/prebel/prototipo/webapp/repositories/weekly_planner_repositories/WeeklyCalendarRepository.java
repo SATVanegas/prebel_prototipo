@@ -11,14 +11,14 @@ public interface WeeklyCalendarRepository extends CrudRepository<WeeklyCalendar,
     // Obtener las tareas del técnico para un día específico
     default List<TechnicianSchedule> findTechnicianSchedulesByDay(WeeklyCalendar weeklyCalendar, String day) {
         return weeklyCalendar.getTechniciansSchedules().stream()
-                .filter(schedule -> schedule.getDayOfWeek().equalsIgnoreCase(day))
+                .filter(schedule -> schedule.getDay().toString().equalsIgnoreCase(day))
                 .collect(Collectors.toList());
     }
 
     // Eliminar tareas de un día específico
     default boolean deleteDayTasks(WeeklyCalendar weeklyCalendar, String day) {
         List<TechnicianSchedule> schedulesToRemove = weeklyCalendar.getTechniciansSchedules().stream()
-                .filter(schedule -> schedule.getDayOfWeek().equalsIgnoreCase(day))
+                .filter(schedule -> schedule.getDay().toString().equalsIgnoreCase(day))
                 .toList();
 
         weeklyCalendar.getTechniciansSchedules().removeAll(schedulesToRemove);
@@ -28,8 +28,8 @@ public interface WeeklyCalendarRepository extends CrudRepository<WeeklyCalendar,
 
     // Actualizar tareas de un día específico
     default WeeklyCalendar updateDayTasks(WeeklyCalendar weeklyCalendar, String day, List<TechnicianSchedule> updatedSchedules) {
-        weeklyCalendar.getTechniciansSchedules().removeIf(schedule -> schedule.getDayOfWeek().equalsIgnoreCase(day));
-        updatedSchedules.forEach(schedule -> schedule.setDayOfWeek(day)); // Actualizar día de la semana
+        weeklyCalendar.getTechniciansSchedules().removeIf(schedule -> schedule.getDay().toString().equalsIgnoreCase(day));
+        updatedSchedules.forEach(schedule -> schedule.setDayFromString(day)); // Actualizar día de la semana
         weeklyCalendar.getTechniciansSchedules().addAll(updatedSchedules);
         return save(weeklyCalendar);
     }

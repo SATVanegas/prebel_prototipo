@@ -33,6 +33,6 @@ public class User {
     /*
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeeklyCalendar> weeklyTasks;
-    
+
      */
 }

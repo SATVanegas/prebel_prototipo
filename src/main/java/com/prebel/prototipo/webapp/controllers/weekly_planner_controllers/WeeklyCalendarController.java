@@ -81,4 +81,40 @@ public class WeeklyCalendarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Eliminar la programacion de un dia de la semana
+    @DeleteMapping("/day/{id}/{day}")
+    public ResponseEntity<Void> deleteDayTask(@PathVariable Long id, @PathVariable String day) {
+        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);
+
+        if (weeklyCalendar.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        boolean updated = weeklyCalendarRepository.deleteDayTasks(weeklyCalendar.get(), day);
+
+        if (updated) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PutMapping("/day/{id}/{day}")
+    public ResponseEntity<WeeklyCalendar> updateDayTask(@PathVariable Long id, @PathVariable String day, @RequestBody List<TechnicianSchedule> updatedSchedules) {
+        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);
+
+        if (weeklyCalendar.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        WeeklyCalendar updatedWeeklyCalendar = weeklyCalendarRepository.updateDayTasks(weeklyCalendar.get(), day, updatedSchedules);
+
+        if (updatedWeeklyCalendar != null) {
+            return ResponseEntity.ok(updatedWeeklyCalendar);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+
 }

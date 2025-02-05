@@ -2,7 +2,6 @@ package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
-import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechnicianScheduleRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.WeeklyCalendarRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +15,16 @@ import java.util.Optional;
 public class WeeklyCalendarController {
 
     private final WeeklyCalendarRepository weeklyCalendarRepository;
-    private final TechnicianScheduleRepository technicianScheduleRepository;
 
-    public WeeklyCalendarController(WeeklyCalendarRepository weeklyCalendarRepository, TechnicianScheduleRepository technicianScheduleRepository) {
+    public WeeklyCalendarController(WeeklyCalendarRepository weeklyCalendarRepository) {
         this.weeklyCalendarRepository = weeklyCalendarRepository;
-        this.technicianScheduleRepository = technicianScheduleRepository;
     }
 
     // Obtener el calendario semanal por id
     @GetMapping("/view/{id}")
     public ResponseEntity<WeeklyCalendar> getWeeklyCalendarById(@PathVariable Long id) {
         return weeklyCalendarRepository.findById(id)
-                .map(weeklyCalendar -> ResponseEntity.ok(weeklyCalendar))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

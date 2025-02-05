@@ -1,8 +1,7 @@
-package com.prebel.prototipo.webapp.controllers.testControllers;
+package com.prebel.prototipo.webapp.controllers.testsControllers;
 
 import com.prebel.prototipo.webapp.models.tests.Appearance;
 import com.prebel.prototipo.webapp.repositories.testRepositories.AppearanceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "weekly_calendar")
 @Getter
@@ -17,11 +19,10 @@ public class WeeklyCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String day;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "technicians_schedule_id")
     private TechniciansSchedule techniciansSchedule;
-
 
 }

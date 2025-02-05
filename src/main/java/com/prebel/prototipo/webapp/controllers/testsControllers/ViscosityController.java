@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.controllers.testControllers;
+package com.prebel.prototipo.webapp.controllers.testsControllers;
 
 import com.prebel.prototipo.webapp.models.tests.Viscosity;
 import com.prebel.prototipo.webapp.repositories.testRepositories.ViscosityRepository;

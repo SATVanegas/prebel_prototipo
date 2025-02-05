@@ -1,6 +1,5 @@
 package com.prebel.prototipo.webapp.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.prebel.prototipo.webapp.models.tests.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

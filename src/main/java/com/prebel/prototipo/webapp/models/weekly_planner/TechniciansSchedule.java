@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 
 @Entity
 @Table(name = "tecnicians_schedules")
@@ -21,7 +20,8 @@ public class TechniciansSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    @Enumerated(EnumType.STRING)
+    private DayWeek day;
 
     @ManyToOne
     @JoinColumn(name = "technician_id")

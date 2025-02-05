@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.controllers.testControllers;
+package com.prebel.prototipo.webapp.controllers;
 
 
 import com.prebel.prototipo.webapp.models.Product;

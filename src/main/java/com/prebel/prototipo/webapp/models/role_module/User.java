@@ -30,6 +30,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    /*
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WeeklyCalendar> weeklyTasks;
+    
+     */
 }

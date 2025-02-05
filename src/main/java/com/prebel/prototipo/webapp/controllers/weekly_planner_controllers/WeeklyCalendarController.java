@@ -1,5 +1,7 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
+import com.prebel.prototipo.webapp.dtos.CreateTaskDTO;
+import com.prebel.prototipo.webapp.dtos.ViewTaskRequestDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
@@ -33,50 +35,72 @@ public class WeeklyCalendarController {
         return (List<WeeklyCalendar>) weeklyCalendarRepository.findAll();
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<WeeklyCalendar>> getTasksByUser(@PathVariable Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            List<WeeklyCalendar> tasks = weeklyCalendarRepository.findByAssignedUser(user.get());
-            return ResponseEntity.ok(tasks);
+    @GetMapping("/tasks")
+    public ResponseEntity<List<WeeklyCalendar>> getTasks(@RequestBody ViewTaskRequestDTO requestDTO) {
+        if (requestDTO.getUserName() != null && !requestDTO.getUserName().isEmpty()) {
+            // Si el nombre de usuario está presente, buscar las tareas asignadas a ese usuario
+            Optional<User> user = userRepository.findByName(requestDTO.getUserName());
+            if (user.isPresent()) {
+                List<WeeklyCalendar> tasks = weeklyCalendarRepository.findByAssignedUser(user.get());
+                return ResponseEntity.ok(tasks);
+            }
+        } else if (requestDTO.getRoleName() != null && !requestDTO.getRoleName().isEmpty()) {
+            // Si el nombre de rol está presente, buscar las tareas asignadas a ese rol
+            Optional<Role> role = roleRepository.findByRoleName(requestDTO.getRoleName());
+            if (role.isPresent()) {
+                List<WeeklyCalendar> tasks = weeklyCalendarRepository.findByAssignedRole(role.get());
+                return ResponseEntity.ok(tasks);
+            }
         }
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/role/{roleId}")
-    public ResponseEntity<List<WeeklyCalendar>> getTasksByRole(@PathVariable Long roleId) {
-        Optional<Role> role = roleRepository.findById(roleId);
-        if (role.isPresent()) {
-            List<WeeklyCalendar> tasks = weeklyCalendarRepository.findByAssignedRole(role.get());
-            return ResponseEntity.ok(tasks);
+
+    @PostMapping("/create")
+    public ResponseEntity<WeeklyCalendar> createTask(@RequestBody CreateTaskDTO taskDTO) {
+        // Validar campos obligatorios
+        if (taskDTO.getTitle() == null || taskDTO.getDescription() == null || taskDTO.getStartDate() == null || taskDTO.getEndDate() == null) {
+            return ResponseEntity.badRequest().body(null);  // Faltan campos obligatorios
         }
-        return ResponseEntity.notFound().build();
+
+        WeeklyCalendar task = new WeeklyCalendar();
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setStartDate(taskDTO.getStartDate());
+        task.setEndDate(taskDTO.getEndDate());
+
+        // Verificar si se proporciona el nombre de un usuario o rol
+        if (taskDTO.getUserName() != null && taskDTO.getRoleName() != null) {
+            return ResponseEntity.badRequest().body(null);  // No se puede proporcionar ambos
+        }
+
+        if (taskDTO.getUserName() != null) {
+            // Buscar usuario por nombre
+            Optional<User> user = userRepository.findByName(taskDTO.getUserName());
+            if (user.isPresent()) {
+                task.setAssignedUser(user.get());
+                task.setAssignedRole(null);  // No se asigna rol
+            } else {
+                return ResponseEntity.badRequest().body(null);  // Usuario no encontrado
+            }
+        } else if (taskDTO.getRoleName() != null) {
+            // Buscar rol por nombre
+            Optional<Role> role = roleRepository.findByRoleName(taskDTO.getRoleName());
+            if (role.isPresent()) {
+                task.setAssignedRole(role.get());
+                task.setAssignedUser(null);  // No se asigna usuario
+            } else {
+                return ResponseEntity.badRequest().body(null);  // Rol no encontrado
+            }
+        } else {
+            return ResponseEntity.badRequest().body(null);  // Ningún usuario ni rol proporcionado
+        }
+
+        // Guardar la tarea
+        WeeklyCalendar savedTask = weeklyCalendarRepository.save(task);
+        return ResponseEntity.ok(savedTask);
     }
 
-
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<WeeklyCalendar> createTaskForUser(@PathVariable Long userId, @RequestBody WeeklyCalendar task) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            task.setAssignedUser(user.get());
-            task.setAssignedRole(null);
-            WeeklyCalendar savedTask = weeklyCalendarRepository.save(task);
-            return ResponseEntity.ok(savedTask);
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping("/role/{roleId}")
-    public ResponseEntity<WeeklyCalendar> createTaskForRole(@PathVariable Long roleId, @RequestBody WeeklyCalendar task) {
-        Optional<Role> role = roleRepository.findById(roleId);
-        if (role.isPresent()) {
-            task.setAssignedRole(role.get());
-            task.setAssignedUser(null);
-            WeeklyCalendar savedTask = weeklyCalendarRepository.save(task);
-            return ResponseEntity.ok(savedTask);
-        }
-        return ResponseEntity.notFound().build();
-    }
 
     @PutMapping("/{taskId}")
     public ResponseEntity<WeeklyCalendar> updateTask(@PathVariable Long taskId, @RequestBody WeeklyCalendar updatedTask) {
@@ -117,32 +141,6 @@ public class WeeklyCalendarController {
         if (role.isPresent()) {
             weeklyCalendarRepository.deleteByAssignedRole(role.get());
             return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<List<WeeklyCalendar>> getFilteredTasks(
-            @RequestParam(required = false) Long roleId,
-            @RequestParam(required = false) Long userId) {
-
-        if (roleId != null) {
-            return getTasksByRole(roleId);
-        } else if (userId != null) {
-            return getTasksByUser(userId);
-        } else {
-            return ResponseEntity.ok((List<WeeklyCalendar>) weeklyCalendarRepository.findAll());
-        }
-    }
-
-    @GetMapping("/my-tasks/{userId}")
-    public ResponseEntity<List<WeeklyCalendar>> getCombinedTasks(@PathVariable Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            List<WeeklyCalendar> tasks = new ArrayList<>();
-            tasks.addAll(weeklyCalendarRepository.findByAssignedUser(user.get()));
-            tasks.addAll(weeklyCalendarRepository.findByAssignedRole(user.get().getRole()));
-            return ResponseEntity.ok(tasks);
         }
         return ResponseEntity.notFound().build();
     }

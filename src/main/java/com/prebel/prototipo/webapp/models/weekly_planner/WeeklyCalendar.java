@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,8 +25,10 @@ public class WeeklyCalendar {
 
     private String title;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)

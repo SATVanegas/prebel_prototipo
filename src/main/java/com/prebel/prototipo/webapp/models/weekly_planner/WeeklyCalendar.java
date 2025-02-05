@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.models;
+package com.prebel.prototipo.webapp.models.weekly_planner;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,21 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "wekly_calendar")
+@Table(name = "weekly_calendar")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeklyCalendar {
+public class WeeklyCalendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date startDate;
-    private Date finishDate;
+    private String day;
+
+    @ManyToOne
+    @JoinColumn(name = "technicians_schedule_id")
+    private TechniciansSchedule techniciansSchedule;
 
 
 }

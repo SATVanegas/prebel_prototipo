@@ -1,5 +1,7 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
+import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,10 +21,16 @@ public class WeeklyCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    private String title;
+    private String description;
+    private Date startDate;
+    private Date endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "technicians_schedule_id")
-    private TechniciansSchedule techniciansSchedule;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User assignedUser;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = true)
+    private Role assignedRole;
 }

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports;
 
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

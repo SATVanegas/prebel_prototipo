@@ -1,7 +1,7 @@
 package com.prebel.prototipo.webapp.services;
 
-import com.prebel.prototipo.webapp.models.User;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

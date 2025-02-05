@@ -1,11 +1,13 @@
-package com.prebel.prototipo.webapp.models;
+package com.prebel.prototipo.webapp.models.role_module;
 
-import com.prebel.prototipo.webapp.models.role_module.Role;
+import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -24,8 +26,10 @@ public class User {
     private String email;
     private String resetCode;
 
-    // Relación ManyToOne, ya que un usuario tiene un solo rol
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")  // La columna "role_id" se crea en la tabla "users"
+    @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WeeklyCalendar> weeklyTasks;
 }

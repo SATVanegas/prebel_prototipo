@@ -1,11 +1,15 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.models.role_module.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,25 +24,18 @@ public class WeeklyCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date StartDate;
-    private Date FinishDate;
+    private String title;
+    private String description;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> MondayTechniciansSchedule;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User assignedUser;
 
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> TuesdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> WednesdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> ThursdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> FridayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> SaturdayTechniciansSchedule;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = true)
+    private Role assignedRole;
 }

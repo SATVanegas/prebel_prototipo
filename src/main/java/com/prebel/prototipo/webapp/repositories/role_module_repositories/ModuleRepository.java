@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.repositories;
+package com.prebel.prototipo.webapp.repositories.role_module_repositories;
 
 import com.prebel.prototipo.webapp.models.role_module.Module;
 import org.springframework.data.repository.CrudRepository;

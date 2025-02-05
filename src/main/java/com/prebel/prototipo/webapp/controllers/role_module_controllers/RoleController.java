@@ -1,15 +1,15 @@
-package com.prebel.prototipo.webapp.controllers;
+package com.prebel.prototipo.webapp.controllers.role_module_controllers;
 
 import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.UserRoleResponseDTO;
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.dtos.RoleRequestDTO;
 import com.prebel.prototipo.webapp.models.role_module.*;
 import com.prebel.prototipo.webapp.models.role_module.Module;
-import com.prebel.prototipo.webapp.repositories.ModuleRepository;
-import com.prebel.prototipo.webapp.repositories.RoleModuleRepository;
-import com.prebel.prototipo.webapp.repositories.RoleRepository;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.ModuleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleModuleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

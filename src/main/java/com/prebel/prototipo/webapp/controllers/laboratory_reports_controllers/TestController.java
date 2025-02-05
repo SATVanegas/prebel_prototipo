@@ -3,9 +3,9 @@ package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Test;
-import com.prebel.prototipo.webapp.models.User;
+import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
-import com.prebel.prototipo.webapp.repositories.UserRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.TestRepository;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.*;
 import org.springframework.http.HttpStatus;

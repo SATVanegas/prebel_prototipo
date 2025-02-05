@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.role_module;
 
+import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoleModule> roleModules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignedRole", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WeeklyCalendar> roleTasks = new ArrayList<>();
 }

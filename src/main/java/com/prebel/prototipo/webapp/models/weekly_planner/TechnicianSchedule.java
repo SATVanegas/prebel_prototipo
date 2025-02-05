@@ -20,6 +20,7 @@ public class TechnicianSchedule {
     private Long id;
 
     private Date date;
+    private String dayOfWeek;
 
     @ManyToOne
     @JoinColumn(name = "technician_id",nullable = false)

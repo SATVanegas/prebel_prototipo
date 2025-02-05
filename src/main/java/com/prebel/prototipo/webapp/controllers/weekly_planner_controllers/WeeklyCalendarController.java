@@ -24,14 +24,14 @@ public class WeeklyCalendarController {
     }
 
     // Obtener el calendario semanal por id
-    @GetMapping("/{id}")
+    @GetMapping("/view/{id}")
     public ResponseEntity<WeeklyCalendar> getWeeklyCalendarById(@PathVariable Long id) {
         return weeklyCalendarRepository.findById(id)
                 .map(weeklyCalendar -> ResponseEntity.ok(weeklyCalendar))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/day/{day}")
+    @GetMapping("/viewday/{day}")
     public ResponseEntity<List<TechnicianSchedule>> getDayTasks(@PathVariable String day) {
         Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(1L); // Supongamos que 1L es el id del calendario actual
 
@@ -50,14 +50,14 @@ public class WeeklyCalendarController {
 
 
     // Crear un nuevo calendario semanal
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<WeeklyCalendar> createWeeklyCalendar(@RequestBody WeeklyCalendar weeklyCalendar) {
         WeeklyCalendar savedWeeklyCalendar = weeklyCalendarRepository.save(weeklyCalendar);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedWeeklyCalendar);
     }
 
     // Actualizar un calendario semanal
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<WeeklyCalendar> updateWeeklyCalendar(@PathVariable Long id, @RequestBody WeeklyCalendar updatedWeeklyCalendar) {
         return weeklyCalendarRepository.findById(id)
                 .map(existingCalendar -> {
@@ -70,35 +70,7 @@ public class WeeklyCalendarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Eliminar un calendario semanal
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteWeeklyCalendar(@PathVariable Long id) {
-        return weeklyCalendarRepository.findById(id)
-                .map(existingCalendar -> {
-                    weeklyCalendarRepository.delete(existingCalendar);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // Eliminar la programacion de un dia de la semana
-    @DeleteMapping("/day/{id}/{day}")
-    public ResponseEntity<Void> deleteDayTask(@PathVariable Long id, @PathVariable String day) {
-        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);
-
-        if (weeklyCalendar.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        boolean updated = weeklyCalendarRepository.deleteDayTasks(weeklyCalendar.get(), day);
-
-        if (updated) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    @PutMapping("/day/{id}/{day}")
+    @PutMapping("/updateday/{id}/{day}")
     public ResponseEntity<WeeklyCalendar> updateDayTask(@PathVariable Long id, @PathVariable String day, @RequestBody List<TechnicianSchedule> updatedSchedules) {
         Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);
 
@@ -115,6 +87,34 @@ public class WeeklyCalendarController {
         }
     }
 
+    // Eliminar un calendario semanal
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteWeeklyCalendar(@PathVariable Long id) {
+        return weeklyCalendarRepository.findById(id)
+                .map(existingCalendar -> {
+                    weeklyCalendarRepository.delete(existingCalendar);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Eliminar la programacion de un dia de la semana
+    @DeleteMapping("/deleteday/{id}/{day}")
+    public ResponseEntity<Void> deleteDayTask(@PathVariable Long id, @PathVariable String day) {
+        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarRepository.findById(id);
+
+        if (weeklyCalendar.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        boolean updated = weeklyCalendarRepository.deleteDayTasks(weeklyCalendar.get(), day);
+
+        if (updated) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 
 }

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.role_module;
 
-import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
+import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +30,8 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    /*
-    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WeeklyCalendar> weeklyTasks;
 
-     */
+    @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechnicianSchedule> weeklyTasks;
+
 }

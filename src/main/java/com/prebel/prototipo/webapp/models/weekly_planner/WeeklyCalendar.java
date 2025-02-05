@@ -27,20 +27,6 @@ public class WeeklyCalendar {
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> MondayTechniciansSchedule;
+    private List<TechnicianSchedule> TechniciansSchedules;
 
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> TuesdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> WednesdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> ThursdayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> FridayTechniciansSchedule;
-
-    @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechnicianSchedule> SaturdayTechniciansSchedule;
 }

@@ -1,5 +1,9 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
+import lombok.*;
+
+@Getter
+@RequiredArgsConstructor
 public enum DayWeek {
     LUNES("Lunes"),
     MARTES("Martes"),
@@ -9,14 +13,6 @@ public enum DayWeek {
     SABADO("Sábado");
 
     private final String nombre;
-
-    DayWeek(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
 
     @Override
     public String toString() {

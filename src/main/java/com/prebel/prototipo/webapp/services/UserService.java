@@ -2,18 +2,20 @@ package com.prebel.prototipo.webapp.services;
 
 import com.prebel.prototipo.webapp.models.User;
 import com.prebel.prototipo.webapp.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private EmailService emailService;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+
+    public UserService(UserRepository userRepository, EmailService emailService) {
+        this.userRepository = userRepository;
+        this.emailService = emailService;
+    }
 
     // Método para enviar un código de recuperación de contraseña al correo electrónico
     public void sendPasswordResetCode(String email) {

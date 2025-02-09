@@ -25,11 +25,11 @@ public class Product {
     private String productDescription;
     private String reference;
     private String batch;
-    private String packagingType; // to define if it remains as a java enum
-    private String packagingMaterial; // to define if it remains as a java enum
-    private String containerColor; // to define if it remains as a java enum
-    private String lidMaterial; // to define if it remains as a java enum
-    private String lidColor; // to define if it remains as a java enum
+    private String packagingType;
+    private String packagingMaterial;
+    private String containerColor;
+    private String lidMaterial;
+    private String lidColor;
     private String formulaNumber;
     private String projectCode;
     private String projectName;

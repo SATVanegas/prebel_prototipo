@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestTemperatureDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,12 @@ public class Temperature {
     private long id;
 
     private String unit;
-    private int time; // In weeks
+    private int time;
     private int equipment;
 
+    public Temperature(TestTemperatureDTO dto) {
+        this.unit = dto.getUnit();
+        this.time = dto.getTime();
+        this.equipment = dto.getEquipment();
+    }
 }

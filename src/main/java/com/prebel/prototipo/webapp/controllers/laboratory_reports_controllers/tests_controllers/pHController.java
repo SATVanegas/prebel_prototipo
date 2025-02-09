@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.pH;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.pHRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,8 @@ public class pHController {
 
     // Crear un nuevo pH
     @PostMapping
-    public ResponseEntity<pH> createPH(@RequestBody pH ph) {
-        if (ph.getUnit() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        pH savedPH = phRepository.save(ph);
-        return ResponseEntity.ok(savedPH);
+    public ResponseEntity<String> createPH(@Valid @RequestBody TestsDTO dto) {
+        phRepository.save(new pH(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

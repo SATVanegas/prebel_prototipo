@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Appearance;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.AppearanceRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,15 +27,10 @@ public class AppearanceController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-
     // Crear una nueva Appearance
     @PostMapping
-    public ResponseEntity<Appearance> createAppearance(@RequestBody Appearance appearance) {
-        if (appearance.getUnit() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        Appearance savedAppearance = appearanceRepository.save(appearance);
-        return ResponseEntity.ok(savedAppearance);
+    public ResponseEntity<String> createAppearance(@Valid @RequestBody TestsDTO dto) {
+        appearanceRepository.save(new Appearance(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

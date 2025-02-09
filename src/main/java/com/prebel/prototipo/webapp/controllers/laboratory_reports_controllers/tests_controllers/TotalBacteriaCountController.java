@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.TotalBacteriaCount;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TotalBacteriaCountRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,8 @@ public class TotalBacteriaCountController {
 
     // Crear un nuevo TotalBacteriaCount
     @PostMapping
-    public ResponseEntity<TotalBacteriaCount> createTotalBacteriaCount(@RequestBody TotalBacteriaCount totalBacteriaCount) {
-        if (totalBacteriaCount.getUnit() == null || totalBacteriaCount.getMethod() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        TotalBacteriaCount savedTotalBacteriaCount = totalBacteriaCountRepository.save(totalBacteriaCount);
-        return ResponseEntity.ok(savedTotalBacteriaCount);
+    public ResponseEntity<String> createTotalBacteriaCount(@Valid @RequestBody TestsDTO dto) {
+        totalBacteriaCountRepository.save(new TotalBacteriaCount(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

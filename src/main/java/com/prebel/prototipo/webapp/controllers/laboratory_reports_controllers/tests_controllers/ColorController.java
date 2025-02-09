@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Color;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ColorRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +28,8 @@ public class ColorController {
 
     // Crear un nuevo Color
     @PostMapping
-    public ResponseEntity<Color> createColor(@RequestBody Color color) {
-        if (color.getUnit() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        Color savedColor = colorRepository.save(color);
-        return ResponseEntity.ok(savedColor);
+    public ResponseEntity<String> createColor(@Valid @RequestBody TestsDTO dto) {
+        colorRepository.save(new Color(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

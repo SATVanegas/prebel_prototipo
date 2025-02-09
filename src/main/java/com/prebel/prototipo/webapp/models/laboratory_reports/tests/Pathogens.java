@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,16 @@ public class Pathogens {
     private String method;
     private String initialResultsDevelopmentLaboratory;
     private String initialResultsStabilityLaboratory;
-    private int time; // In weeks
+    private int time;
     private int equipment;
 
+    public Pathogens(TestsDTO dto) {
+        this.unit = dto.getUnit();
+        this.specification = dto.getSpecification();
+        this.method = dto.getMethod();
+        this.initialResultsDevelopmentLaboratory = dto.getInitialResultsDevelopmentLaboratory();
+        this.initialResultsStabilityLaboratory = dto.getInitialResultsStabilityLaboratory();
+        this.time = dto.getTime();
+        this.equipment = dto.getEquipment();
+    }
 }

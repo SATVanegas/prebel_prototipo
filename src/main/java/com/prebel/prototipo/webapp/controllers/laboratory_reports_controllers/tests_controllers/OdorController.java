@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestsDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Odor;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.OdorRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,8 @@ public class OdorController {
 
     // Crear un nuevo Odor
     @PostMapping
-    public ResponseEntity<Odor> createOdor(@RequestBody Odor odor) {
-        if (odor.getUnit() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        Odor savedOdor = odorRepository.save(odor);
-        return ResponseEntity.ok(savedOdor);
+    public ResponseEntity<String> createOdor(@Valid @RequestBody TestsDTO dto) {
+        odorRepository.save(new Odor(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

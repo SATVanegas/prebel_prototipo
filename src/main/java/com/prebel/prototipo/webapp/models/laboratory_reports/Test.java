@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,10 @@ public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id",nullable = false)
+    private Product product;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "temperature_id", referencedColumnName = "id")
@@ -74,9 +79,5 @@ public class Test {
 
     private String observations;
     private String conclusion;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 
 }

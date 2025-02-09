@@ -1,7 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.TestStorageDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +29,8 @@ public class StorageController {
 
     // Crear un nuevo Storage
     @PostMapping
-    public ResponseEntity<Storage> createStorage(@RequestBody Storage storage) {
-        if (storage.getEquipmentCode() == null || storage.getDescription() == null) {
-            return ResponseEntity.badRequest().build();  // Evita crear registros con datos incompletos
-        }
-        Storage savedStorage = storageRepository.save(storage);
-        return ResponseEntity.ok(savedStorage);
+    public ResponseEntity<String> createStorage(@Valid @RequestBody TestStorageDTO dto) {
+        storageRepository.save(new Storage(dto));
+        return ResponseEntity.ok("Test creado correctamente");
     }
 }

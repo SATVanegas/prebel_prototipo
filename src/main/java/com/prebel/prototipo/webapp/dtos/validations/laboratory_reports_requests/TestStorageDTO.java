@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.dtos.validations;
+package com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

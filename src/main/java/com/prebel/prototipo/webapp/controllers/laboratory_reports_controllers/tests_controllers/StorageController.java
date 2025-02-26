@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.TestStorageDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestStorageDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.StorageService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +13,16 @@ import java.util.Optional;
 @RequestMapping("/api/test/storage")
 public class StorageController {
 
-    private final StorageRepository storageRepository;
+    private final StorageService storageService;
 
-    public StorageController(StorageRepository storageRepository) {
-        this.storageRepository = storageRepository;
+    public StorageController(StorageService storageService) {
+        this.storageService = storageService;
     }
 
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Storage> getStorageById(@PathVariable Long id) {
-        Optional<Storage> storage = storageRepository.findById(id);
+        Optional<Storage> storage = storageService.getStorage(id);
         return storage.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -30,7 +30,7 @@ public class StorageController {
     // Crear un nuevo Storage
     @PostMapping
     public ResponseEntity<String> createStorage(@Valid @RequestBody TestStorageDTO dto) {
-        storageRepository.save(new Storage(dto));
+        storageService.createStorage(dto);
         return ResponseEntity.ok("Test creado correctamente");
     }
 }

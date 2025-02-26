@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tests")
 @Getter
@@ -22,7 +25,7 @@ public class Test {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -30,44 +33,12 @@ public class Test {
     private Temperature temperature;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "color_id", referencedColumnName = "id")
-    private Color color;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "odor_id", referencedColumnName = "id")
-    private Odor odor;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "appearance_id", referencedColumnName = "id")
-    private Appearance appearance;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ph_id", referencedColumnName = "id")
-    private pH ph;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "viscosity_id", referencedColumnName = "id")
-    private Viscosity viscosity;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specific_gravity_id", referencedColumnName = "id")
-    private SpecificGravity specificGravity;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "total_bacteria_count_id", referencedColumnName = "id")
-    private TotalBacteriaCount totalBacteriaCount;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fungi_yeast_count_id", referencedColumnName = "id")
-    private FungiYeastCount fungiYeastCount;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pathogens_id", referencedColumnName = "id")
-    private Pathogens pathogens;
-
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "storage_id", referencedColumnName = "id")
     private Storage storage;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "test_id") // Clave foránea en Condition
+    private List<Condition> conditions = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_organoleptic_tests_id")
@@ -79,5 +50,4 @@ public class Test {
 
     private String observations;
     private String conclusion;
-
 }

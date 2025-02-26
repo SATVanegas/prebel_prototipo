@@ -1,8 +1,8 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.TestTemperatureDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestTemperatureDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TemperatureRepository;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TemperatureService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +13,24 @@ import java.util.Optional;
 @RequestMapping("/api/test/temperature")
 public class TemperatureController {
 
-    private final TemperatureRepository temperatureRepository;
+    private final TemperatureService temperatureService;
 
-    public TemperatureController(TemperatureRepository temperatureRepository) {
-        this.temperatureRepository = temperatureRepository;
+    public TemperatureController(TemperatureService temperatureService) {
+        this.temperatureService = temperatureService;
     }
 
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Temperature> getTemperatureById(@PathVariable Long id) {
-        Optional<Temperature> temperature = temperatureRepository.findById(id);
+        Optional<Temperature> temperature = temperatureService.getTemperature(id);
         return temperature.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo Temperature
+    // Crear una nueva Temperature
     @PostMapping
-    public ResponseEntity<String> createTemperature(@Valid @RequestBody TestTemperatureDTO dto) {
-        temperatureRepository.save(new Temperature(dto));
+    public ResponseEntity<String> temperatureStorage(@Valid @RequestBody TestTemperatureDTO dto) {
+        temperatureService.createTemperature(dto);
         return ResponseEntity.ok("Test creado correctamente");
     }
 }

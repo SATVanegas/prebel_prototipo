@@ -1,9 +1,8 @@
-package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
+package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.TestDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Test;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.TestRepository;
-import com.prebel.prototipo.webapp.services.TestService;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +13,17 @@ import java.util.Optional;
 @RequestMapping("/api/test")
 public class TestController {
 
-    private final TestRepository testRepository;
     private final TestService testService;
 
-    public TestController(TestRepository testRepository, TestService testService) {
-        this.testRepository = testRepository;
+    public TestController(TestService testService) {
+
         this.testService = testService;
     }
 
-    // Buscar un Test por ID
+    // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Test> getTestById(@PathVariable Long id) {
-        Optional<Test> test = testRepository.findById(id);
+        Optional<Test> test = testService.getTest(id);
         return test.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

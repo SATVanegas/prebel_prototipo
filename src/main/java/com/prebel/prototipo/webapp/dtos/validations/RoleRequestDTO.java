@@ -1,5 +1,6 @@
-package com.prebel.prototipo.webapp.dtos;
+package com.prebel.prototipo.webapp.dtos.validations;
 
+import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import lombok.Getter;
 import lombok.Setter;
 

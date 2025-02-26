@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestConditionDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.ConditionService;
 import jakarta.validation.Valid;

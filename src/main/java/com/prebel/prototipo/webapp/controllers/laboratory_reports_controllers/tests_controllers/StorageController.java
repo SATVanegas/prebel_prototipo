@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestStorageDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestStorageDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.StorageService;
 import jakarta.validation.Valid;

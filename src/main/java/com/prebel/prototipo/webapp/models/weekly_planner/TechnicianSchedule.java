@@ -39,13 +39,4 @@ public class TechnicianSchedule {
     @JoinColumn(name = "weekly_calendar_id")
     private WeeklyCalendar weekly_calendar;
 
-    public void setDayFromString(String dayName) {
-        for (DayWeek d : DayWeek.values()) {
-            if (d.toString().equalsIgnoreCase(dayName)) {
-                this.day = d;
-                return;
-            }
-        }
-        throw new IllegalArgumentException("Nombre de día inválido: " + dayName);
-    }
 }

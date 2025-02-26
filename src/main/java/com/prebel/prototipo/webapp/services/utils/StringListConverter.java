@@ -1,9 +1,7 @@
-package com.prebel.prototipo.webapp.services;
+package com.prebel.prototipo.webapp.services.utils;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import java.util.Arrays;
-import java.util.List;
 
 @Converter
 public class StringListConverter implements AttributeConverter<String[], String> {

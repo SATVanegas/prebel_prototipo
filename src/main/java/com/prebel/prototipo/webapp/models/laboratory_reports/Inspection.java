@@ -2,7 +2,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 
 import java.util.Date;
 
-import com.prebel.prototipo.webapp.models.StabilitiesMatrix;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

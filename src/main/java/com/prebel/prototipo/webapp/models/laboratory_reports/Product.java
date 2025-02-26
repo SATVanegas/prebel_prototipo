@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import java.util.Date;
 import java.util.List;
 
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

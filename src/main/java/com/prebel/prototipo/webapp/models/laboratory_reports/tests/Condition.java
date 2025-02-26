@@ -1,8 +1,7 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.TestConditionDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
-import com.prebel.prototipo.webapp.models.laboratory_reports.Test;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

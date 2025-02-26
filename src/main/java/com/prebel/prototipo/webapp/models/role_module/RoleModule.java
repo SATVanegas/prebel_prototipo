@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.role_module;
 
-import com.prebel.prototipo.webapp.services.StringListConverter;
+import com.prebel.prototipo.webapp.services.utils.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,9 @@
-package com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests;
+package com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request;
 
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

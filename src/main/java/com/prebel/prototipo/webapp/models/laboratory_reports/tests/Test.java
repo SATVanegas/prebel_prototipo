@@ -1,9 +1,8 @@
-package com.prebel.prototipo.webapp.models.laboratory_reports;
+package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
+import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

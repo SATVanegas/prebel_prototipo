@@ -34,6 +34,4 @@ public class TestConditionDTO {
     private String specification;
     private String initialResultsDevelopmentLaboratory;
     private String initialResultsStabilityLaboratory;
-
-    private Long testId;
 }

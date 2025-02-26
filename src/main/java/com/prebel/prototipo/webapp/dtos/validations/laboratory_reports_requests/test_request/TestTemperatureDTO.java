@@ -22,6 +22,4 @@ public class TestTemperatureDTO {
 
     @NotNull(message = "El equipo (equipment) es obligatorio")
     private int equipment;
-
-    private Long testId;
 }

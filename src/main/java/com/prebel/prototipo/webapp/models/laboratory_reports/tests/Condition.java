@@ -32,11 +32,7 @@ public class Condition {
     private int time;
     private int equipment;
 
-    @ManyToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
-
-    public Condition(@Valid TestConditionDTO dto, Test test) {
+    public Condition(@Valid TestConditionDTO dto) {
         this.type = dto.getType();
         this.unit = dto.getUnit();
         this.specification = dto.getSpecification();
@@ -45,7 +41,6 @@ public class Condition {
         this.initialResultsStabilityLaboratory = dto.getInitialResultsStabilityLaboratory();
         this.time = dto.getTime();
         this.equipment = dto.getEquipment();
-        this.test = test;
     }
 
 }

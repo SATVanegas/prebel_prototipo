@@ -4,7 +4,6 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -18,11 +17,8 @@ import java.util.Optional;
 public class ConditionService {
 
     private final ConditionRepository conditionRepository;
-    private final TestService testService;
-
-    public ConditionService(ConditionRepository conditionRepository, TestService testService) {
+    public ConditionService(ConditionRepository conditionRepository) {
         this.conditionRepository = conditionRepository;
-        this.testService = testService;
     }
 
     public Optional<Condition> getConditionById(Long id) {
@@ -31,10 +27,7 @@ public class ConditionService {
     }
 
     public void createCondition(@Valid TestConditionDTO dto) {
-        Test test = testService.getTestById(dto.getTestId())
-                .orElseThrow(() -> new EntityNotFoundException("El test con ID " + dto.getTestId() + " no existe"));
-
-        Condition condition = new Condition(dto, test);
+        Condition condition = new Condition(dto);
         conditionRepository.save(condition);
     }
 

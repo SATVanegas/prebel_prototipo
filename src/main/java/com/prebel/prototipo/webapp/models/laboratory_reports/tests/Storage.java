@@ -24,15 +24,10 @@ public class Storage {
     private String equipmentCode;
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
-
-    public Storage(TestStorageDTO dto, Test test) {
+    public Storage(TestStorageDTO dto) {
         this.maxTemperature = dto.getMaxTemperature();
         this.minTemperature = dto.getMinTemperature();
         this.equipmentCode = dto.getEquipmentCode();
         this.description = dto.getDescription();
-        this.test = test;
     }
 }

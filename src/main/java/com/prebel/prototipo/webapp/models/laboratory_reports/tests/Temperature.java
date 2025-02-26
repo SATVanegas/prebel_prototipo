@@ -23,14 +23,9 @@ public class Temperature {
     private int time;
     private int equipment;
 
-    @OneToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
-
-    public Temperature(TestTemperatureDTO dto, Test test) {
+    public Temperature(TestTemperatureDTO dto) {
         this.unit = dto.getUnit();
         this.time = dto.getTime();
         this.equipment = dto.getEquipment();
-        this.test = test;
     }
 }

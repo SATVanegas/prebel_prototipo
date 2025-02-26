@@ -19,4 +19,6 @@ public class TestStorageDTO {
     @NotNull(message = "El codigo del equipo es obligatorio")
     private String equipmentCode;
     private String description;
+
+    private Long testId;
 }

@@ -3,9 +3,11 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import java.util.Date;
 import java.util.List;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,4 +71,32 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Test> tests;
 
+    public Product(@Valid ProductDTO dto, User customer, User responsibleChemist,
+                   User responsibleEngineer, User responsibleAnalyst, User technicianInCharge) {
+        this.productDescription = dto.getProductDescription();
+        this.reference = dto.getReference();
+        this.batch = dto.getBatch();
+        this.packagingType = dto.getPackagingType();
+        this.packagingMaterial = dto.getPackagingMaterial();
+        this.containerColor = dto.getContainerColor();
+        this.lidMaterial = dto.getLidMaterial();
+        this.lidColor = dto.getLidColor();
+        this.formulaNumber = dto.getFormulaNumber();
+        this.projectCode = dto.getProjectCode();
+        this.projectName = dto.getProjectName();
+        this.customer = customer;
+        this.brand = dto.getBrand();
+        this.studyType = dto.getStudyType();
+        this.consecutive = dto.getConsecutive();
+        this.justification = dto.getJustification();
+        this.qualification = dto.getQualification();
+        this.establishedValidity = dto.getEstablishedValidity();
+        this.responsibleChemist = responsibleChemist;
+        this.responsibleEngineer = responsibleEngineer;
+        this.responsibleAnalyst = responsibleAnalyst;
+        this.technicianInCharge = technicianInCharge;
+        this.studyDuration = dto.getStudyDuration();
+        this.startDate = dto.getStartDate();
+        this.finishDate = dto.getFinishDate();
+    }
 }

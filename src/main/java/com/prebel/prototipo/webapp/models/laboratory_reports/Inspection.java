@@ -2,8 +2,10 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 
 import java.util.Date;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,20 @@ public class Inspection {
     @JoinColumn(name = "test_id")
     private Test test;
 
+    public Inspection(@Valid InspectionDTO dto, StabilitiesMatrix stabilitiesMatrix, Test test) {
+        this.expectedDate = dto.getExpectedDate();
+        this.realDate = dto.getRealDate();
+        this.responseTime = dto.getResponseTime();
+        this.aerosolStove = dto.getAerosolStove();
+        this.inOut = dto.getInOut();
+        this.stove = dto.getStove();
+        this.hrStove = dto.getHrStove();
+        this.environment = dto.getEnvironment();
+        this.fridge = dto.getFridge();
+        this.photolysis = dto.getPhotolysis();
+        this.stabilitiesMatrix = stabilitiesMatrix;
+        this.test = test;
+    }
 }
 
 

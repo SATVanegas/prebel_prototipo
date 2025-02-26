@@ -20,7 +20,7 @@ public class ProductController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProduct(id);
+        Optional<Product> product = productService.getProductById(id);
         return product.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

@@ -15,8 +15,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class InspectionDTO {
 
-    private Long id;
-
     @NotNull(message = "La fecha esperada (expectedDate) es obligatoria")
     private Date expectedDate;
 

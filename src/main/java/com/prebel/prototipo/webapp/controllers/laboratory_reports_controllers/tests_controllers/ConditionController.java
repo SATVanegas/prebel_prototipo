@@ -22,7 +22,7 @@ public class ConditionController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Condition> getConditionById(@PathVariable Long id) {
-        Optional<Condition> condition = conditionService.getCondition(id);
+        Optional<Condition> condition = conditionService.getConditionById(id);
         return condition.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

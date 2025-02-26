@@ -20,7 +20,7 @@ public class TestController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Test> getTestById(@PathVariable Long id) {
-        Optional<Test> test = testService.getTest(id);
+        Optional<Test> test = testService.getTestById(id);
         return test.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

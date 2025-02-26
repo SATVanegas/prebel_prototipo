@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
@@ -36,7 +37,7 @@ public class Test {
     private Storage storage;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "test_id") // Clave foránea en Condition
+    @JoinColumn(name = "test_id")
     private List<Condition> conditions = new ArrayList<>();
 
     @ManyToOne
@@ -49,4 +50,16 @@ public class Test {
 
     private String observations;
     private String conclusion;
+
+    public Test(TestDTO dto,List<Condition> conditions, Product product, Temperature temperature, Storage storage,
+                User userOrganolepticTests, User userPhysicochemicalTests) {
+        this.conditions = conditions;
+        this.product = product;
+        this.temperature = temperature;
+        this.storage = storage;
+        this.userOrganolepticTests = userOrganolepticTests;
+        this.userPhysicochemicalTests = userPhysicochemicalTests;
+        this.observations = dto.getObservations();
+        this.conclusion = dto.getConclusion();
+    }
 }

@@ -3,8 +3,10 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import java.util.Date;
 import java.util.List;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -77,4 +79,42 @@ public class StabilitiesMatrix {
     @JoinColumn(name = "engineer_id", nullable = false)
     private User engineer;
 
+    public StabilitiesMatrix(@Valid StabilitiesMatrixDTO dto, Product product, User customer, User chemical, User engineer) {
+        this.projectCode = dto.getProjectCode();
+        this.formulaCode = dto.getFormulaCode();
+        this.ptReference = dto.getPtReference();
+        this.bulkReference = dto.getBulkReference();
+        this.product = product;
+        this.studyDescription = dto.getStudyDescription();
+        this.locationEnvironment = dto.getLocationEnvironment();
+        this.locationOven = dto.getLocationOven();
+        this.locationFridge = dto.getLocationFridge();
+        this.locationPhotolysisChamber = dto.getLocationPhotolysisChamber();
+        this.batch = dto.getBatch();
+        this.container = dto.getContainer();
+        this.dosage = dto.getDosage();
+        this.packagingMaterial = dto.getPackagingMaterial();
+        this.containerColor = dto.getContainerColor();
+        this.coverMaterial = dto.getCoverMaterial();
+        this.coverColor = dto.getCoverColor();
+        this.supplier = dto.getSupplier();
+        this.customer = customer;
+        this.category = dto.getCategory();
+        this.cosmeticForm = dto.getCosmeticForm();
+        this.studyJustification = dto.getStudyJustification();
+        this.studyType = dto.getStudyType();
+        this.deliveryDatePt = dto.getDeliveryDatePt();
+        this.dateStartFormat = dto.getDateStartFormat();
+        this.startDate = dto.getStartDate();
+        this.startMonth = dto.getStartMonth();
+        this.startYear = dto.getStartYear();
+        this.endDate = dto.getEndDate();
+        this.endMonth = dto.getEndMonth();
+        this.endYear = dto.getEndYear();
+        this.qualification = dto.getQualification();
+        this.validity = dto.getValidity();
+        this.justificationRating = dto.getJustificationRating();
+        this.chemical = chemical;
+        this.engineer = engineer;
+    }
 }

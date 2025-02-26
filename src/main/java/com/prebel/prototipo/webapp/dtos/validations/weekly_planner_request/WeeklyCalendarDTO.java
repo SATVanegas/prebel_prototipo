@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WeeklyCalendarDTO {
 
-    private Long id;
-
     @NotNull(message = "La fecha de inicio (startDate) es obligatoria")
     private LocalDateTime startDate;
 

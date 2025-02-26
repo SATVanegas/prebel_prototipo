@@ -20,7 +20,7 @@ public class InspectionController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Inspection> getInspectionById(@PathVariable Long id) {
-        Optional<Inspection> inspection = inspectionService.getInspection(id);
+        Optional<Inspection> inspection = inspectionService.getInspectionById(id);
         return inspection.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

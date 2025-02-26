@@ -21,7 +21,7 @@ public class WeeklyCalendarController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<WeeklyCalendar> getWeeklyCalendarById(@PathVariable Long id) {
-        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarService.getWeeklyCalendar(id);
+        Optional<WeeklyCalendar> weeklyCalendar = weeklyCalendarService.getWeeklyCalendarById(id);
         return weeklyCalendar.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

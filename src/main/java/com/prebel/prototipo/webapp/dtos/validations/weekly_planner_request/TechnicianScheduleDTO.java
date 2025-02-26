@@ -15,8 +15,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class TechnicianScheduleDTO {
 
-    private Long id;
-
     @NotNull(message = "La fecha (date) es obligatoria")
     private Date date;
 

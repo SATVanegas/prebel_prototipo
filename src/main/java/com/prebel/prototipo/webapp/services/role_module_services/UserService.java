@@ -19,6 +19,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
     public void updateResetCode(User user, String resetCode) {
         user.setResetCode(resetCode);
         userRepository.save(user);
@@ -29,4 +33,5 @@ public class UserService {
         user.setResetCode(null);
         userRepository.save(user);
     }
+
 }

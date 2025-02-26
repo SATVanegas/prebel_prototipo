@@ -20,7 +20,7 @@ public class TemperatureController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Temperature> getTemperatureById(@PathVariable Long id) {
-        Optional<Temperature> temperature = temperatureService.getTemperature(id);
+        Optional<Temperature> temperature = temperatureService.getTemperatureById(id);
         return temperature.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

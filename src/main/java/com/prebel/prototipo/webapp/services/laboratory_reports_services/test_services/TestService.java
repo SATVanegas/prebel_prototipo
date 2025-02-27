@@ -50,7 +50,7 @@ public class TestService {
         Temperature temperature = temperatureService.getTemperatureById(dto.getTemperatureId())
                 .orElseThrow(() -> new EntityNotFoundException("La temperatura con ID " + dto.getTemperatureId() + " no existe"));
 
-        Storage storage = storageService.getStorage(dto.getStorageId())
+        Storage storage = storageService.getStorageById(dto.getStorageId())
                 .orElseThrow(() -> new EntityNotFoundException("El almacenamiento con ID " + dto.getStorageId() + " no existe"));
 
         User userOrganolepticTests = userService.getUserById(dto.getUserOrganolepticTestsId())

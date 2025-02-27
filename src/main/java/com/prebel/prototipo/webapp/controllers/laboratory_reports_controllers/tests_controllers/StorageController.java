@@ -22,7 +22,7 @@ public class StorageController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Storage> getStorageById(@PathVariable Long id) {
-        Optional<Storage> storage = storageService.getStorage(id);
+        Optional<Storage> storage = storageService.getStorageById(id);
         return storage.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

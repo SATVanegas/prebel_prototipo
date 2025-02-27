@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.login_controllers;
 
-import com.prebel.prototipo.webapp.services.utils.LoginService;
+import com.prebel.prototipo.webapp.services.login_services.LoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

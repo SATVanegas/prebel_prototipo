@@ -17,7 +17,7 @@ public class StorageService {
         this.storageRepository = storageRepository;
     }
 
-    public Optional<Storage> getStorage(Long id) {
+    public Optional<Storage> getStorageById(Long id) {
         return storageRepository.findById(id);
     }
 

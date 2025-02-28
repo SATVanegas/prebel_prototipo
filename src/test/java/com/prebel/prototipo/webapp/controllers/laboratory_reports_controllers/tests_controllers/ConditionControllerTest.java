@@ -1,17 +1,17 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
-import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
+
 import jakarta.transaction.Transactional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +22,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.springframework.core.env.Environment;
+
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
+import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +34,8 @@ import org.springframework.core.env.Environment;
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConditionControllerTest {
+
+    private static final String BASE_URL = "/api/test/conditions";
 
     private MockMvc mockMvc;
 
@@ -62,7 +68,7 @@ public class ConditionControllerTest {
         conditionRepository.save(condition);
 
         // Ejecutar el GET y verificar la respuesta
-        mockMvc.perform(get("/api/test/conditions/" + condition.getId())
+        mockMvc.perform(get(BASE_URL +"/" +condition.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.type").value("COLOR"))
@@ -72,7 +78,7 @@ public class ConditionControllerTest {
 
     @Test
     void cuandoSeBuscaPorIdYNoExisteDebeRetornar404() throws Exception {
-        mockMvc.perform(get("/api/test/conditions/999")
+        mockMvc.perform(get(BASE_URL + "/999")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -86,7 +92,7 @@ public class ConditionControllerTest {
         dto.setEquipment(1);
         dto.setMethod("Método A");
 
-        mockMvc.perform(post("/api/test/conditions")
+        mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
@@ -96,12 +102,12 @@ public class ConditionControllerTest {
     void cuandoSeCreaConditionConDatosInvalidosDebeRetornar400() throws Exception {
         TestConditionDTO dto = new TestConditionDTO();
 
-        mockMvc.perform(post("/api/test/conditions")
+        mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").isArray())
-                .andExpect(jsonPath("$.errors.length()").value(3));
+                .andExpect(jsonPath("$.errors.length()").value(5));
     }
 
 
@@ -112,6 +118,5 @@ public class ConditionControllerTest {
         System.out.println("Usuario: " + environment.getProperty("spring.datasource.username"));
         System.out.println("Contraseña: " + environment.getProperty("spring.datasource.password"));
     }
-
 
 }

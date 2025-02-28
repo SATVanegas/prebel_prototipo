@@ -5,10 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class TestTemperatureDTO {
 
@@ -18,8 +20,8 @@ public class TestTemperatureDTO {
 
     @NotNull(message = "El tiempo (time) es obligatorio")
     @Min(value = 0, message = "El tiempo en semanas debe ser un número positivo")
-    private int time;// In weeks
+    private Integer time;// In weeks
 
     @NotNull(message = "El equipo (equipment) es obligatorio")
-    private int equipment;
+    private Integer equipment;
 }

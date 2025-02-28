@@ -1,19 +1,9 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers.tests_controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
-import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
-import com.prebel.prototipo.webapp.models.role_module.User;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TemperatureRepository;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TestRepository;
-import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +19,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.List;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TemperatureRepository;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TestRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
+import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
+import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -78,35 +79,11 @@ public class TestControllerTest {
 
     @Test
     void cuandoSeBuscaPorIdDebeRetornarTest() throws Exception {
-        // Crear y guardar las entidades relacionadas
-        Product product = new Product();
-        productRepository.save(product);
-
-        Temperature temperature = new Temperature();
-        temperatureRepository.save(temperature);
-
-        Storage storage = new Storage();
-        storageRepository.save(storage);
-
-        Condition condition1 = new Condition();
-        Condition condition2 = new Condition();
-        conditionRepository.saveAll(List.of(condition1, condition2));
-
-        User userOrganolepticTests = new User();
-        userRepository.save(userOrganolepticTests);
-
-        User userPhysicochemicalTests = new User();
-        userRepository.save(userPhysicochemicalTests);
-
-        // Crear y guardar el Test
-        com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test =
-                new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test(
-                        new TestDTO(), List.of(condition1, condition2), product, temperature, storage,
-                        userOrganolepticTests, userPhysicochemicalTests);
+        List<Object> resultado = crearTestYDto();
+        com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test = (com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test) resultado.getFirst();
 
         test = testRepository.save(test);
 
-        // Ejecutar el GET y verificar la respuesta
         mockMvc.perform(get(BASE_URL + "/" + test.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -114,13 +91,12 @@ public class TestControllerTest {
                 .andExpect(jsonPath("$.temperature").exists())
                 .andExpect(jsonPath("$.storage").exists())
                 .andExpect(jsonPath("$.conditions").isArray())
-                .andExpect(jsonPath("$.conditions.length()").value(2))  // Deben existir 2 condiciones
+                .andExpect(jsonPath("$.conditions.length()").value(9))  // Verifica que hay 9 condiciones
                 .andExpect(jsonPath("$.userOrganolepticTests").exists())
                 .andExpect(jsonPath("$.userPhysicochemicalTests").exists())
                 .andExpect(jsonPath("$.observations").value("Observación de prueba"))
                 .andExpect(jsonPath("$.conclusion").value("Conclusión de prueba"));
     }
-
 
     @Test
     void cuandoSeBuscaPorIdYNoExisteDebeRetornar404() throws Exception {
@@ -130,19 +106,11 @@ public class TestControllerTest {
 
     @Test
     void cuandoSeCreaTestDebeRetornar200() throws Exception {
-        TestDTO dto = new TestDTO();
-        dto.setPhId(1L);
-        dto.setViscosityId(2L);
-        dto.setSpecificGravityId(3L);
-        dto.setTotalBacteriaCountId(4L);
-        dto.setFungiYeastCountId(5L);
-        dto.setPathogensId(6L);
-        dto.setStorageId(7L);
-        dto.setUserOrganolepticTestsId(8L);
-        dto.setUserPhysicochemicalTestsId(9L);
-        dto.setObservations("Observación de prueba");
-        dto.setConclusion("Conclusión de prueba");
+        // Obtener el objeto Test y su DTO
+        List<Object> testData = crearTestYDto();
+        TestDTO dto = (TestDTO) testData.get(1);
 
+        // Ejecutar la solicitud POST
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
@@ -161,4 +129,62 @@ public class TestControllerTest {
                 .andExpect(jsonPath("$.errors").isArray())
                 .andExpect(jsonPath("$.errors.length()").value(14));
     }
+
+    private List<Object> crearTestYDto() {
+        // Crear y guardar entidades relacionadas
+        Product product = productRepository.save(new Product());
+        Temperature temperature = temperatureRepository.save(new Temperature());
+        Storage storage = storageRepository.save(new Storage());
+        User userOrganolepticTests = userRepository.save(new User());
+        User userPhysicochemicalTests = userRepository.save(new User());
+
+        // Crear y guardar condiciones con un método auxiliar
+        List<Condition> conditions = (List<Condition>) conditionRepository.saveAll(List.of(
+                crearCondition(EnumTest.COLOR),
+                crearCondition(EnumTest.ODOR),
+                crearCondition(EnumTest.APPEARANCE),
+                crearCondition(EnumTest.PH),
+                crearCondition(EnumTest.VISCOSITY),
+                crearCondition(EnumTest.SPECIFIC_GRAVITY),
+                crearCondition(EnumTest.TOTAL_BACTERIA_COUNT),
+                crearCondition(EnumTest.FUNGAL_YEAST_COUNT),
+                crearCondition(EnumTest.PATHOGENS)
+        ));
+
+        // Asignar IDs de condiciones al DTO
+        TestDTO dto = new TestDTO();
+        dto.setProductId(product.getId());
+        dto.setTemperatureId(temperature.getId());
+        dto.setStorageId(storage.getId());
+        dto.setUserOrganolepticTestsId(userOrganolepticTests.getId());
+        dto.setUserPhysicochemicalTestsId(userPhysicochemicalTests.getId());
+
+        dto.setColorId(conditions.get(0).getId());
+        dto.setOdorId(conditions.get(1).getId());
+        dto.setAppearanceId(conditions.get(2).getId());
+        dto.setPhId(conditions.get(3).getId());
+        dto.setViscosityId(conditions.get(4).getId());
+        dto.setSpecificGravityId(conditions.get(5).getId());
+        dto.setTotalBacteriaCountId(conditions.get(6).getId());
+        dto.setFungiYeastCountId(conditions.get(7).getId());
+        dto.setPathogensId(conditions.get(8).getId());
+
+        dto.setObservations("Observación de prueba");
+        dto.setConclusion("Conclusión de prueba");
+
+        // Crear el objeto Test a partir del DTO y las entidades
+        com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test =
+                new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test(
+                        dto, conditions, product, temperature, storage, userOrganolepticTests, userPhysicochemicalTests);
+
+        return List.of(test, dto);
+    }
+
+    private Condition crearCondition(EnumTest tipo) {
+        Condition condition = new Condition();
+        condition.setType(tipo);
+        return condition;
+    }
+
+
 }

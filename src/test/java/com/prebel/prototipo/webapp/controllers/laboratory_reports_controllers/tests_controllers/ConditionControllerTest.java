@@ -28,6 +28,9 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -58,14 +61,8 @@ public class ConditionControllerTest {
 
     @Test
     void cuandoSeBuscaPorIdDebeRetornarCondition() throws Exception {
-        // Crear y guardar un Condition de prueba en la BD
-        Condition condition = new Condition();
-        condition.setType(EnumTest.COLOR);
-        condition.setUnit("Celsius");
-        condition.setTime(12);
-        condition.setEquipment(1);
-        condition.setMethod("Método A");
-        conditionRepository.save(condition);
+        List<Object> testData = crearConditionYDTODePrueba();
+        Condition condition = (Condition) testData.getFirst();
 
         // Ejecutar el GET y verificar la respuesta
         mockMvc.perform(get(BASE_URL +"/" +condition.getId())
@@ -85,12 +82,8 @@ public class ConditionControllerTest {
 
     @Test
     void cuandoSeCreaConditionDebeRetornar200() throws Exception {
-        TestConditionDTO dto = new TestConditionDTO();
-        dto.setType(EnumTest.COLOR);
-        dto.setUnit("Celsius");
-        dto.setTime(12);
-        dto.setEquipment(1);
-        dto.setMethod("Método A");
+        List<Object> testData = crearConditionYDTODePrueba();
+        TestConditionDTO dto = (TestConditionDTO) testData.get(1);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -119,4 +112,20 @@ public class ConditionControllerTest {
         System.out.println("Contraseña: " + environment.getProperty("spring.datasource.password"));
     }
 
+    private List<Object> crearConditionYDTODePrueba() {
+        // Crear DTO de prueba
+        TestConditionDTO dto = new TestConditionDTO();
+        dto.setType(EnumTest.COLOR);
+        dto.setUnit("Celsius");
+        dto.setTime(12);
+        dto.setEquipment(1);
+        dto.setMethod("Método A");
+
+        // Crear y guardar la entidad Condition
+        Condition condition = new Condition(dto);
+        condition = conditionRepository.save(condition);
+
+        return Arrays.asList(condition, dto);
+
+    }
 }

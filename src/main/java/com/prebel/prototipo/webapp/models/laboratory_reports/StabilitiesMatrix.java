@@ -30,7 +30,7 @@ public class StabilitiesMatrix {
     private String bulkReference;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     private String studyDescription;
@@ -48,7 +48,7 @@ public class StabilitiesMatrix {
     private String supplier;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")
     private User customer;
 
     private String category;
@@ -72,11 +72,11 @@ public class StabilitiesMatrix {
     private String justificationRating;
 
     @ManyToOne
-    @JoinColumn(name = "chemical_id", nullable = false)
+    @JoinColumn(name = "chemical_id")
     private User chemical;
 
     @ManyToOne
-    @JoinColumn(name = "engineer_id", nullable = false)
+    @JoinColumn(name = "engineer_id")
     private User engineer;
 
     public StabilitiesMatrix(@Valid StabilitiesMatrixDTO dto, Product product, User customer, User chemical, User engineer) {

@@ -25,7 +25,7 @@ public class Test {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @OneToOne(cascade = CascadeType.ALL)

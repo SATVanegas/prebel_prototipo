@@ -25,6 +25,9 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TemperatureRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -52,13 +55,8 @@ public class TemperatureControllerTest {
 
     @Test
     void cuandoSeBuscaPorIdDebeRetornarTemperature() throws Exception {
-        // Crear y guardar una Temperature de prueba en la BD
-        Temperature temperature = new Temperature();
-        temperature.setUnit("Celsius");
-        temperature.setTime(12);
-        temperature.setEquipment(1);
-
-        temperature = temperatureRepository.save(temperature); // Guardamos correctamente
+        List<Object> testData = crearTemperatureYDTODePrueba();
+        Temperature temperature = (Temperature) testData.getFirst();
 
         // Ejecutar el GET y verificar la respuesta
         mockMvc.perform(get(BASE_URL + "/" + temperature.getId())
@@ -77,10 +75,8 @@ public class TemperatureControllerTest {
 
     @Test
     void cuandoSeCreaTemperatureDebeRetornar200() throws Exception {
-        TestTemperatureDTO dto = new TestTemperatureDTO();
-        dto.setUnit("Celsius");
-        dto.setTime(12);
-        dto.setEquipment(1);
+        List<Object> testData = crearTemperatureYDTODePrueba();
+        TestTemperatureDTO dto = (TestTemperatureDTO) testData.get(1);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,13 +87,28 @@ public class TemperatureControllerTest {
 
     @Test
     void cuandoSeCreaTemperatureConDatosInvalidosDebeRetornar400() throws Exception {
-        TestTemperatureDTO dto = new TestTemperatureDTO(); // DTO vacío, provocará errores de validación
+        TestTemperatureDTO dto = new TestTemperatureDTO();
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").isArray())
-                .andExpect(jsonPath("$.errors.length()").value(3)); // 3 errores esperados: unit, time, equipment
+                .andExpect(jsonPath("$.errors.length()").value(3));
+    }
+
+    private List<Object> crearTemperatureYDTODePrueba() {
+        // Crear DTO de prueba
+        TestTemperatureDTO dto = new TestTemperatureDTO();
+        dto.setUnit("Celsius");
+        dto.setTime(12);
+        dto.setEquipment(1);
+
+        // Crear y guardar la entidad temperature
+        Temperature temperature = new Temperature(dto);
+        temperature = temperatureRepository.save(temperature);
+
+        return Arrays.asList(temperature, dto);
+
     }
 }

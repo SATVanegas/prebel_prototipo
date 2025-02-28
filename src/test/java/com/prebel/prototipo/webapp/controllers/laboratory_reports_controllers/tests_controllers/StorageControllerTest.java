@@ -25,6 +25,9 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -52,14 +55,8 @@ public class StorageControllerTest {
 
     @Test
     void cuandoSeBuscaPorIdDebeRetornarStorage() throws Exception {
-        // Crear y guardar un Storage de prueba en la BD
-        Storage storage = new Storage();
-        storage.setMaxTemperature(10);
-        storage.setMinTemperature(-5);
-        storage.setEquipmentCode("EQ123");
-        storage.setDescription("Test Storage");
-
-        storage = storageRepository.save(storage); // Aseguramos que se guarda correctamente
+        List<Object> testData = crearStorageYDTODePrueba();
+        Storage storage = (Storage) testData.getFirst();
 
         // Ejecutar el GET y verificar la respuesta
         mockMvc.perform(get(BASE_URL + "/" + storage.getId())
@@ -78,7 +75,8 @@ public class StorageControllerTest {
 
     @Test
     void cuandoSeCreaStorageDebeRetornar200() throws Exception {
-        TestStorageDTO dto = new TestStorageDTO(10,-5,"EQ123","Test Storage");
+        List<Object> testData = crearStorageYDTODePrueba();
+        TestStorageDTO dto = (TestStorageDTO) testData.get(1);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -97,5 +95,21 @@ public class StorageControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").isArray())
                 .andExpect(jsonPath("$.errors.length()").value(3));
+    }
+
+    private List<Object> crearStorageYDTODePrueba() {
+        // Crear DTO de prueba
+        TestStorageDTO dto = new TestStorageDTO();
+        dto.setMaxTemperature(10);
+        dto.setMinTemperature(-5);
+        dto.setEquipmentCode("EQ123");
+        dto.setDescription("Test Storage");
+
+        // Crear y guardar la entidad Storage
+        Storage storage = new Storage(dto);
+        storage = storageRepository.save(storage);
+
+        return Arrays.asList(storage, dto);
+
     }
 }

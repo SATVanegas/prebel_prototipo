@@ -47,28 +47,8 @@ public class ProductServiceTest {
     @BeforeEach
     void setUp() {
         productDTO = new ProductDTO();
-        productDTO.setCustomerId(1L);
-        productDTO.setResponsibleChemistId(2L);
-        productDTO.setResponsibleEngineerId(3L);
-        productDTO.setResponsibleAnalystId(4L);
-        productDTO.setTechnicianInChargeId(5L);
 
-        customer = new User();
-        customer.setId(1L);
-
-        responsibleChemist = new User();
-        responsibleChemist.setId(2L);
-
-        responsibleEngineer = new User();
-        responsibleEngineer.setId(3L);
-
-        responsibleAnalyst = new User();
-        responsibleAnalyst.setId(4L);
-
-        technicianInCharge = new User();
-        technicianInCharge.setId(5L);
-
-        product = new Product(productDTO, customer, responsibleChemist, responsibleEngineer, responsibleAnalyst, technicianInCharge);
+        product = new Product(productDTO);
     }
 
     @Test
@@ -78,11 +58,6 @@ public class ProductServiceTest {
         Optional<Product> result = productService.getProductById(1L);
 
         assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getCustomer().getId());
-        assertEquals(2L, result.get().getResponsibleChemist().getId());
-        assertEquals(3L, result.get().getResponsibleEngineer().getId());
-        assertEquals(4L, result.get().getResponsibleAnalyst().getId());
-        assertEquals(5L, result.get().getTechnicianInCharge().getId());
 
         verify(productRepository, times(1)).findById(1L);
     }
@@ -100,38 +75,15 @@ public class ProductServiceTest {
 
     @Test
     void createProduct_Success() {
-        when(userService.getUserById(1L)).thenReturn(Optional.of(customer));
-        when(userService.getUserById(2L)).thenReturn(Optional.of(responsibleChemist));
-        when(userService.getUserById(3L)).thenReturn(Optional.of(responsibleEngineer));
-        when(userService.getUserById(4L)).thenReturn(Optional.of(responsibleAnalyst));
-        when(userService.getUserById(5L)).thenReturn(Optional.of(technicianInCharge));
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         productService.createProduct(productDTO);
 
-        verify(userService, times(1)).getUserById(1L);
-        verify(userService, times(1)).getUserById(2L);
-        verify(userService, times(1)).getUserById(3L);
-        verify(userService, times(1)).getUserById(4L);
-        verify(userService, times(1)).getUserById(5L);
         verify(productRepository, times(1)).save(any(Product.class));
     }
 
     @Test
     void createProduct_UserNotFound() {
-        when(userService.getUserById(1L)).thenReturn(Optional.empty());
-
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            productService.createProduct(productDTO);
-        });
-
-        assertEquals("El cliente con ID 1 no existe", exception.getMessage());
-
-        verify(userService, times(1)).getUserById(1L);
-        verify(userService, never()).getUserById(2L);
-        verify(userService, never()).getUserById(3L);
-        verify(userService, never()).getUserById(4L);
-        verify(userService, never()).getUserById(5L);
         verify(productRepository, never()).save(any(Product.class));
     }
 

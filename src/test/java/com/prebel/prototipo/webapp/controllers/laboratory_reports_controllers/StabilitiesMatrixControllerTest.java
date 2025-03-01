@@ -73,10 +73,7 @@ public class StabilitiesMatrixControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.projectCode").value(stabilitiesMatrix.getProjectCode()))
                 .andExpect(jsonPath("$.formulaCode").value(stabilitiesMatrix.getFormulaCode()))
-                .andExpect(jsonPath("$.product.id").value(stabilitiesMatrix.getProduct().getId()))
-                .andExpect(jsonPath("$.customer.id").value(stabilitiesMatrix.getCustomer().getId()))
-                .andExpect(jsonPath("$.chemical.id").value(stabilitiesMatrix.getChemical().getId()))
-                .andExpect(jsonPath("$.engineer.id").value(stabilitiesMatrix.getEngineer().getId()));
+                .andExpect(jsonPath("$.product.id").value(stabilitiesMatrix.getProduct().getId()));
     }
 
     @Test
@@ -111,22 +108,16 @@ public class StabilitiesMatrixControllerTest {
 
     private List<Object> crearStabilitiesMatrixYDTODePrueba() {
         // Crear y guardar objetos relacionados
-        User customer = userRepository.save(new User());
-        User chemical = userRepository.save(new User());
-        User engineer = userRepository.save(new User());
         Product product = productRepository.save(new Product());
 
         // Crear DTO de prueba
         StabilitiesMatrixDTO dto = new StabilitiesMatrixDTO();
-        dto.setCustomerId(customer.getId());
-        dto.setChemicalId(chemical.getId());
-        dto.setEngineerId(engineer.getId());
         dto.setProductId(product.getId());
         dto.setProjectCode("PROJ123");
         dto.setFormulaCode("FORM001");
 
         // Crear y guardar la entidad StabilitiesMatrix
-        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product, customer, chemical, engineer);
+        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
         stabilitiesMatrix = stabilitiesMatrixRepository.save(stabilitiesMatrix);
 
         return Arrays.asList(stabilitiesMatrix, dto);

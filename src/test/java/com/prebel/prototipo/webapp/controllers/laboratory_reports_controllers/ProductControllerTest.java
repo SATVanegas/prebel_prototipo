@@ -136,20 +136,8 @@ public class ProductControllerTest {
     }
 
     private List<Object> crearProductYDTODePrueba() {
-        // Crear y guardar objetos relacionados
-        User customer = userRepository.save(new User());
-        User chemist = userRepository.save(new User());
-        User engineer = userRepository.save(new User());
-        User analyst = userRepository.save(new User());
-        User technician = userRepository.save(new User());
-
         // Crear DTO de prueba
         ProductDTO dto = new ProductDTO();
-        dto.setCustomerId(customer.getId());
-        dto.setResponsibleChemistId(chemist.getId());
-        dto.setResponsibleEngineerId(engineer.getId());
-        dto.setResponsibleAnalystId(analyst.getId());
-        dto.setTechnicianInChargeId(technician.getId());
         dto.setReference("REF123");
         dto.setBatch("BATCH001");
         dto.setPackagingType("Caja de cartón");
@@ -160,7 +148,7 @@ public class ProductControllerTest {
         dto.setFinishDate(new Date());
 
         // Crear y guardar la entidad Product
-        Product product = new Product(dto, customer, chemist, engineer, analyst, technician);
+        Product product = new Product(dto);
         product = productRepository.save(product);
 
         return Arrays.asList(product, dto);

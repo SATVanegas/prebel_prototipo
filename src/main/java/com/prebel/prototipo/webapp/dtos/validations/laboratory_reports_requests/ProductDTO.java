@@ -42,9 +42,6 @@ public class ProductDTO {
     private String projectCode;
     private String projectName;
 
-    @NotNull(message = "El cliente es obligatorio")
-    private Long customerId;
-
     private String brand;
     private String studyType;
 
@@ -54,18 +51,6 @@ public class ProductDTO {
     private String justification;
     private String qualification;
     private String establishedValidity;
-
-    @NotNull(message = "El químico responsable es obligatorio")
-    private Long responsibleChemistId;
-
-    @NotNull(message = "El ingeniero responsable es obligatorio")
-    private Long responsibleEngineerId;
-
-    @NotNull(message = "El analista responsable es obligatorio")
-    private Long responsibleAnalystId;
-
-    @NotNull(message = "El técnico encargado es obligatorio")
-    private Long technicianInChargeId;
 
     @Min(value = 1, message = "La duración del estudio debe ser mayor a 0")
     private int studyDuration;

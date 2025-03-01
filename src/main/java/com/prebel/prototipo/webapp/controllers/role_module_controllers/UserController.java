@@ -65,4 +65,12 @@ public class UserController {
                 .toList();
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/users/by-role/{roleName}")
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable String roleName) {
+        Role role = roleRepository.findByRoleName(roleName)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        List<User> users = userRepository.findByRole(role);
+        return ResponseEntity.ok(users);
+    }
 }

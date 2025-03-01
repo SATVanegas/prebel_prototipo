@@ -74,16 +74,12 @@ public class ProductService {
         com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test1 =
                 new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test();
         test1.setId(1L);
-        test1.setObservations("Observación 1");
-        test1.setConclusion("Conclusión 1");
         Temperature temp1 = new Temperature();
         temp1.setUnit("°C");
         test1.setTemperature(temp1);
 
         com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test2 = new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test();
         test2.setId(2L);
-        test2.setObservations("Observación 2");
-        test2.setConclusion("Conclusión 2");
         Temperature temp2 = new Temperature();
         temp2.setUnit("°F");
         test2.setTemperature(temp2);

@@ -8,11 +8,7 @@ import java.util.Optional;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
-import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.StabilitiesMatrixRepository;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
-import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,9 +82,7 @@ public class StabilitiesMatrixServiceTest {
     void createStabilitiesMatrix_ProductNotFound() {
         when(productService.getProductById(1L)).thenReturn(Optional.empty());
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            stabilitiesMatrixService.createStabilitiesMatrix(stabilitiesMatrixDTO);
-        });
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> stabilitiesMatrixService.createStabilitiesMatrix(stabilitiesMatrixDTO));
 
         assertEquals("El producto con ID 1 no existe", exception.getMessage());
 

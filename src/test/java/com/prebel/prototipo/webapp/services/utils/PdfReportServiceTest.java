@@ -95,7 +95,7 @@ public class PdfReportServiceTest {
             verificarTextoEnPdf(pdfText, "INITIAL RESULTS FROM STABILITY LABORATORY");
 
             // Validar que la tabla contiene todos los `EnumTest`
-            List<EnumTest> testTypes = Arrays.asList(EnumTest.values());
+            EnumTest[] testTypes = EnumTest.values();
 
             for (com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test : product.getTests()) {
                 List<Condition> conditions = (test.getConditions() != null) ? test.getConditions() : new ArrayList<>();
@@ -122,8 +122,8 @@ public class PdfReportServiceTest {
             verificarTextoEnPdf(pdfText, "STORAGE EQUIPMENT CODE");
             verificarTextoEnPdf(pdfText, "DESCRIPTION");
 
-            if (product.getTests() != null && !product.getTests().isEmpty() && product.getTests().get(0).getStorage() != null) {
-                Storage storage = product.getTests().get(0).getStorage();
+            if (product.getTests() != null && !product.getTests().isEmpty() && product.getTests().getFirst().getStorage() != null) {
+                Storage storage = product.getTests().getFirst().getStorage();
                 verificarTextoEnPdf(pdfText, storage.getEquipmentCode());
                 verificarTextoEnPdf(pdfText, storage.getDescription());
             } else {
@@ -136,8 +136,8 @@ public class PdfReportServiceTest {
             verificarTextoEnPdf(pdfText, "TEMPERATURE / UNIT");
             verificarTextoEnPdf(pdfText, "EQUIPMENT");
 
-            if (product.getTests() != null && !product.getTests().isEmpty() && product.getTests().get(0).getTemperature() != null) {
-                Temperature temperature = product.getTests().get(0).getTemperature();
+            if (product.getTests() != null && !product.getTests().isEmpty() && product.getTests().getFirst().getTemperature() != null) {
+                Temperature temperature = product.getTests().getFirst().getTemperature();
                 verificarTextoEnPdf(pdfText, temperature.getUnit());
                 verificarTextoEnPdf(pdfText, String.valueOf(temperature.getEquipment()));
             } else {

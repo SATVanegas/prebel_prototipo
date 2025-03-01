@@ -73,10 +73,7 @@ public class StabilitiesMatrixControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.projectCode").value(stabilitiesMatrix.getProjectCode()))
                 .andExpect(jsonPath("$.formulaCode").value(stabilitiesMatrix.getFormulaCode()))
-                .andExpect(jsonPath("$.product.id").value(stabilitiesMatrix.getProduct().getId()))
-                .andExpect(jsonPath("$.customer.id").value(stabilitiesMatrix.getCustomer().getId()))
-                .andExpect(jsonPath("$.chemical.id").value(stabilitiesMatrix.getChemical().getId()))
-                .andExpect(jsonPath("$.engineer.id").value(stabilitiesMatrix.getEngineer().getId()));
+                .andExpect(jsonPath("$.product.id").value(stabilitiesMatrix.getProduct().getId()));
     }
 
     @Test
@@ -126,7 +123,7 @@ public class StabilitiesMatrixControllerTest {
         dto.setFormulaCode("FORM001");
 
         // Crear y guardar la entidad StabilitiesMatrix
-        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product, customer, chemical, engineer);
+        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
         stabilitiesMatrix = stabilitiesMatrixRepository.save(stabilitiesMatrix);
 
         return Arrays.asList(stabilitiesMatrix, dto);

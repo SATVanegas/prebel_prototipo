@@ -5,7 +5,6 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
-import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import com.prebel.prototipo.webapp.services.utils.PdfReportService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,19 +14,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductService {
-    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final UserService userService;
     private final PdfReportService pdfReportService;
 
-    public ProductService(UserRepository userRepository, ProductRepository productRepository, UserService userService, PdfReportService pdfReportService) {
-        this.userRepository = userRepository;
+    public ProductService(ProductRepository productRepository, UserService userService, PdfReportService pdfReportService) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.pdfReportService = pdfReportService;

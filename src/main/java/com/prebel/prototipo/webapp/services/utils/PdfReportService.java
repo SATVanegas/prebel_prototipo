@@ -8,7 +8,6 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
@@ -19,7 +18,6 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -92,12 +90,12 @@ public class PdfReportService {
             // --------------------------
             addProductInfo(productTable, "Container Color:", Optional.ofNullable(product.getContainerColor()).orElse("No registrado"));
             addProductInfo(productTable, "Study type:", Optional.ofNullable(product.getStudyType()).orElse("No registrado"));
-            addProductInfo(productTable, "Study duration:", Optional.ofNullable(product.getStudyDuration()).map(d -> d + " months").orElse("No registrado"));
+            addProductInfo(productTable, "Study duration:", Optional.of(product.getStudyDuration()).map(d -> d + " months").orElse("No registrado"));
             // --------------------------
             // FILA 8
             // --------------------------
             addProductInfo(productTable, "Lid Material:", Optional.ofNullable(product.getLidMaterial()).orElse("No registrado"));
-            addProductInfo(productTable, "Consecutive:", Optional.ofNullable(product.getConsecutive()).map(String::valueOf).orElse("No registrado"));
+            addProductInfo(productTable, "Consecutive:", Optional.of(product.getConsecutive()).map(String::valueOf).orElse("No registrado"));
             addProductInfo(productTable, "Start Date:", Optional.ofNullable(product.getStartDate()).map(Object::toString).orElse("No registrado"));
             // --------------------------
             // FILA 9
@@ -125,7 +123,7 @@ public class PdfReportService {
                     addTestHeader(testTable);
 
                     List<Condition> conditions = (test.getConditions() != null) ? test.getConditions() : new ArrayList<>();
-                    List<EnumTest> tests = Arrays.asList(EnumTest.values());
+                    EnumTest[] tests = EnumTest.values();
 
                     // --------------------------
                     // FILAS DE CONDITIONS
@@ -209,7 +207,7 @@ public class PdfReportService {
                 addTestHeader(testTable);
 
                 // Se agregan filas vacías con "No registrado"
-                List<EnumTest> tests = Arrays.asList(EnumTest.values());
+                EnumTest[] tests = EnumTest.values();
                 for (EnumTest testType : tests) {
                     testTable.addCell(createValueCell(testType.name()));
                     testTable.addCell(createValueCell("No registrado"));

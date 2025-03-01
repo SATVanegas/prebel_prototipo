@@ -96,18 +96,5 @@ public class StabilitiesMatrixServiceTest {
         verify(stabilitiesMatrixRepository, never()).save(any(StabilitiesMatrix.class));
     }
 
-    @Test
-    void createStabilitiesMatrix_UserrNotFound() {
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
-
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            stabilitiesMatrixService.createStabilitiesMatrix(stabilitiesMatrixDTO);
-        });
-
-        assertEquals("El cliente con ID 2 no existe", exception.getMessage());
-
-        verify(productService, times(1)).getProductById(1L);
-        verify(stabilitiesMatrixRepository, never()).save(any(StabilitiesMatrix.class));
-    }
 
 }

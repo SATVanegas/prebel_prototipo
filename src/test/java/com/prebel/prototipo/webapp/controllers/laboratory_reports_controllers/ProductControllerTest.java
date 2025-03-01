@@ -17,12 +17,15 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -104,6 +107,32 @@ public class ProductControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").isArray())
                 .andExpect(jsonPath("$.errors.length()").value(11));
+    }
+
+    @Test
+    void cuandoSeGeneraElReporteDebeRetornarPDF() throws Exception {
+        // Crear un producto de prueba
+        List<Object> testData = crearProductYDTODePrueba();
+        Product product = (Product) testData.getFirst();
+
+        // Ejecutar el GET y verificar que se genera un PDF correctamente
+        mockMvc.perform(get(BASE_URL + "/" + product.getId() + "/generate-report")
+                        .contentType(MediaType.APPLICATION_PDF))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_PDF))
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=product_report.pdf"))
+                .andExpect(result -> {
+                    byte[] content = result.getResponse().getContentAsByteArray();
+                    assertNotNull(content);
+                    assertTrue(content.length > 0, "El PDF no debe estar vacío");
+                });
+    }
+
+    @Test
+    void cuandoSeGeneraReporteYProductoNoExisteDebeRetornar404() throws Exception {
+        mockMvc.perform(get(BASE_URL + "/999/report")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private List<Object> crearProductYDTODePrueba() {

@@ -4,6 +4,8 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +32,14 @@ public class ProductController {
     public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDTO dto) {
         productService.createProduct(dto);
         return ResponseEntity.ok("Product creado correctamente");
+    }
+
+    @GetMapping("/{id}/generate-report")
+    public ResponseEntity<byte[]> generateProductReport(@PathVariable Long id) {
+        byte[] pdf = productService.generateReport(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=product_report.pdf")
+                .body(pdf);
     }
 }

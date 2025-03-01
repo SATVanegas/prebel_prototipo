@@ -6,6 +6,8 @@ import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +33,13 @@ public class WeeklyCalendarController {
     public ResponseEntity<String> createWeeklyCalendar(@Valid @RequestBody WeeklyCalendarDTO dto) {
         weeklyCalendarService.createWeeklyCalendar(dto);
         return ResponseEntity.ok("Test creado correctamente");
+    }
+
+    // Añadir al WeeklyCalendarController.java
+    @GetMapping
+    public ResponseEntity<List<WeeklyCalendar>> getAllWeeklyCalendars() {
+        List<WeeklyCalendar> calendars = weeklyCalendarService.getAllWeeklyCalendars();
+        return ResponseEntity.ok(calendars);
     }
 
 }

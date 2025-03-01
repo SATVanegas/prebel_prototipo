@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +55,10 @@ public class ProductService {
 
         Product product = new Product(dto, customer, responsibleChemist, responsibleEngineer, responsibleAnalyst, technicianInCharge);
         productRepository.save(product);
+    }
+
+    public List<Product> getAllProducts() {
+        return (List<Product>) productRepository.findAll();
     }
 
     public byte[] generateReport(Long productId) {

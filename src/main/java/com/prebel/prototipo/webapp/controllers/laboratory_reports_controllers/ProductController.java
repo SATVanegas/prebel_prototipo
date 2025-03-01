@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
@@ -39,6 +40,14 @@ public class ProductController {
     public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDTO dto) {
         productService.createProduct(dto);
         return ResponseEntity.ok("Product creado correctamente");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetProductDTO>> getAllProducts() {
+        List<GetProductDTO> products = productService.getAllProducts().stream()
+                .map(product -> new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand()))
+                .toList();
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}/generate-report")

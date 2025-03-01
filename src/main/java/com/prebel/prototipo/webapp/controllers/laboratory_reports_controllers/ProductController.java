@@ -1,6 +1,7 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,5 +43,13 @@ public class ProductController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=product_report.pdf")
                 .body(pdf);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GetProductDTO>> getAllProducts() {
+        List<GetProductDTO> products = productService.getAllProducts().stream()
+                .map(product -> new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand()))
+                .toList();
+        return ResponseEntity.ok(products);
     }
 }

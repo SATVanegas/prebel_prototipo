@@ -46,11 +46,6 @@ public class StabilitiesMatrix {
     private String coverMaterial;
     private String coverColor;
     private String supplier;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
-
     private String category;
     private String cosmeticForm;
     private String studyJustification;
@@ -71,15 +66,7 @@ public class StabilitiesMatrix {
     private Integer validity;
     private String justificationRating;
 
-    @ManyToOne
-    @JoinColumn(name = "chemical_id")
-    private User chemical;
-
-    @ManyToOne
-    @JoinColumn(name = "engineer_id")
-    private User engineer;
-
-    public StabilitiesMatrix(@Valid StabilitiesMatrixDTO dto, Product product, User customer, User chemical, User engineer) {
+    public StabilitiesMatrix(@Valid StabilitiesMatrixDTO dto, Product product) {
         this.projectCode = dto.getProjectCode();
         this.formulaCode = dto.getFormulaCode();
         this.ptReference = dto.getPtReference();
@@ -98,7 +85,6 @@ public class StabilitiesMatrix {
         this.coverMaterial = dto.getCoverMaterial();
         this.coverColor = dto.getCoverColor();
         this.supplier = dto.getSupplier();
-        this.customer = customer;
         this.category = dto.getCategory();
         this.cosmeticForm = dto.getCosmeticForm();
         this.studyJustification = dto.getStudyJustification();
@@ -114,7 +100,5 @@ public class StabilitiesMatrix {
         this.qualification = dto.getQualification();
         this.validity = dto.getValidity();
         this.justificationRating = dto.getJustificationRating();
-        this.chemical = chemical;
-        this.engineer = engineer;
     }
 }

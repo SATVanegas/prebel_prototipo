@@ -17,12 +17,10 @@ public class StabilitiesMatrixService {
 
     private final StabilitiesMatrixRepository stabilitiesMatrixRepository;
     private final ProductService productService;
-    private final UserService userService;
 
-    public StabilitiesMatrixService(StabilitiesMatrixRepository stabilitiesMatrixRepository, ProductService productService, UserService userService) {
+    public StabilitiesMatrixService(StabilitiesMatrixRepository stabilitiesMatrixRepository, ProductService productService) {
         this.stabilitiesMatrixRepository = stabilitiesMatrixRepository;
         this.productService = productService;
-        this.userService = userService;
     }
 
     public Optional<StabilitiesMatrix> getStabilitiesMatrixById(Long id) {
@@ -33,16 +31,7 @@ public class StabilitiesMatrixService {
         Product product = productService.getProductById(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + dto.getProductId() + " no existe"));
 
-        User customer = userService.getUserById(dto.getCustomerId())
-                .orElseThrow(() -> new EntityNotFoundException("El cliente con ID " + dto.getCustomerId() + " no existe"));
-
-        User chemical = userService.getUserById(dto.getChemicalId())
-                .orElseThrow(() -> new EntityNotFoundException("El químico con ID " + dto.getChemicalId() + " no existe"));
-
-        User engineer = userService.getUserById(dto.getEngineerId())
-                .orElseThrow(() -> new EntityNotFoundException("El ingeniero con ID " + dto.getEngineerId() + " no existe"));
-
-        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product, customer, chemical, engineer);
+        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
         stabilitiesMatrixRepository.save(stabilitiesMatrix);
     }
 }

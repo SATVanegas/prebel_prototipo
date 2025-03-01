@@ -31,5 +31,12 @@ public class InspectionController {
         inspectionService.createInspection(dto);
         return ResponseEntity.ok("Inspection creada correctamente");
     }
+
+    @GetMapping("/last")
+    public ResponseEntity<?> getLastInspection() {
+        Optional<Inspection> lastInspection = inspectionService.getLastInspection();
+        return lastInspection.map(ResponseEntity::ok)
+                .orElseGet(() -> (ResponseEntity<Inspection>) ResponseEntity.ok());
+    }
 }
 

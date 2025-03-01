@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email")
-public class EmailController {
+public class HTMLEmailController {
 
     private final HtmlEmailService htmlEmailService;
 
-    public EmailController(HtmlEmailService htmlEmailService) {
+    public HTMLEmailController(HtmlEmailService htmlEmailService) {
         this.htmlEmailService = htmlEmailService;
     }
 

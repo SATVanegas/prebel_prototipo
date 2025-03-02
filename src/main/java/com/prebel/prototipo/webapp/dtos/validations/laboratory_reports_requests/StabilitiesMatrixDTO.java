@@ -57,9 +57,6 @@ public class StabilitiesMatrixDTO {
     private String coverColor;
     private String supplier;
 
-    @NotNull(message = "El ID del cliente (customerId) es obligatorio")
-    private Long customerId;
-
     private String category;
     private String cosmeticForm;
     private String studyJustification;
@@ -92,9 +89,7 @@ public class StabilitiesMatrixDTO {
 
     private String justificationRating;
 
-    @NotNull(message = "El ID del químico (chemicalId) es obligatorio")
-    private Long chemicalId;
+    public StabilitiesMatrixDTO(String projectCode, String formulaCode, String ptReference, String bulkReference, Long id, String studyDescription, Integer locationEnvironment, Integer locationOven, Integer locationFridge, Integer locationPhotolysisChamber, List<Long> inspectionIds, String batch, String container, String dosage, String packagingMaterial, String containerColor, String coverMaterial, String coverColor, String supplier, String category, String cosmeticForm, String studyJustification, String studyType, Date deliveryDatePt, Date dateStartFormat, Date startDate, Integer startMonth, Integer startYear, Date endDate, Integer endMonth, Integer endYear, String qualification, Integer validity, String justificationRating, List<Long> inspectionIds1) {
+    }
 
-    @NotNull(message = "El ID del ingeniero (engineerId) es obligatorio")
-    private Long engineerId;
 }

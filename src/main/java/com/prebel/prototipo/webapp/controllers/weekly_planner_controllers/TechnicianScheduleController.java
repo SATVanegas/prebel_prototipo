@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
+import com.prebel.prototipo.webapp.dtos.updates.TechnicianScheduleUpdateDTO;
 import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.TechnicianScheduleDTO;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.services.weekly_planner_services.TechnicianScheduleService;
@@ -40,6 +41,24 @@ public class TechnicianScheduleController {
         return technicianSchedules.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(technicianSchedules);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateTechnicianSchedule(
+            @PathVariable Long id,
+            @Valid @RequestBody TechnicianScheduleUpdateDTO dto) {
+        technicianScheduleService.updateTechnicianSchedule(id, dto);
+        return ResponseEntity.ok("Technician Schedule actualizado correctamente");
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTechnicianSchedule(@PathVariable Long id) {
+        boolean deleted = technicianScheduleService.deleteTechnicianSchedule(id);
+
+        return deleted
+                ? ResponseEntity.ok("Technician Schedule eliminado correctamente")
+                : ResponseEntity.notFound().build();
     }
 
 

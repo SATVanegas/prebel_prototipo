@@ -1,25 +1,20 @@
 package com.prebel.prototipo.webapp.services.weekly_planner_services;
 
+import com.prebel.prototipo.webapp.dtos.updates.TechnicianScheduleUpdateDTO;
 import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.TechnicianScheduleDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.weekly_planner.DayWeek;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
-import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleRepository;
-import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechnicianScheduleRepository;
-import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.WeeklyCalendarRepository;
 import com.prebel.prototipo.webapp.services.role_module_services.RoleService;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import com.prebel.prototipo.webapp.services.utils.DateService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TechnicianScheduleService {
@@ -61,6 +56,44 @@ public class TechnicianScheduleService {
 
     public List<TechnicianSchedule> getAllTechnicianSchedules() {
         return (List<TechnicianSchedule>) technicianScheduleRepository.findAll();
+    }
+
+    public boolean deleteTechnicianSchedule(Long id) {
+        if (technicianScheduleRepository.existsById(id)) {
+            technicianScheduleRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public void updateTechnicianSchedule(Long id, TechnicianScheduleUpdateDTO dto) {
+        Optional<TechnicianSchedule> optionalSchedule = technicianScheduleRepository.findById(id);
+
+        if (optionalSchedule.isEmpty()) {
+            return; // Retorna vacío si no se encuentra el TechnicianSchedule
+        }
+
+        TechnicianSchedule schedule = optionalSchedule.get();
+
+        // Actualizar solo los campos que vienen en el DTO
+        if (dto.getTechnicianId() != null) {
+            User technician = userService.getUserById(dto.getTechnicianId())
+                    .orElseThrow(() -> new NoSuchElementException("Técnico no encontrado con ID: " + dto.getTechnicianId()));
+            schedule.setTechnician(technician);
+        }
+
+        if (dto.getAssignedRoleId() != null) {
+            Role assignedRole = roleService.getRoleById(dto.getAssignedRoleId())
+                    .orElseThrow(() -> new NoSuchElementException("Rol no encontrado con ID: " + dto.getAssignedRoleId()));
+            schedule.setAssignedRole(assignedRole);
+        }
+
+        if (dto.getDay() != null) {
+            DayWeek dayWeek = dateService.getDayFromString(dto.getDay())
+                    .orElseThrow(() -> new NoSuchElementException("El día de la semana se ingresó incorrectamente"));
+            schedule.setDay(dayWeek);
+        }
+
     }
 
 }

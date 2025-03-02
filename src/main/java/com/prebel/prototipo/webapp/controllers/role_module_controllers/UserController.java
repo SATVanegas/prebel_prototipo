@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.role_module_controllers;
 
+import com.prebel.prototipo.webapp.dtos.UserDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.dtos.UserRegistrationDTO;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -67,10 +69,13 @@ public class UserController {
     }
 
     @GetMapping("/users/by-role/{roleName}")
-    public ResponseEntity<List<User>> getUsersByRole(@PathVariable String roleName) {
+    public ResponseEntity<List<UserDTO>> getUsersByRole(@PathVariable String roleName) {
         Role role = roleRepository.findByRoleName(roleName)
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         List<User> users = userRepository.findByRole(role);
-        return ResponseEntity.ok(users);
+        List<UserDTO> userDTOs = users.stream()
+                .map(UserDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
     }
 }

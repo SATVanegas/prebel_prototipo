@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
-import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.TechnicianScheduleDTO;
+import com.prebel.prototipo.webapp.dtos.request.weekly_planner_request.TechnicianScheduleDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
@@ -39,7 +39,7 @@ public class TechnicianSchedule {
 
     @ManyToOne
     @JoinColumn(name = "weekly_calendar_id")
-    private WeeklyCalendar weekly_calendar;
+    private WeeklyCalendar weeklyCalendar;
 
     public TechnicianSchedule(@Valid TechnicianScheduleDTO dto, User technician, Role assignedRole, WeeklyCalendar weeklyCalendar, DayWeek dayWeek) {
         this.date = dto.getDate();
@@ -48,6 +48,6 @@ public class TechnicianSchedule {
         this.assignedRole = assignedRole;
         this.schedule = dto.getSchedule();
         this.info = dto.getInfo();
-        this.weekly_calendar = weeklyCalendar;
+        this.weeklyCalendar = weeklyCalendar;
     }
 }

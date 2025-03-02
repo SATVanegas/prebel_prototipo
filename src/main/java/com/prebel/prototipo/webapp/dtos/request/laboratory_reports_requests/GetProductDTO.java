@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests;
+package com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
 import com.prebel.prototipo.webapp.models.role_module.User;

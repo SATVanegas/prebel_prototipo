@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.dtos.validations;
+package com.prebel.prototipo.webapp.dtos.request.role_module_request;
 
 import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import lombok.Getter;

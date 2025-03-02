@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestStorageDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request.TestStorageDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

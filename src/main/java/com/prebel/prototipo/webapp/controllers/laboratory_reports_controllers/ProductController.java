@@ -1,7 +1,7 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.GetProductDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import com.prebel.prototipo.webapp.services.utils.PdfReportService;

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;

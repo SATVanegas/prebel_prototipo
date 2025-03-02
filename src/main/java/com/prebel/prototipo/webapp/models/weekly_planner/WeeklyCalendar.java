@@ -1,7 +1,7 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.WeeklyCalendarDTO;
+import com.prebel.prototipo.webapp.dtos.request.weekly_planner_request.WeeklyCalendarDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "weekly_calendar")
+@Table(name = "weeklyCalendar")
 @Getter
 @Setter
 @NoArgsConstructor

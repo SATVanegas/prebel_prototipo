@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request.TestConditionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;

@@ -3,8 +3,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import java.util.Date;
 import java.util.List;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
-import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.StabilitiesMatrixDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

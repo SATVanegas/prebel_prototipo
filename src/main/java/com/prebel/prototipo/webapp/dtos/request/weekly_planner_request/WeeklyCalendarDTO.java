@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request;
+package com.prebel.prototipo.webapp.dtos.request.weekly_planner_request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

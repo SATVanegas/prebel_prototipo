@@ -2,7 +2,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 
 import java.util.Date;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.InspectionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.weekly_planner_controllers;
 
-import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.WeeklyCalendarDTO;
+import com.prebel.prototipo.webapp.dtos.request.weekly_planner_request.WeeklyCalendarDTO;
 import com.prebel.prototipo.webapp.services.weekly_planner_services.WeeklyCalendarService;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import jakarta.validation.Valid;

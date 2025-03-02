@@ -1,6 +1,5 @@
-package com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request;
+package com.prebel.prototipo.webapp.dtos.request.weekly_planner_request;
 
-import com.prebel.prototipo.webapp.models.weekly_planner.DayWeek;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

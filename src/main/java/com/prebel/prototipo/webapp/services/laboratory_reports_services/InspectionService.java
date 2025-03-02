@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.InspectionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
@@ -8,8 +8,6 @@ import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

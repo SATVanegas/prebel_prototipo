@@ -30,7 +30,7 @@ import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TestRepository;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;

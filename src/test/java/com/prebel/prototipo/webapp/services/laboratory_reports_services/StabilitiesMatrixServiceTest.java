@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.StabilitiesMatrixRepository;

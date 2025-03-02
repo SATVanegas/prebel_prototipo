@@ -1,11 +1,9 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
+import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
-import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.StabilitiesMatrixRepository;
-import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request;
+package com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

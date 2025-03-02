@@ -2,6 +2,7 @@ package com.prebel.prototipo.webapp.services.role_module_services;
 
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -2,6 +2,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import jakarta.persistence.*;
@@ -36,10 +37,12 @@ public class Inspection {
 
     @ManyToOne
     @JoinColumn(name = "stabilities_matrix_id")
+    @JsonIgnore
     private StabilitiesMatrix stabilitiesMatrix;
 
     @ManyToOne
     @JoinColumn(name = "test_id")
+    @JsonIgnore
     private Test test;
 
     public Inspection(@Valid InspectionDTO dto, StabilitiesMatrix stabilitiesMatrix, Test test) {

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,5 +39,14 @@ public class InspectionController {
         return lastInspection.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.ok(null));
     }
+
+    // Endpoint para obtener inspecciones en los próximos 7 días
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<Inspection>> getUpcomingInspections() {
+        List<Inspection> upcomingInspections = inspectionService.getInspectionsDueInNext7Days();
+        return ResponseEntity.ok(upcomingInspections);
+    }
+
+
 }
 

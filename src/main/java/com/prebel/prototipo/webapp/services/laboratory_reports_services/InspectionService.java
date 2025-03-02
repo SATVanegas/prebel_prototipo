@@ -12,6 +12,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +49,19 @@ public class InspectionService {
 
     public Optional<Inspection> getLastInspection() {
         return inspectionRepository.findTopByOrderByIdDesc();
+    }
+
+    public List<Inspection> getInspectionsDueInNext7Days() {
+        // Obtener la fecha actual
+        Calendar calendar = Calendar.getInstance();
+        Date startDate = calendar.getTime(); // Fecha actual
+
+        // Sumar 7 días a la fecha actual para obtener el límite superior del rango
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        Date endDate = calendar.getTime();
+
+        // Obtener las inspecciones dentro del rango de fechas (desde hoy hasta dentro de 7 días)
+        return inspectionRepository.findInspectionsByExpectedDateBetween(startDate, endDate);
     }
 
 }

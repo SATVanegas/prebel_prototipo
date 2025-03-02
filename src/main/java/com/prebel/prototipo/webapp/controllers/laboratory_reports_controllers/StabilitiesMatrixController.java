@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +31,13 @@ public class StabilitiesMatrixController {
     public ResponseEntity<String> createStabilitiesMatrix(@Valid @RequestBody StabilitiesMatrixDTO dto) {
         stabilitiesMatrixService.createStabilitiesMatrix(dto);
         return ResponseEntity.ok("Test creado correctamente");
+    }
+
+    // Endpoint para obtener inspecciones en los próximos 7 días
+    @GetMapping("/upcoming-inspections")
+    public ResponseEntity<List<StabilitiesMatrix>> getUpcomingInspections() {
+        List<StabilitiesMatrix> upcomingInspections = stabilitiesMatrixService.getInspectionsDueInNext7Days();
+        return ResponseEntity.ok(upcomingInspections);
     }
 }
 

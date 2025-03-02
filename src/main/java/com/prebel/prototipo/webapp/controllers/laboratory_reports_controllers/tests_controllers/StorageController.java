@@ -29,8 +29,8 @@ public class StorageController {
 
     // Crear un nuevo Storage
     @PostMapping
-    public ResponseEntity<String> createStorage(@Valid @RequestBody TestStorageDTO dto) {
-        storageService.createStorage(dto);
-        return ResponseEntity.ok("Test creado correctamente");
+    public ResponseEntity<Long> createStorage(@Valid @RequestBody TestStorageDTO dto) {
+        Storage createdStorage = storageService.createStorage(dto);
+        return ResponseEntity.ok(createdStorage.getId());
     }
 }

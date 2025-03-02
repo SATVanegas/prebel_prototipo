@@ -27,8 +27,8 @@ public class TemperatureController {
 
     // Crear una nueva Temperature
     @PostMapping
-    public ResponseEntity<String> temperatureStorage(@Valid @RequestBody TestTemperatureDTO dto) {
-        temperatureService.createTemperature(dto);
-        return ResponseEntity.ok("Test creado correctamente");
+    public ResponseEntity<Long> temperatureStorage(@Valid @RequestBody TestTemperatureDTO dto) {
+        Temperature createdTemperature = temperatureService.createTemperature(dto);
+        return ResponseEntity.ok(createdTemperature.getId());
     }
 }

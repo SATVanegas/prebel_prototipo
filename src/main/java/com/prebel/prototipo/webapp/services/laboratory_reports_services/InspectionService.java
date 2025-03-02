@@ -8,6 +8,8 @@ import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,5 +44,8 @@ public class InspectionService {
         inspectionRepository.save(inspection);
     }
 
+    public Optional<Inspection> getLastInspection() {
+        return inspectionRepository.findTopByOrderByIdDesc();
+    }
 
 }

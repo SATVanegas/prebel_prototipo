@@ -1,4 +1,4 @@
-package services.laboratory_reports_services;
+package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -9,8 +9,8 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
+import com.prebel.prototipo.webapp.services.utils.PdfReportService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -27,6 +29,9 @@ public class ProductServiceTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private PdfReportService pdfReportService;
 
     @InjectMocks
     private ProductService productService;
@@ -128,6 +133,43 @@ public class ProductServiceTest {
         verify(userService, never()).getUserById(4L);
         verify(userService, never()).getUserById(5L);
         verify(productRepository, never()).save(any(Product.class));
+    }
+
+    @Test
+    void generateReport_Success() {
+        // Simular un producto existente
+        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+        when(pdfReportService.createProductReport(product)).thenReturn(new byte[]{1, 2, 3}); // Simulamos un PDF en bytes
+
+        // Ejecutar el método
+        byte[] pdfBytes = productService.generateReport(1L);
+
+        // Verificar que el PDF no sea nulo ni vacío
+        assertNotNull(pdfBytes);
+        assertTrue(pdfBytes.length > 0);
+
+        // Verificar interacciones
+        verify(productRepository, times(1)).findById(1L);
+        verify(pdfReportService, times(1)).createProductReport(product);
+    }
+
+    @Test
+    void generateReport_ProductNotFound() {
+        // Simular que el producto no existe
+        when(productRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Ejecutar el método y verificar que lanza la excepción correcta
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            productService.generateReport(1L);
+        });
+
+        // Verificar el mensaje y el código de error
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        assertEquals("Producto no encontrado", exception.getReason());
+
+        // Verificar que no se llama al servicio de PDF
+        verify(productRepository, times(1)).findById(1L);
+        verify(pdfReportService, never()).createProductReport(any(Product.class));
     }
 
 }

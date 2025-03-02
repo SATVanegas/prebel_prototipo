@@ -21,9 +21,10 @@ public class TemperatureService {
         return temperatureRepository.findById(id);
     }
 
-    public void createTemperature(@Valid TestTemperatureDTO dto) {
+    public Temperature createTemperature(@Valid TestTemperatureDTO dto) {
         Temperature temperature = new Temperature(dto);
         temperatureRepository.save(temperature);
+        return temperature;
     }
 
 }

@@ -1,4 +1,4 @@
-package services.laboratory_reports_services.test_services;
+package com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;

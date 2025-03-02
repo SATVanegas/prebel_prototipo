@@ -25,7 +25,7 @@ public class Test {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -51,14 +51,11 @@ public class Test {
     private String observations;
     private String conclusion;
 
-    public Test(TestDTO dto,List<Condition> conditions, Product product, Temperature temperature, Storage storage,
-                User userOrganolepticTests, User userPhysicochemicalTests) {
+    public Test(TestDTO dto,List<Condition> conditions, Product product, Temperature temperature, Storage storage) {
         this.conditions = conditions;
         this.product = product;
         this.temperature = temperature;
         this.storage = storage;
-        this.userOrganolepticTests = userOrganolepticTests;
-        this.userPhysicochemicalTests = userPhysicochemicalTests;
         this.observations = dto.getObservations();
         this.conclusion = dto.getConclusion();
     }

@@ -6,7 +6,6 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
-import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.TestRepository;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
@@ -42,7 +41,7 @@ public class TestService {
         return testRepository.findById(id);
     }
 
-    public void createTest(@Valid TestDTO dto) {
+    public Test createTest(@Valid TestDTO dto) {
         // Validar entidades relacionadas
         Product product = productService.getProductById(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + dto.getProductId() + " no existe"));
@@ -52,21 +51,15 @@ public class TestService {
 
         Storage storage = storageService.getStorageById(dto.getStorageId())
                 .orElseThrow(() -> new EntityNotFoundException("El almacenamiento con ID " + dto.getStorageId() + " no existe"));
-
-        User userOrganolepticTests = userService.getUserById(dto.getUserOrganolepticTestsId())
-                .orElseThrow(() -> new EntityNotFoundException("El usuario de pruebas organolépticas con ID " + dto.getUserOrganolepticTestsId() + " no existe"));
-
-        User userPhysicochemicalTests = userService.getUserById(dto.getUserPhysicochemicalTestsId())
-                .orElseThrow(() -> new EntityNotFoundException("El usuario de pruebas fisicoquímicas con ID " + dto.getUserPhysicochemicalTestsId() + " no existe"));
-
         // Obtener condiciones validadas
         List<Condition> conditions = conditionService.getConditionsFromDTO(dto);
 
         // Crear Test
-        Test test = new Test(dto, conditions, product, temperature, storage, userOrganolepticTests, userPhysicochemicalTests);
+        Test test = new Test(dto, conditions, product, temperature, storage);
 
         // Guardar en base de datos
         testRepository.save(test);
+        return test;
     }
 }
 

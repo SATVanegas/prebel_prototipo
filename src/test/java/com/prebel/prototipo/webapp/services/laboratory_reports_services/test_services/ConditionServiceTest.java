@@ -1,16 +1,11 @@
-package services.laboratory_reports_services.test_services;
+package com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
 import java.util.Optional;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
-import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.ConditionService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import jakarta.persistence.EntityNotFoundException;
+
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestConditionDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
+import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
+import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Condition;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.ConditionRepository;
+
 
 @ExtendWith(MockitoExtension.class)
 class ConditionServiceTest {
@@ -36,6 +38,11 @@ class ConditionServiceTest {
     @BeforeEach
     void setUp() {
         testConditionDTO = new TestConditionDTO();
+        testConditionDTO.setType(EnumTest.COLOR);
+        testConditionDTO.setUnit("mg/L");
+        testConditionDTO.setTime(5);
+        testConditionDTO.setEquipment(1);
+        testConditionDTO.setMethod("Método de prueba");
 
         condition = new Condition();
         condition.setId(1L);
@@ -88,9 +95,7 @@ class ConditionServiceTest {
     void testGetConditionsFromDTO_ConditionNotFound() {
         when(conditionRepository.findById(1L)).thenReturn(Optional.empty());
 
-        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> {
-            conditionService.getConditionsFromDTO(testDTO);
-        });
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> conditionService.getConditionsFromDTO(testDTO));
 
         assertTrue(thrown.getMessage().contains("La condición con ID 1 no existe"));
         verify(conditionRepository, times(1)).findById(1L);
@@ -101,9 +106,7 @@ class ConditionServiceTest {
         condition.setType(EnumTest.ODOR);
         when(conditionRepository.findById(1L)).thenReturn(Optional.of(condition));
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-            conditionService.getConditionsFromDTO(testDTO);
-        });
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> conditionService.getConditionsFromDTO(testDTO));
 
         assertTrue(thrown.getMessage().contains("La condición con ID 1 no corresponde al tipo esperado"));
         verify(conditionRepository, times(1)).findById(1L);

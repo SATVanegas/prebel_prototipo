@@ -26,9 +26,10 @@ public class ConditionService {
         return conditionRepository.findById(id);
     }
 
-    public void createCondition(@Valid TestConditionDTO dto) {
+    public Condition createCondition(@Valid TestConditionDTO dto) {
         Condition condition = new Condition(dto);
         conditionRepository.save(condition);
+        return condition;
     }
 
     public List<Condition> getConditionsFromDTO(TestDTO dto) {
@@ -56,7 +57,7 @@ public class ConditionService {
             conditions.add(getValidCondition(dto.getTotalBacteriaCountId(), EnumTest.TOTAL_BACTERIA_COUNT));
         }
         if (dto.getFungiYeastCountId() != null) {
-            conditions.add(getValidCondition(dto.getFungiYeastCountId(), EnumTest.FUNGAL_YEAST_COUNT));
+            conditions.add(getValidCondition(dto.getFungiYeastCountId(), EnumTest.FUNGI_YEAST_COUNT));
         }
         if (dto.getPathogensId() != null) {
             conditions.add(getValidCondition(dto.getPathogensId(), EnumTest.PATHOGENS));

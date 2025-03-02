@@ -23,10 +23,10 @@ public class TestConditionDTO {
 
     @NotNull(message = "El tiempo (time) es obligatorio")
     @Min(value = 0, message = "El tiempo en semanas debe ser un número positivo")
-    private int time; // In weeks
+    private Integer time; // In weeks
 
     @NotNull(message = "El equipo (equipment) es obligatorio")
-    private int equipment;
+    private Integer equipment;
 
     @NotNull(message = "El método (method) es obligatorio")
     private String method;

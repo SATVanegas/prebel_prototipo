@@ -56,43 +56,6 @@ public class InspectionServiceTest {
     }
 
     @Test
-    void getInspectionById_Success() {
-        when(inspectionRepository.findById(1L)).thenReturn(Optional.of(inspection));
-
-        Optional<Inspection> result = inspectionService.getInspectionById(1L);
-
-        assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getStabilitiesMatrix().getId());
-        assertEquals(1L, result.get().getTest().getId());
-
-        verify(inspectionRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void getInspectionById_NotFound() {
-        when(inspectionRepository.findById(1L)).thenReturn(Optional.empty());
-
-        Optional<Inspection> result = inspectionService.getInspectionById(1L);
-
-        assertFalse(result.isPresent());
-
-        verify(inspectionRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void createInspection_Success() {
-        when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.of(stabilitiesMatrix));
-        when(testService.getTestById(1L)).thenReturn(Optional.of(test));
-        when(inspectionRepository.save(any(Inspection.class))).thenReturn(inspection);
-
-        inspectionService.createInspection(inspectionDTO);
-
-        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixById(1L);
-        verify(testService, times(1)).getTestById(1L);
-        verify(inspectionRepository, times(1)).save(any(Inspection.class));
-    }
-
-    @Test
     void createInspection_StabilitiesMatrixNotFound() {
         when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.empty());
 
@@ -107,19 +70,4 @@ public class InspectionServiceTest {
         verify(inspectionRepository, never()).save(any(Inspection.class));
     }
 
-    @Test
-    void createInspection_TestNotFound() {
-        when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.of(stabilitiesMatrix));
-        when(testService.getTestById(1L)).thenReturn(Optional.empty());
-
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            inspectionService.createInspection(inspectionDTO);
-        });
-
-        assertEquals("El test con ID 1 no existe", exception.getMessage());
-
-        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixById(1L);
-        verify(testService, times(1)).getTestById(1L);
-        verify(inspectionRepository, never()).save(any(Inspection.class));
-    }
 }

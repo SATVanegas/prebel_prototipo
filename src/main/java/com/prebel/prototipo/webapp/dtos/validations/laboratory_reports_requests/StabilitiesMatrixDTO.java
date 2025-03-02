@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,8 @@ public class StabilitiesMatrixDTO {
     @Min(value = 0, message = "La ubicación en cámara de fotólisis debe ser un número positivo")
     private Integer locationPhotolysisChamber;
 
+    private List<Long> inspectionIds;
+
     private String batch;
     private String container;
     private String dosage;
@@ -53,8 +56,6 @@ public class StabilitiesMatrixDTO {
     private String coverMaterial;
     private String coverColor;
     private String supplier;
-
-    private Long customerId;
 
     private String category;
     private String cosmeticForm;
@@ -88,7 +89,7 @@ public class StabilitiesMatrixDTO {
 
     private String justificationRating;
 
-    private Long chemicalId;
+    public StabilitiesMatrixDTO(String projectCode, String formulaCode, String ptReference, String bulkReference, Long id, String studyDescription, Integer locationEnvironment, Integer locationOven, Integer locationFridge, Integer locationPhotolysisChamber, List<Long> inspectionIds, String batch, String container, String dosage, String packagingMaterial, String containerColor, String coverMaterial, String coverColor, String supplier, String category, String cosmeticForm, String studyJustification, String studyType, Date deliveryDatePt, Date dateStartFormat, Date startDate, Integer startMonth, Integer startYear, Date endDate, Integer endMonth, Integer endYear, String qualification, Integer validity, String justificationRating, List<Long> inspectionIds1) {
+    }
 
-    private Long engineerId;
 }

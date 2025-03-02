@@ -1,6 +1,7 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
@@ -8,14 +9,14 @@ import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InspectionService {
@@ -32,12 +33,14 @@ public class InspectionService {
         this.testService = testService;
     }
 
-    public Optional<Inspection> getInspectionById(Long id) {
-        return inspectionRepository.findById(id);
+    public InspectionDTO getInspectionById(Long id) {
+        Inspection inspection = inspectionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Inspection not found with id " + id));
+        return convertToDTO(inspection);
     }
 
     public void createInspection(@Valid InspectionDTO dto) {
-        StabilitiesMatrix stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixById(dto.getStabilitiesMatrixId())
+        StabilitiesMatrixDTO stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixById(dto.getStabilitiesMatrixId())
                 .orElseThrow(() -> new EntityNotFoundException("La matriz de estabilidad con ID " + dto.getStabilitiesMatrixId() + " no existe"));
 
         Test test = testService.getTestById(dto.getTestId())
@@ -64,4 +67,28 @@ public class InspectionService {
         return inspectionRepository.findInspectionsByExpectedDateBetween(startDate, endDate);
     }
 
+}
+    public List<InspectionDTO> getAllInspectionDTOs() {
+        List<Inspection> inspections = (List<Inspection>) inspectionRepository.findAll();
+        return inspections.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private InspectionDTO convertToDTO(Inspection inspection) {
+        return new InspectionDTO(
+                inspection.getExpectedDate(),
+                inspection.getRealDate(),
+                inspection.getResponseTime(),
+                inspection.getAerosolStove(),
+                inspection.getInOut(),
+                inspection.getStove(),
+                inspection.getHrStove(),
+                inspection.getEnvironment(),
+                inspection.getFridge(),
+                inspection.getPhotolysis(),
+                inspection.getStabilitiesMatrix().getId(),
+                inspection.getTest().getId()
+        );
+    }
 }

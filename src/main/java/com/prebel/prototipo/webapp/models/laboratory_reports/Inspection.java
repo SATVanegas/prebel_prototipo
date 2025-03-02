@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -58,6 +59,9 @@ public class Inspection {
         this.photolysis = dto.getPhotolysis();
         this.stabilitiesMatrix = stabilitiesMatrix;
         this.test = test;
+    }
+
+    public Inspection(@Valid InspectionDTO dto, StabilitiesMatrixDTO stabilitiesMatrix, Test test) {
     }
 }
 

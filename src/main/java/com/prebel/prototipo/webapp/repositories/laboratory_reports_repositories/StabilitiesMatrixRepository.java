@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StabilitiesMatrixRepository extends CrudRepository<StabilitiesMatrix, Long> {
 
@@ -19,4 +20,9 @@ public interface StabilitiesMatrixRepository extends CrudRepository<StabilitiesM
 
     Optional<StabilitiesMatrix> findByProductId(Long productId);
 
+}
+import java.util.Optional;
+
+public interface StabilitiesMatrixRepository extends JpaRepository<StabilitiesMatrix, Long> {
+    Optional<StabilitiesMatrix> findByProductId(Long productId);
 }

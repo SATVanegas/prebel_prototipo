@@ -15,3 +15,7 @@ public interface InspectionRepository extends CrudRepository<Inspection, Long> {
     @Query("SELECT i FROM Inspection i WHERE i.expectedDate BETWEEN :startDate AND :endDate AND i.realDate IS NULL")
     List<Inspection> findInspectionsByExpectedDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
+
+    @Query("SELECT i FROM Inspection i WHERE i.expectedDate BETWEEN :startDate AND :endDate")
+    List<Inspection> findInspectionsWithinDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+}

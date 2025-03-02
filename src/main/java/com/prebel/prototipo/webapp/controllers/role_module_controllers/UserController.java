@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.role_module_controllers;
 
+import com.prebel.prototipo.webapp.dtos.UserDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.dtos.UserRegistrationDTO;

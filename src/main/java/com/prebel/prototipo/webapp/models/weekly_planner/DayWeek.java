@@ -20,4 +20,12 @@ public enum DayWeek {
         return nombre;
     }
 
+    public static DayWeek fromNombre(String nombre) {
+        for (DayWeek day : DayWeek.values()) {
+            if (day.getNombre().equalsIgnoreCase(nombre)) {
+                return day;
+            }
+        }
+        throw new IllegalArgumentException("Día inválido: " + nombre);
+    }
 }

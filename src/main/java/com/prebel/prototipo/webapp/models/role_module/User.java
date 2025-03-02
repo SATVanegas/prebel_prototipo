@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.role_module;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"weeklyTasks"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +32,8 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-
     @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("technician")
     private List<TechnicianSchedule> weeklyTasks;
 
 }

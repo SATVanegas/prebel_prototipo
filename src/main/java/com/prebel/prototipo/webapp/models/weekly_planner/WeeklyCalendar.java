@@ -1,6 +1,7 @@
 package com.prebel.prototipo.webapp.models.weekly_planner;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.WeeklyCalendarDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,10 +25,12 @@ public class WeeklyCalendar {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDate;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDate;
 
     @OneToMany(mappedBy = "weekly_calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TechnicianSchedule> TechniciansSchedules;
 
     public WeeklyCalendar(WeeklyCalendarDTO dto) {

@@ -4,7 +4,8 @@ import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.UserRoleResponseDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.dtos.validations.RoleRequestDTO;
-import com.prebel.prototipo.webapp.models.role_module.*;
+import com.prebel.prototipo.webapp.models.role_module.Role;
+import com.prebel.prototipo.webapp.models.role_module.RoleModule;
 import com.prebel.prototipo.webapp.models.role_module.Module;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.ModuleRepository;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleModuleRepository;
@@ -13,7 +14,6 @@ import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRep
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

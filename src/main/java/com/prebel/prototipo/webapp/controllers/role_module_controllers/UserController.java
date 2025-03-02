@@ -78,4 +78,16 @@ public class UserController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(userDTOs);
     }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            UserDTO userDTO = new UserDTO(user);
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

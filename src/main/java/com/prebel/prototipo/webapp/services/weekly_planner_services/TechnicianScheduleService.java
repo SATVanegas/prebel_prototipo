@@ -11,6 +11,7 @@ import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.Tech
 import com.prebel.prototipo.webapp.services.role_module_services.RoleService;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import com.prebel.prototipo.webapp.services.utils.DateService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ import java.util.*;
 
 @Service
 public class TechnicianScheduleService {
-
     private final TechnicianScheduleRepository technicianScheduleRepository;
     private final UserService userService;
     private final RoleService roleService;
@@ -33,6 +33,7 @@ public class TechnicianScheduleService {
         this.weeklyCalendarService = weeklyCalendarService;
     }
 
+    @Transactional
     public void createTechnicianSchedule(@Valid TechnicianScheduleDTO dto) {
         User technician = userService.getUserById(dto.getTechnicianId())
                 .orElseThrow(() -> new RuntimeException("Técnico no encontrado con ID: " + dto.getTechnicianId()));
@@ -55,9 +56,18 @@ public class TechnicianScheduleService {
     }
 
     public List<TechnicianSchedule> getAllTechnicianSchedules() {
-        return (List<TechnicianSchedule>) technicianScheduleRepository.findAll();
+        List<TechnicianSchedule> results = new ArrayList<>();
+        technicianScheduleRepository.findAll().forEach(results::add);
+        return results;
     }
 
+    public List<TechnicianSchedule> getTechnicianSchedulesByTechnicianId(Long technicianId) {
+        User technician = userService.getUserById(technicianId)
+                .orElseThrow(() -> new RuntimeException("Técnico no encontrado con ID: " + technicianId));
+        return technicianScheduleRepository.findByTechnician(technician);
+    }
+
+    @Transactional
     public boolean deleteTechnicianSchedule(Long id) {
         if (technicianScheduleRepository.existsById(id)) {
             technicianScheduleRepository.deleteById(id);
@@ -66,16 +76,12 @@ public class TechnicianScheduleService {
         return false;
     }
 
+
+    @Transactional
     public void updateTechnicianSchedule(Long id, TechnicianScheduleUpdateDTO dto) {
-        Optional<TechnicianSchedule> optionalSchedule = technicianScheduleRepository.findById(id);
+        TechnicianSchedule schedule = technicianScheduleRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("TechnicianSchedule no encontrado con ID: " + id));
 
-        if (optionalSchedule.isEmpty()) {
-            return; // Retorna vacío si no se encuentra el TechnicianSchedule
-        }
-
-        TechnicianSchedule schedule = optionalSchedule.get();
-
-        // Actualizar solo los campos que vienen en el DTO
         if (dto.getTechnicianId() != null) {
             User technician = userService.getUserById(dto.getTechnicianId())
                     .orElseThrow(() -> new NoSuchElementException("Técnico no encontrado con ID: " + dto.getTechnicianId()));
@@ -94,6 +100,19 @@ public class TechnicianScheduleService {
             schedule.setDay(dayWeek);
         }
 
+        if (dto.getSchedule() != null) {
+            schedule.setSchedule(dto.getSchedule());
+        }
+
+        if (dto.getInfo() != null) {
+            schedule.setInfo(dto.getInfo());
+        }
+
+        if (dto.getDate() != null) {
+            schedule.setDate(dto.getDate());
+        }
+
+        technicianScheduleRepository.save(schedule);
     }
 
 }

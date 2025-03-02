@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
+import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;

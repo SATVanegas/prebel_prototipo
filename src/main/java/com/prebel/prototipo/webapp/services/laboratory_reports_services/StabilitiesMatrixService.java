@@ -4,25 +4,15 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import com.prebel.prototipo.webapp.models.role_module.User;
-=======
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
->>>>>>> Stashed changes
-=======
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
->>>>>>> Stashed changes
-=======
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
->>>>>>> Stashed changes
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.StabilitiesMatrixRepository;
-import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,90 +32,6 @@ public class StabilitiesMatrixService {
     public Optional<StabilitiesMatrixDTO> getStabilitiesMatrixById(Long id) {
         return stabilitiesMatrixRepository.findById(id)
                 .map(this::convertToDTO);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
-    }
-
-    private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {
-        return new StabilitiesMatrixDTO(
-                stabilitiesMatrix.getProjectCode(),
-                stabilitiesMatrix.getFormulaCode(),
-                stabilitiesMatrix.getPtReference(),
-                stabilitiesMatrix.getBulkReference(),
-                stabilitiesMatrix.getProduct().getId(),
-                stabilitiesMatrix.getStudyDescription(),
-                stabilitiesMatrix.getLocationEnvironment(),
-                stabilitiesMatrix.getLocationOven(),
-                stabilitiesMatrix.getLocationFridge(),
-                stabilitiesMatrix.getLocationPhotolysisChamber(),
-                stabilitiesMatrix.getInspectionIds(),
-                stabilitiesMatrix.getBatch(),
-                stabilitiesMatrix.getContainer(),
-                stabilitiesMatrix.getDosage(),
-                stabilitiesMatrix.getPackagingMaterial(),
-                stabilitiesMatrix.getContainerColor(),
-                stabilitiesMatrix.getCoverMaterial(),
-                stabilitiesMatrix.getCoverColor(),
-                stabilitiesMatrix.getSupplier(),
-                stabilitiesMatrix.getCategory(),
-                stabilitiesMatrix.getCosmeticForm(),
-                stabilitiesMatrix.getStudyJustification(),
-                stabilitiesMatrix.getStudyType(),
-                stabilitiesMatrix.getDeliveryDatePt(),
-                stabilitiesMatrix.getDateStartFormat(),
-                stabilitiesMatrix.getStartDate(),
-                stabilitiesMatrix.getStartMonth(),
-                stabilitiesMatrix.getStartYear(),
-                stabilitiesMatrix.getEndDate(),
-                stabilitiesMatrix.getEndMonth(),
-                stabilitiesMatrix.getEndYear(),
-                stabilitiesMatrix.getQualification(),
-                stabilitiesMatrix.getValidity(),
-                stabilitiesMatrix.getJustificationRating()
-        );
->>>>>>> Stashed changes
-    }
-
-    private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {
-        return new StabilitiesMatrixDTO(
-                stabilitiesMatrix.getProjectCode(),
-                stabilitiesMatrix.getFormulaCode(),
-                stabilitiesMatrix.getPtReference(),
-                stabilitiesMatrix.getBulkReference(),
-                stabilitiesMatrix.getProduct().getId(),
-                stabilitiesMatrix.getStudyDescription(),
-                stabilitiesMatrix.getLocationEnvironment(),
-                stabilitiesMatrix.getLocationOven(),
-                stabilitiesMatrix.getLocationFridge(),
-                stabilitiesMatrix.getLocationPhotolysisChamber(),
-                stabilitiesMatrix.getInspectionIds(),
-                stabilitiesMatrix.getBatch(),
-                stabilitiesMatrix.getContainer(),
-                stabilitiesMatrix.getDosage(),
-                stabilitiesMatrix.getPackagingMaterial(),
-                stabilitiesMatrix.getContainerColor(),
-                stabilitiesMatrix.getCoverMaterial(),
-                stabilitiesMatrix.getCoverColor(),
-                stabilitiesMatrix.getSupplier(),
-                stabilitiesMatrix.getCategory(),
-                stabilitiesMatrix.getCosmeticForm(),
-                stabilitiesMatrix.getStudyJustification(),
-                stabilitiesMatrix.getStudyType(),
-                stabilitiesMatrix.getDeliveryDatePt(),
-                stabilitiesMatrix.getDateStartFormat(),
-                stabilitiesMatrix.getStartDate(),
-                stabilitiesMatrix.getStartMonth(),
-                stabilitiesMatrix.getStartYear(),
-                stabilitiesMatrix.getEndDate(),
-                stabilitiesMatrix.getEndMonth(),
-                stabilitiesMatrix.getEndYear(),
-                stabilitiesMatrix.getQualification(),
-                stabilitiesMatrix.getValidity(),
-                stabilitiesMatrix.getJustificationRating()
-        );
->>>>>>> Stashed changes
     }
 
     private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {
@@ -174,8 +80,6 @@ public class StabilitiesMatrixService {
         StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
         stabilitiesMatrixRepository.save(stabilitiesMatrix);
     }
-<<<<<<< Updated upstream
-=======
 
     public List<Inspection> getInspectionsDueInNext7Days() {
         Calendar calendar = Calendar.getInstance();
@@ -197,11 +101,4 @@ public class StabilitiesMatrixService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }

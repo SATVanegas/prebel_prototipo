@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,7 +17,9 @@ public class StabilitiesMatrixController {
 
     private final StabilitiesMatrixService stabilitiesMatrixService;
 
-    public StabilitiesMatrixController(StabilitiesMatrixService stabilitiesMatrixService) { this.stabilitiesMatrixService = stabilitiesMatrixService;}
+    public StabilitiesMatrixController(StabilitiesMatrixService stabilitiesMatrixService) {
+        this.stabilitiesMatrixService = stabilitiesMatrixService;
+    }
 
     @GetMapping
     public ResponseEntity<List<StabilitiesMatrixDTO>> getAllStabilitiesMatrix() {
@@ -36,28 +39,20 @@ public class StabilitiesMatrixController {
     @PostMapping
     public ResponseEntity<String> createStabilitiesMatrix(@Valid @RequestBody StabilitiesMatrixDTO dto) {
         stabilitiesMatrixService.createStabilitiesMatrix(dto);
-<<<<<<< Updated upstream
-        return ResponseEntity.ok("Test creado correctamente");
-=======
         return ResponseEntity.ok("Matriz de estabilidades creada correctamente");
     }
-
 
     // Endpoint para obtener inspecciones en los próximos 7 días
     @GetMapping("/upcoming-inspections")
     public ResponseEntity<List<Inspection>> getUpcomingInspections() {
         List<Inspection> upcomingInspections = stabilitiesMatrixService.getInspectionsDueInNext7Days();
         return ResponseEntity.ok(upcomingInspections);
-
     }
-
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<Long> getStabilitiesMatrixIdByProductId(@PathVariable Long productId) {
         Optional<StabilitiesMatrix> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixByProductId(productId);
         return stabilitiesMatrix.map(matrix -> ResponseEntity.ok(matrix.getId()))
                 .orElseGet(() -> ResponseEntity.notFound().build());
->>>>>>> Stashed changes
     }
 }
-

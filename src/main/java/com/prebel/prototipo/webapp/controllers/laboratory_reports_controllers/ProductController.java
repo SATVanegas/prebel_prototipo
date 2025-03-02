@@ -3,7 +3,9 @@ package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
+import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
 import com.prebel.prototipo.webapp.services.utils.PdfReportService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +21,10 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+    private final StabilitiesMatrixService stabilitiesMatrixService;
     private final PdfReportService pdfReportService;
-    public ProductController(ProductService productService, PdfReportService pdfReportService) { this.productService = productService;
+    public ProductController(ProductService productService, StabilitiesMatrixService stabilitiesMatrixService, PdfReportService pdfReportService) { this.productService = productService;
+        this.stabilitiesMatrixService = stabilitiesMatrixService;
         this.pdfReportService = pdfReportService;
     }
 
@@ -42,7 +46,12 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<GetProductDTO>> getAllProducts() {
         List<GetProductDTO> products = productService.getAllProducts().stream()
-                .map(product -> new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand()))
+                .map(product -> {
+                    Long stabilitiesMatrixId = stabilitiesMatrixService.getStabilitiesMatrixByProductId(product.getId())
+                            .map(StabilitiesMatrix::getId)
+                            .orElse(null);
+                    return new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand(), stabilitiesMatrixId);
+                })
                 .toList();
         return ResponseEntity.ok(products);
     }

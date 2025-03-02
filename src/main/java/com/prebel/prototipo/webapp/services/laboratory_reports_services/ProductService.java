@@ -34,22 +34,7 @@ public class ProductService {
     }
 
     public void createProduct(@Valid ProductDTO dto) {
-        User customer = userService.getUserById(dto.getCustomerId())
-                .orElseThrow(() -> new EntityNotFoundException("El cliente con ID " + dto.getCustomerId() + " no existe"));
-
-        User responsibleChemist = userService.getUserById(dto.getResponsibleChemistId())
-                .orElseThrow(() -> new EntityNotFoundException("El químico responsable con ID " + dto.getResponsibleChemistId() + " no existe"));
-
-        User responsibleEngineer = userService.getUserById(dto.getResponsibleEngineerId())
-                .orElseThrow(() -> new EntityNotFoundException("El ingeniero responsable con ID " + dto.getResponsibleEngineerId() + " no existe"));
-
-        User responsibleAnalyst = userService.getUserById(dto.getResponsibleAnalystId())
-                .orElseThrow(() -> new EntityNotFoundException("El analista responsable con ID " + dto.getResponsibleAnalystId() + " no existe"));
-
-        User technicianInCharge = userService.getUserById(dto.getTechnicianInChargeId())
-                .orElseThrow(() -> new EntityNotFoundException("El técnico encargado con ID " + dto.getTechnicianInChargeId() + " no existe"));
-
-        Product product = new Product(dto, customer, responsibleChemist, responsibleEngineer, responsibleAnalyst, technicianInCharge);
+        Product product = new Product(dto);
         productRepository.save(product);
     }
 

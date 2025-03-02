@@ -71,8 +71,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Test> tests;
 
-    public Product(@Valid ProductDTO dto, User customer, User responsibleChemist,
-                   User responsibleEngineer, User responsibleAnalyst, User technicianInCharge) {
+
+    // Constructor con todos los campos
+    public Product(@Valid ProductDTO dto, User customer, User responsibleChemist, User responsibleEngineer, User responsibleAnalyst, User technicianInCharge) {
         this.productDescription = dto.getProductDescription();
         this.reference = dto.getReference();
         this.batch = dto.getBatch();
@@ -95,6 +96,30 @@ public class Product {
         this.responsibleEngineer = responsibleEngineer;
         this.responsibleAnalyst = responsibleAnalyst;
         this.technicianInCharge = technicianInCharge;
+        this.studyDuration = dto.getStudyDuration();
+        this.startDate = dto.getStartDate();
+        this.finishDate = dto.getFinishDate();
+    }
+
+    // Constructor sin ids
+    public Product(ProductDTO dto) {
+        this.productDescription = dto.getProductDescription();
+        this.reference = dto.getReference();
+        this.batch = dto.getBatch();
+        this.packagingType = dto.getPackagingType();
+        this.packagingMaterial = dto.getPackagingMaterial();
+        this.containerColor = dto.getContainerColor();
+        this.lidMaterial = dto.getLidMaterial();
+        this.lidColor = dto.getLidColor();
+        this.formulaNumber = dto.getFormulaNumber();
+        this.projectCode = dto.getProjectCode();
+        this.projectName = dto.getProjectName();
+        this.brand = dto.getBrand();
+        this.studyType = dto.getStudyType();
+        this.consecutive = dto.getConsecutive();
+        this.justification = dto.getJustification();
+        this.qualification = dto.getQualification();
+        this.establishedValidity = dto.getEstablishedValidity();
         this.studyDuration = dto.getStudyDuration();
         this.startDate = dto.getStartDate();
         this.finishDate = dto.getFinishDate();

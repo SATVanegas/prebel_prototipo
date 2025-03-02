@@ -11,4 +11,5 @@ public class GetProductDTO {
     private Long id;
     private String productDescription;
     private String brand;
+    private Long stabilitiesMatrixId;
 }

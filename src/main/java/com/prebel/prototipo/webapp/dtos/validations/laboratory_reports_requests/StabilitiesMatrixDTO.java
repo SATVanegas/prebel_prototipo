@@ -54,7 +54,6 @@ public class StabilitiesMatrixDTO {
     private String coverColor;
     private String supplier;
 
-    @NotNull(message = "El ID del cliente (customerId) es obligatorio")
     private Long customerId;
 
     private String category;
@@ -89,9 +88,7 @@ public class StabilitiesMatrixDTO {
 
     private String justificationRating;
 
-    @NotNull(message = "El ID del químico (chemicalId) es obligatorio")
     private Long chemicalId;
 
-    @NotNull(message = "El ID del ingeniero (engineerId) es obligatorio")
     private Long engineerId;
 }

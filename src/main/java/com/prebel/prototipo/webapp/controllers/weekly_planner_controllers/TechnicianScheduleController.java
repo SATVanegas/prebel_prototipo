@@ -52,11 +52,10 @@ public class TechnicianScheduleController {
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateTechnicianSchedule(
             @PathVariable Long id,
-            @Valid @RequestBody TechnicianScheduleDTO dto) {
+            @Valid @RequestBody TechnicianScheduleUpdateDTO dto) {
         technicianScheduleService.updateTechnicianSchedule(id, dto);
         return ResponseEntity.ok("Technician Schedule actualizado correctamente");
     }
-
 
 
     @DeleteMapping("/{id}")

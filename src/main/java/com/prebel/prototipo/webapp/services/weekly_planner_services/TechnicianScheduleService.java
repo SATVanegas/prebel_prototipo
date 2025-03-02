@@ -70,7 +70,7 @@ public class TechnicianScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public void updateTechnicianSchedule(Long id, TechnicianScheduleDTO dto) {
+    public void updateTechnicianSchedule(Long id, TechnicianScheduleUpdateDTO dto) {
         TechnicianSchedule schedule = technicianScheduleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Technician Schedule no encontrado con ID: " + id));
 
@@ -87,12 +87,6 @@ public class TechnicianScheduleService {
             schedule.setAssignedRole(assignedRole);
         }
 
-        if (dto.getWeeklyCalendarId() != null) {
-            WeeklyCalendar weeklyCalendar = weeklyCalendarService.getWeeklyCalendarById(dto.getWeeklyCalendarId())
-                    .orElseThrow(() -> new NoSuchElementException("Calendario semanal no encontrado con ID: " + dto.getWeeklyCalendarId()));
-            schedule.setWeeklyCalendar(weeklyCalendar);
-        }
-
         if (dto.getDay() != null) {
             DayWeek dayWeek = dateService.getDayFromString(dto.getDay())
                     .orElseThrow(() -> new NoSuchElementException("El día de la semana se ingresó incorrectamente"));
@@ -101,9 +95,6 @@ public class TechnicianScheduleService {
 
         technicianScheduleRepository.save(schedule);
     }
-
-
-
 
     public boolean deleteTechnicianSchedule(Long id) {
         if (technicianScheduleRepository.existsById(id)) {

@@ -28,7 +28,6 @@ public class WeeklyCalendarService {
         weeklyCalendarRepository.save(weeklyCalendar);
     }
 
-    // Añadir al WeeklyCalendarService.java
     public List<WeeklyCalendar> getAllWeeklyCalendars() {
         List<WeeklyCalendar> calendars = new ArrayList<>();
         weeklyCalendarRepository.findAll().forEach(calendars::add);

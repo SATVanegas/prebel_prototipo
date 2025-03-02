@@ -48,10 +48,8 @@ public class TestDTO {
     @NotNull(message = "El almacenamiento (storage) es obligatorio")
     private Long storageId;
 
-    @NotNull(message = "El usuario de pruebas organolépticas (userOrganolepticTests) es obligatorio")
     private Long userOrganolepticTestsId;
 
-    @NotNull(message = "El usuario de pruebas fisicoquímicas (userPhysicochemicalTests) es obligatorio")
     private Long userPhysicochemicalTestsId;
 
     private String observations;

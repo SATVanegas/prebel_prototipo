@@ -57,7 +57,7 @@ public class ConditionService {
             conditions.add(getValidCondition(dto.getTotalBacteriaCountId(), EnumTest.TOTAL_BACTERIA_COUNT));
         }
         if (dto.getFungiYeastCountId() != null) {
-            conditions.add(getValidCondition(dto.getFungiYeastCountId(), EnumTest.FUNGAL_YEAST_COUNT));
+            conditions.add(getValidCondition(dto.getFungiYeastCountId(), EnumTest.FUNGI_YEAST_COUNT));
         }
         if (dto.getPathogensId() != null) {
             conditions.add(getValidCondition(dto.getPathogensId(), EnumTest.PATHOGENS));

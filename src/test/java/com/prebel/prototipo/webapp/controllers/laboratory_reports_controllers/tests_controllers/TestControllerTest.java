@@ -147,7 +147,7 @@ public class TestControllerTest {
                 crearCondition(EnumTest.VISCOSITY),
                 crearCondition(EnumTest.SPECIFIC_GRAVITY),
                 crearCondition(EnumTest.TOTAL_BACTERIA_COUNT),
-                crearCondition(EnumTest.FUNGAL_YEAST_COUNT),
+                crearCondition(EnumTest.FUNGI_YEAST_COUNT),
                 crearCondition(EnumTest.PATHOGENS)
         ));
 
@@ -175,7 +175,7 @@ public class TestControllerTest {
         // Crear el objeto Test a partir del DTO y las entidades
         com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test =
                 new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test(
-                        dto, conditions, product, temperature, storage, userOrganolepticTests, userPhysicochemicalTests);
+                        dto, conditions, product, temperature, storage);
 
         return List.of(test, dto);
     }

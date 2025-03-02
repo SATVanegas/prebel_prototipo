@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum EnumTest {
     APPEARANCE("Appearance"),
     COLOR("Color"),
-    FUNGAL_YEAST_COUNT("Fungal Yeast Count"),
+    FUNGI_YEAST_COUNT("Fungal Yeast Count"),
     ODOR("Odor"),
     PATHOGENS("Pathogens"),
     PH("pH Level"),

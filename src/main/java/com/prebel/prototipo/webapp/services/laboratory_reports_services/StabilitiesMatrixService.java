@@ -8,6 +8,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +34,16 @@ public class StabilitiesMatrixService {
 
         StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
         return stabilitiesMatrixRepository.save(stabilitiesMatrix);
+    }
+
+    public List<StabilitiesMatrix> getInspectionsDueInNext7Days() {
+        Calendar calendar = Calendar.getInstance();
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        Date endDate = calendar.getTime();
+
+        return stabilitiesMatrixRepository.findInspectionsWithinDateRange(startDate, endDate);
     }
 
     public Optional<StabilitiesMatrix> getStabilitiesMatrixByProductId(Long productId) {

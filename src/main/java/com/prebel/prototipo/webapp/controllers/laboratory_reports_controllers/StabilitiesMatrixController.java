@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,6 +33,16 @@ public class StabilitiesMatrixController {
         return ResponseEntity.ok("Matriz de estabilidades creada correctamente");
     }
 
+
+    // Endpoint para obtener inspecciones en los próximos 7 días
+    @GetMapping("/upcoming-inspections")
+    public ResponseEntity<List<StabilitiesMatrix>> getUpcomingInspections() {
+        List<StabilitiesMatrix> upcomingInspections = stabilitiesMatrixService.getInspectionsDueInNext7Days();
+        return ResponseEntity.ok(upcomingInspections);
+
+    }
+
+
     @GetMapping("/product/{productId}")
     public ResponseEntity<Long> getStabilitiesMatrixIdByProductId(@PathVariable Long productId) {
         Optional<StabilitiesMatrix> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixByProductId(productId);
@@ -39,3 +50,4 @@ public class StabilitiesMatrixController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
+

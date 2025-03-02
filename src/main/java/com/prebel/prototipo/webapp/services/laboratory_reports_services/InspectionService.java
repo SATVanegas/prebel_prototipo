@@ -67,7 +67,6 @@ public class InspectionService {
         return inspectionRepository.findInspectionsByExpectedDateBetween(startDate, endDate);
     }
 
-}
     public List<InspectionDTO> getAllInspectionDTOs() {
         List<Inspection> inspections = (List<Inspection>) inspectionRepository.findAll();
         return inspections.stream()

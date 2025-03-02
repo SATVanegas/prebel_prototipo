@@ -59,8 +59,10 @@ public class StabilitiesMatrix {
     private Integer endMonth;
     private Integer endYear;
 
-    @OneToMany(mappedBy = "stabilitiesMatrix", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
-    private List<Inspection> inspections;
+    @ElementCollection
+    @CollectionTable(name = "inspections", joinColumns = @JoinColumn(name = "stabilities_matrix_id"))
+    @Column(name = "id")
+    private List<Long> inspectionIds;
 
     private String qualification;
     private Integer validity;

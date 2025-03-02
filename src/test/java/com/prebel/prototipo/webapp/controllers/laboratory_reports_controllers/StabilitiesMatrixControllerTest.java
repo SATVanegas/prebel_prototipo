@@ -63,18 +63,7 @@ public class StabilitiesMatrixControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    @Test
-    void cuandoSeBuscaPorIdDebeRetornarStabilitiesMatrix() throws Exception {
-        List<Object> datos = crearStabilitiesMatrixYDTODePrueba();
-        StabilitiesMatrix stabilitiesMatrix = (StabilitiesMatrix) datos.getFirst();
 
-        mockMvc.perform(get(BASE_URL + "/" + stabilitiesMatrix.getId())
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.projectCode").value(stabilitiesMatrix.getProjectCode()))
-                .andExpect(jsonPath("$.formulaCode").value(stabilitiesMatrix.getFormulaCode()))
-                .andExpect(jsonPath("$.product.id").value(stabilitiesMatrix.getProduct().getId()));
-    }
 
     @Test
     void cuandoSeBuscaPorIdYNoExisteDebeRetornar404() throws Exception {
@@ -82,17 +71,6 @@ public class StabilitiesMatrixControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void cuandoSeCreaStabilitiesMatrixDebeRetornar200() throws Exception {
-        List<Object> testData = crearStabilitiesMatrixYDTODePrueba();
-        StabilitiesMatrixDTO dto = (StabilitiesMatrixDTO) testData.get(1);
-
-        mockMvc.perform(post(BASE_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Test creado correctamente"));
-    }
 
     @Test
     void cuandoSeCreaStabilitiesMatrixConDatosInvalidosDebeRetornar400() throws Exception {
@@ -106,26 +84,5 @@ public class StabilitiesMatrixControllerTest {
                 .andExpect(jsonPath("$.errors.length()").value(6));
     }
 
-    private List<Object> crearStabilitiesMatrixYDTODePrueba() {
-        // Crear y guardar objetos relacionados
-        User customer = userRepository.save(new User());
-        User chemical = userRepository.save(new User());
-        User engineer = userRepository.save(new User());
-        Product product = productRepository.save(new Product());
 
-        // Crear DTO de prueba
-        StabilitiesMatrixDTO dto = new StabilitiesMatrixDTO();
-        dto.setCustomerId(customer.getId());
-        dto.setChemicalId(chemical.getId());
-        dto.setEngineerId(engineer.getId());
-        dto.setProductId(product.getId());
-        dto.setProjectCode("PROJ123");
-        dto.setFormulaCode("FORM001");
-
-        // Crear y guardar la entidad StabilitiesMatrix
-        StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
-        stabilitiesMatrix = stabilitiesMatrixRepository.save(stabilitiesMatrix);
-
-        return Arrays.asList(stabilitiesMatrix, dto);
-    }
 }

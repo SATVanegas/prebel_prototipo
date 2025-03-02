@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,12 +18,17 @@ public class InspectionController {
 
     public InspectionController(InspectionService inspectionService) { this.inspectionService = inspectionService;}
 
+    @GetMapping
+    public ResponseEntity<List<InspectionDTO>> getAllInspections() {
+        List<InspectionDTO> inspectionDTOs = inspectionService.getAllInspectionDTOs();
+        return ResponseEntity.ok(inspectionDTOs);
+    }
+
     // Buscar por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Inspection> getInspectionById(@PathVariable Long id) {
-        Optional<Inspection> inspection = inspectionService.getInspectionById(id);
-        return inspection.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<InspectionDTO> getInspectionById(@PathVariable Long id) {
+        InspectionDTO inspection = inspectionService.getInspectionById(id);
+        return ResponseEntity.ok(inspection);
     }
 
     // Crear una nueva Inspection

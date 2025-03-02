@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,8 @@ public class StabilitiesMatrixDTO {
     @Min(value = 0, message = "La ubicación en cámara de fotólisis debe ser un número positivo")
     private Integer locationPhotolysisChamber;
 
+    private List<Long> inspectionIds;
+
     private String batch;
     private String container;
     private String dosage;
@@ -54,9 +57,12 @@ public class StabilitiesMatrixDTO {
     private String coverColor;
     private String supplier;
 
+<<<<<<< Updated upstream
     @NotNull(message = "El ID del cliente (customerId) es obligatorio")
     private Long customerId;
 
+=======
+>>>>>>> Stashed changes
     private String category;
     private String cosmeticForm;
     private String studyJustification;
@@ -89,9 +95,14 @@ public class StabilitiesMatrixDTO {
 
     private String justificationRating;
 
+<<<<<<< Updated upstream
     @NotNull(message = "El ID del químico (chemicalId) es obligatorio")
     private Long chemicalId;
 
     @NotNull(message = "El ID del ingeniero (engineerId) es obligatorio")
     private Long engineerId;
+=======
+    public StabilitiesMatrixDTO(String projectCode, String formulaCode, String ptReference, String bulkReference, Long id, String studyDescription, Integer locationEnvironment, Integer locationOven, Integer locationFridge, Integer locationPhotolysisChamber, List<Long> inspectionIds, String batch, String container, String dosage, String packagingMaterial, String containerColor, String coverMaterial, String coverColor, String supplier, String category, String cosmeticForm, String studyJustification, String studyType, Date deliveryDatePt, Date dateStartFormat, Date startDate, Integer startMonth, Integer startYear, Date endDate, Integer endMonth, Integer endYear, String qualification, Integer validity, String justificationRating, List<Long> inspectionIds1) {
+    }
+>>>>>>> Stashed changes
 }

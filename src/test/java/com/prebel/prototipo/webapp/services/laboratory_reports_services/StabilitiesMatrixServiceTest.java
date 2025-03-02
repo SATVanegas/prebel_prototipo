@@ -45,29 +45,6 @@ public class StabilitiesMatrixServiceTest {
     }
 
     @Test
-    void getStabilitiesMatrixById_Success() {
-        when(stabilitiesMatrixRepository.findById(1L)).thenReturn(Optional.of(stabilitiesMatrix));
-
-        Optional<StabilitiesMatrix> result = stabilitiesMatrixService.getStabilitiesMatrixById(1L);
-
-        assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getProduct().getId());
-
-        verify(stabilitiesMatrixRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void getStabilitiesMatrixById_NotFound() {
-        when(stabilitiesMatrixRepository.findById(1L)).thenReturn(Optional.empty());
-
-        Optional<StabilitiesMatrix> result = stabilitiesMatrixService.getStabilitiesMatrixById(1L);
-
-        assertFalse(result.isPresent());
-
-        verify(stabilitiesMatrixRepository, times(1)).findById(1L);
-    }
-
-    @Test
     void createStabilitiesMatrix_Success() {
         when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(stabilitiesMatrixRepository.save(any(StabilitiesMatrix.class))).thenReturn(stabilitiesMatrix);

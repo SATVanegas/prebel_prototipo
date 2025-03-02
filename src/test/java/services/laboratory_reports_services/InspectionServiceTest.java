@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.services.laboratory_reports_services;
+package services.laboratory_reports_services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -55,6 +55,10 @@ public class InspectionServiceTest {
         inspection = new Inspection(inspectionDTO, stabilitiesMatrix, test);
     }
 
+
+
+
+
     @Test
     void createInspection_StabilitiesMatrixNotFound() {
         when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.empty());
@@ -69,5 +73,4 @@ public class InspectionServiceTest {
         verify(testService, never()).getTestById(anyLong());
         verify(inspectionRepository, never()).save(any(Inspection.class));
     }
-
 }

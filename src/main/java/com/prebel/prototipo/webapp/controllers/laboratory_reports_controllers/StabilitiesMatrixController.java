@@ -29,7 +29,13 @@ public class StabilitiesMatrixController {
     @PostMapping
     public ResponseEntity<String> createStabilitiesMatrix(@Valid @RequestBody StabilitiesMatrixDTO dto) {
         stabilitiesMatrixService.createStabilitiesMatrix(dto);
-        return ResponseEntity.ok("Test creado correctamente");
+        return ResponseEntity.ok("Matriz de estabilidades creada correctamente");
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<Long> getStabilitiesMatrixIdByProductId(@PathVariable Long productId) {
+        Optional<StabilitiesMatrix> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixByProductId(productId);
+        return stabilitiesMatrix.map(matrix -> ResponseEntity.ok(matrix.getId()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
-

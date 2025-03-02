@@ -29,8 +29,8 @@ public class StabilitiesMatrix {
     private String ptReference;
     private String bulkReference;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @OneToOne
+    @JoinColumn(name = "product_id", unique = true)
     private Product product;
 
     private String studyDescription;

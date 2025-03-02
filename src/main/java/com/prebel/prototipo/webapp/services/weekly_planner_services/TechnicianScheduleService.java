@@ -1,23 +1,25 @@
 package com.prebel.prototipo.webapp.services.weekly_planner_services;
 
-import com.prebel.prototipo.webapp.dtos.request.weekly_planner_request.TechnicianScheduleDTO;
-import com.prebel.prototipo.webapp.dtos.updates.weekly_planner_updates.TechnicianScheduleUpdateDTO;
+import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.TechnicianScheduleDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import com.prebel.prototipo.webapp.models.weekly_planner.DayWeek;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleRepository;
+import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechnicianScheduleRepository;
+import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.WeeklyCalendarRepository;
 import com.prebel.prototipo.webapp.services.role_module_services.RoleService;
 import com.prebel.prototipo.webapp.services.role_module_services.UserService;
 import com.prebel.prototipo.webapp.services.utils.DateService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TechnicianScheduleService {
@@ -59,58 +61,6 @@ public class TechnicianScheduleService {
 
     public List<TechnicianSchedule> getAllTechnicianSchedules() {
         return (List<TechnicianSchedule>) technicianScheduleRepository.findAll();
-    }
-
-    public List<TechnicianSchedule> getAllTechnicianScheduleInWeeklyCalendar(Long weeklyCalendarId) {
-        List<TechnicianSchedule> allSchedules = (List<TechnicianSchedule>) technicianScheduleRepository.findAll(); // Obtener todos los registros
-
-        return allSchedules.stream()
-                .filter(schedule -> schedule.getWeeklyCalendar() != null &&
-                        schedule.getWeeklyCalendar().getId().equals(weeklyCalendarId)) // Filtrar por ID
-                .collect(Collectors.toList());
-    }
-
-    public void updateTechnicianSchedule(Long id, TechnicianScheduleDTO dto) {
-        TechnicianSchedule schedule = technicianScheduleRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Technician Schedule no encontrado con ID: " + id));
-
-        // Actualizar solo los campos que vienen en el DTO
-        if (dto.getTechnicianId() != null) {
-            User technician = userService.getUserById(dto.getTechnicianId())
-                    .orElseThrow(() -> new NoSuchElementException("Técnico no encontrado con ID: " + dto.getTechnicianId()));
-            schedule.setTechnician(technician);
-        }
-
-        if (dto.getAssignedRoleId() != null) {
-            Role assignedRole = roleService.getRoleById(dto.getAssignedRoleId())
-                    .orElseThrow(() -> new NoSuchElementException("Rol no encontrado con ID: " + dto.getAssignedRoleId()));
-            schedule.setAssignedRole(assignedRole);
-        }
-
-        if (dto.getWeeklyCalendarId() != null) {
-            WeeklyCalendar weeklyCalendar = weeklyCalendarService.getWeeklyCalendarById(dto.getWeeklyCalendarId())
-                    .orElseThrow(() -> new NoSuchElementException("Calendario semanal no encontrado con ID: " + dto.getWeeklyCalendarId()));
-            schedule.setWeeklyCalendar(weeklyCalendar);
-        }
-
-        if (dto.getDay() != null) {
-            DayWeek dayWeek = dateService.getDayFromString(dto.getDay())
-                    .orElseThrow(() -> new NoSuchElementException("El día de la semana se ingresó incorrectamente"));
-            schedule.setDay(dayWeek);
-        }
-
-        technicianScheduleRepository.save(schedule);
-    }
-
-
-
-
-    public boolean deleteTechnicianSchedule(Long id) {
-        if (technicianScheduleRepository.existsById(id)) {
-            technicianScheduleRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 
 }

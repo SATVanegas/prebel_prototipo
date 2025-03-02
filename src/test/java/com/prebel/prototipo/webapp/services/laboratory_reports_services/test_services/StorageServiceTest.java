@@ -3,9 +3,10 @@ package com.prebel.prototipo.webapp.services.laboratory_reports_services.test_se
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
-import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.test_request.TestStorageDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestStorageDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.test_repositories.StorageRepository;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.StorageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

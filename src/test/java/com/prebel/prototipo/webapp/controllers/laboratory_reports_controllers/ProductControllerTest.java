@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.ProductDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.transaction.Transactional;
 

@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.StabilitiesMatrixDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;

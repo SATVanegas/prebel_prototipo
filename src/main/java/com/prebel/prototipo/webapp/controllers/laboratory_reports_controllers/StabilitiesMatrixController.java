@@ -1,6 +1,6 @@
 package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
 
-import com.prebel.prototipo.webapp.dtos.request.laboratory_reports_requests.StabilitiesMatrixDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
 import jakarta.validation.Valid;

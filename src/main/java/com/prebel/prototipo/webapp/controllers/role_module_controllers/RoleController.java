@@ -3,7 +3,7 @@ package com.prebel.prototipo.webapp.controllers.role_module_controllers;
 import com.prebel.prototipo.webapp.dtos.RoleModuleDTO;
 import com.prebel.prototipo.webapp.dtos.UserRoleResponseDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
-import com.prebel.prototipo.webapp.dtos.request.role_module_request.RoleRequestDTO;
+import com.prebel.prototipo.webapp.dtos.validations.RoleRequestDTO;
 import com.prebel.prototipo.webapp.models.role_module.*;
 import com.prebel.prototipo.webapp.models.role_module.Module;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.ModuleRepository;

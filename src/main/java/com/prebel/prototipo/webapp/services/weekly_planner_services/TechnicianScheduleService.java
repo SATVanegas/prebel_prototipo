@@ -96,12 +96,12 @@ public class TechnicianScheduleService {
         technicianScheduleRepository.save(schedule);
     }
 
-    public boolean deleteTechnicianSchedule(Long id) {
-        if (technicianScheduleRepository.existsById(id)) {
-            technicianScheduleRepository.deleteById(id);
-            return true;
+    public void deleteTechnicianSchedule(Long id) {
+        if (!technicianScheduleRepository.existsById(id)) {
+            throw new NoSuchElementException("Technician Schedule no encontrado con ID: " + id);
         }
-        return false;
+        technicianScheduleRepository.deleteById(id);
     }
+
 
 }

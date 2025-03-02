@@ -60,13 +60,9 @@ public class TechnicianScheduleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTechnicianSchedule(@PathVariable Long id) {
-        boolean deleted = technicianScheduleService.deleteTechnicianSchedule(id);
-
-        return deleted
-                ? ResponseEntity.ok("Technician Schedule eliminado correctamente")
-                : ResponseEntity.notFound().build();
+        technicianScheduleService.deleteTechnicianSchedule(id);
+        return ResponseEntity.ok("Technician Schedule eliminado correctamente");
     }
-
 
 }
 

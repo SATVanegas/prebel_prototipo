@@ -5,7 +5,11 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import com.prebel.prototipo.webapp.models.role_module.User;
+=======
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
+>>>>>>> Stashed changes
 =======
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
 >>>>>>> Stashed changes
@@ -34,6 +38,48 @@ public class StabilitiesMatrixService {
     public Optional<StabilitiesMatrixDTO> getStabilitiesMatrixById(Long id) {
         return stabilitiesMatrixRepository.findById(id)
                 .map(this::convertToDTO);
+<<<<<<< Updated upstream
+=======
+    }
+
+    private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {
+        return new StabilitiesMatrixDTO(
+                stabilitiesMatrix.getProjectCode(),
+                stabilitiesMatrix.getFormulaCode(),
+                stabilitiesMatrix.getPtReference(),
+                stabilitiesMatrix.getBulkReference(),
+                stabilitiesMatrix.getProduct().getId(),
+                stabilitiesMatrix.getStudyDescription(),
+                stabilitiesMatrix.getLocationEnvironment(),
+                stabilitiesMatrix.getLocationOven(),
+                stabilitiesMatrix.getLocationFridge(),
+                stabilitiesMatrix.getLocationPhotolysisChamber(),
+                stabilitiesMatrix.getInspectionIds(),
+                stabilitiesMatrix.getBatch(),
+                stabilitiesMatrix.getContainer(),
+                stabilitiesMatrix.getDosage(),
+                stabilitiesMatrix.getPackagingMaterial(),
+                stabilitiesMatrix.getContainerColor(),
+                stabilitiesMatrix.getCoverMaterial(),
+                stabilitiesMatrix.getCoverColor(),
+                stabilitiesMatrix.getSupplier(),
+                stabilitiesMatrix.getCategory(),
+                stabilitiesMatrix.getCosmeticForm(),
+                stabilitiesMatrix.getStudyJustification(),
+                stabilitiesMatrix.getStudyType(),
+                stabilitiesMatrix.getDeliveryDatePt(),
+                stabilitiesMatrix.getDateStartFormat(),
+                stabilitiesMatrix.getStartDate(),
+                stabilitiesMatrix.getStartMonth(),
+                stabilitiesMatrix.getStartYear(),
+                stabilitiesMatrix.getEndDate(),
+                stabilitiesMatrix.getEndMonth(),
+                stabilitiesMatrix.getEndYear(),
+                stabilitiesMatrix.getQualification(),
+                stabilitiesMatrix.getValidity(),
+                stabilitiesMatrix.getJustificationRating()
+        );
+>>>>>>> Stashed changes
     }
 
     private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {
@@ -105,5 +151,8 @@ public class StabilitiesMatrixService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

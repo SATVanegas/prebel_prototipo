@@ -13,16 +13,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TechnicianScheduleUpdateDTO {
-
-    private Date date;
-
-    private String day;
-
     private Long technicianId;
-
     private Long assignedRoleId;
-
     private String schedule;
     private String info;
-
 }

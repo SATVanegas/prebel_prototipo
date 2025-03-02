@@ -15,6 +15,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -76,7 +78,6 @@ public class TechnicianScheduleService {
         return false;
     }
 
-
     @Transactional
     public void updateTechnicianSchedule(Long id, TechnicianScheduleUpdateDTO dto) {
         TechnicianSchedule schedule = technicianScheduleRepository.findById(id)
@@ -94,25 +95,18 @@ public class TechnicianScheduleService {
             schedule.setAssignedRole(assignedRole);
         }
 
-        if (dto.getDay() != null) {
-            DayWeek dayWeek = dateService.getDayFromString(dto.getDay())
-                    .orElseThrow(() -> new NoSuchElementException("El día de la semana se ingresó incorrectamente"));
-            schedule.setDay(dayWeek);
-        }
-
         if (dto.getSchedule() != null) {
-            schedule.setSchedule(dto.getSchedule());
+            schedule.setSchedule(dto.getSchedule()); // Actualizar solo el horario
         }
 
         if (dto.getInfo() != null) {
-            schedule.setInfo(dto.getInfo());
+            schedule.setInfo(dto.getInfo()); // Actualizar solo la descripción
         }
 
-        if (dto.getDate() != null) {
-            schedule.setDate(dto.getDate());
+        if (schedule.getId() != id) {
+            throw new IllegalStateException("Error: El ID de la programación no coincide con el solicitado");
         }
 
         technicianScheduleRepository.save(schedule);
     }
-
 }

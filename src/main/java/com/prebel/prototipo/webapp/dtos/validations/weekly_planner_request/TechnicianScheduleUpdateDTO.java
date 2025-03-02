@@ -16,8 +16,6 @@ import java.util.Date;
 public class TechnicianScheduleUpdateDTO {
     private Long technicianId;
     private Long assignedRoleId;
-    private String day;
     private String schedule;
     private String info;
-    private Date date;
 }

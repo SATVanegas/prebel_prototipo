@@ -21,9 +21,10 @@ public class StorageService {
         return storageRepository.findById(id);
     }
 
-    public void createStorage(@Valid TestStorageDTO dto) {
+    public Storage createStorage(@Valid TestStorageDTO dto) {
         Storage storage = new Storage(dto);
         storageRepository.save(storage);
+        return storage;
     }
 
 }

@@ -26,9 +26,10 @@ public class ConditionService {
         return conditionRepository.findById(id);
     }
 
-    public void createCondition(@Valid TestConditionDTO dto) {
+    public Condition createCondition(@Valid TestConditionDTO dto) {
         Condition condition = new Condition(dto);
         conditionRepository.save(condition);
+        return condition;
     }
 
     public List<Condition> getConditionsFromDTO(TestDTO dto) {

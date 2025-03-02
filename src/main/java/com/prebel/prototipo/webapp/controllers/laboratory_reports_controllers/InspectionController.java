@@ -36,7 +36,7 @@ public class InspectionController {
     public ResponseEntity<?> getLastInspection() {
         Optional<Inspection> lastInspection = inspectionService.getLastInspection();
         return lastInspection.map(ResponseEntity::ok)
-                .orElseGet(() -> (ResponseEntity<Inspection>) ResponseEntity.ok());
+                .orElseGet(() -> ResponseEntity.ok(null));
     }
 }
 

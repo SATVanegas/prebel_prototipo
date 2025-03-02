@@ -29,8 +29,8 @@ public class ConditionController {
 
     // Crear un nuevo Condition
     @PostMapping
-    public ResponseEntity<String> createCondition(@Valid @RequestBody TestConditionDTO dto) {
-        conditionService.createCondition(dto);
-        return ResponseEntity.ok("Test creado correctamente");
+    public ResponseEntity<Long> createCondition(@Valid @RequestBody TestConditionDTO dto) {
+        Condition createdCondition = conditionService.createCondition(dto);
+        return ResponseEntity.ok(createdCondition.getId());
     }
 }

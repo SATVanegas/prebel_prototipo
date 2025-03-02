@@ -3,16 +3,21 @@ package com.prebel.prototipo.webapp.services.weekly_planner_services;
 import com.prebel.prototipo.webapp.dtos.validations.weekly_planner_request.TechnicianScheduleDTO;
 import com.prebel.prototipo.webapp.models.role_module.Role;
 import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.models.weekly_planner.DayWeek;
 import com.prebel.prototipo.webapp.models.weekly_planner.TechnicianSchedule;
 import com.prebel.prototipo.webapp.models.weekly_planner.WeeklyCalendar;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.RoleRepository;
 import com.prebel.prototipo.webapp.repositories.role_module_repositories.UserRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.TechnicianScheduleRepository;
 import com.prebel.prototipo.webapp.repositories.weekly_planner_repositories.WeeklyCalendarRepository;
+import com.prebel.prototipo.webapp.services.role_module_services.RoleService;
+import com.prebel.prototipo.webapp.services.role_module_services.UserService;
+import com.prebel.prototipo.webapp.services.utils.DateService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,44 +25,33 @@ import java.util.Optional;
 public class TechnicianScheduleService {
 
     private final TechnicianScheduleRepository technicianScheduleRepository;
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final WeeklyCalendarRepository weeklyCalendarRepository;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final WeeklyCalendarService weeklyCalendarService;
+    private final DateService dateService = new DateService();
 
     public TechnicianScheduleService(
-            TechnicianScheduleRepository technicianScheduleRepository,
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            WeeklyCalendarRepository weeklyCalendarRepository) {
+            TechnicianScheduleRepository technicianScheduleRepository, UserService userService, RoleService roleService, WeeklyCalendarService weeklyCalendarService) {
         this.technicianScheduleRepository = technicianScheduleRepository;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.weeklyCalendarRepository = weeklyCalendarRepository;
+        this.userService = userService;
+        this.roleService = roleService;
+        this.weeklyCalendarService = weeklyCalendarService;
     }
 
     public void createTechnicianSchedule(@Valid TechnicianScheduleDTO dto) {
-        // Obtener el técnico (usuario)
-        User technician = userRepository.findById(dto.getTechnicianId())
+        User technician = userService.getUserById(dto.getTechnicianId())
                 .orElseThrow(() -> new RuntimeException("Técnico no encontrado con ID: " + dto.getTechnicianId()));
 
-        // Obtener el rol asignado
-        Role assignedRole = roleRepository.findById(dto.getAssignedRoleId())
+        Role assignedRole = roleService.getRoleById(dto.getAssignedRoleId())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado con ID: " + dto.getAssignedRoleId()));
 
-        // Obtener el calendario semanal
-        WeeklyCalendar weeklyCalendar = weeklyCalendarRepository.findById(dto.getWeeklyCalendarId())
+        WeeklyCalendar weeklyCalendar = weeklyCalendarService.getWeeklyCalendarById(dto.getWeeklyCalendarId())
                 .orElseThrow(() -> new RuntimeException("Calendario semanal no encontrado con ID: " + dto.getWeeklyCalendarId()));
 
-        // Crear y guardar el nuevo horario de técnico
-        TechnicianSchedule technicianSchedule = new TechnicianSchedule();
-        technicianSchedule.setDate(dto.getDate());
-        technicianSchedule.setDay(dto.getDay());
-        technicianSchedule.setTechnician(technician);
-        technicianSchedule.setAssignedRole(assignedRole);
-        technicianSchedule.setSchedule(dto.getSchedule());
-        technicianSchedule.setInfo(dto.getInfo());
-        technicianSchedule.setWeekly_calendar(weeklyCalendar);
+        DayWeek dayWeek=dateService.getDayFromString(dto.getDay())
+                .orElseThrow(() -> new RuntimeException("El dia de la semana se ingreso incorrectamente"));
 
+        TechnicianSchedule technicianSchedule = new TechnicianSchedule(dto,technician,assignedRole,weeklyCalendar,dayWeek);
         technicianScheduleRepository.save(technicianSchedule);
     }
 
@@ -66,8 +60,7 @@ public class TechnicianScheduleService {
     }
 
     public List<TechnicianSchedule> getAllTechnicianSchedules() {
-        List<TechnicianSchedule> schedules = new ArrayList<>();
-        technicianScheduleRepository.findAll().forEach(schedules::add);
-        return schedules;
+        return (List<TechnicianSchedule>) technicianScheduleRepository.findAll();
     }
+
 }

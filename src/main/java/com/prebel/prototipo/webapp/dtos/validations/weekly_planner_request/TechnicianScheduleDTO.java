@@ -19,7 +19,7 @@ public class TechnicianScheduleDTO {
     private Date date;
 
     @NotNull(message = "El día de la semana (day) es obligatorio")
-    private DayWeek day;
+    private String day;
 
     @NotNull(message = "El ID del técnico (technicianId) es obligatorio")
     private Long technicianId;

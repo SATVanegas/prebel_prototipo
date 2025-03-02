@@ -39,8 +39,8 @@ public class StabilitiesMatrixController {
     public ResponseEntity<List<StabilitiesMatrix>> getUpcomingInspections() {
         List<StabilitiesMatrix> upcomingInspections = stabilitiesMatrixService.getInspectionsDueInNext7Days();
         return ResponseEntity.ok(upcomingInspections);
+
     }
-}
 
 
     @GetMapping("/product/{productId}")
@@ -50,3 +50,4 @@ public class StabilitiesMatrixController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
+

@@ -29,9 +29,13 @@ public class StabilitiesMatrixService {
         this.productService = productService;
     }
 
-    public Optional<StabilitiesMatrixDTO> getStabilitiesMatrixById(Long id) {
+    public Optional<StabilitiesMatrixDTO> getStabilitiesMatrixDTOById(Long id) {
         return stabilitiesMatrixRepository.findById(id)
                 .map(this::convertToDTO);
+    }
+
+    public Optional<StabilitiesMatrix> getStabilitiesMatrixById(Long id) {
+        return stabilitiesMatrixRepository.findById(id);
     }
 
     private StabilitiesMatrixDTO convertToDTO(StabilitiesMatrix stabilitiesMatrix) {

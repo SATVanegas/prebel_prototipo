@@ -1,7 +1,6 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.InspectionDTO;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,14 +38,14 @@ public class InspectionService {
     }
 
     public void createInspection(@Valid InspectionDTO dto) {
-        StabilitiesMatrixDTO stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixById(dto.getStabilitiesMatrixId())
-                .orElseThrow(() -> new EntityNotFoundException("La matriz de estabilidad con ID " + dto.getStabilitiesMatrixId() + " no existe"));
-
+        StabilitiesMatrix stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixById(dto.getStabilitiesMatrixId())
+                .orElseThrow(() -> new EntityNotFoundException("StabilitiesMatrix not found with id " + dto.getStabilitiesMatrixId()));
         Test test = testService.getTestById(dto.getTestId())
-                .orElseThrow(() -> new EntityNotFoundException("El test con ID " + dto.getTestId() + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException("Test not found with id " + dto.getTestId()));
 
         Inspection inspection = new Inspection(dto, stabilitiesMatrix, test);
         inspectionRepository.save(inspection);
+
     }
 
     public Optional<Inspection> getLastInspection() {

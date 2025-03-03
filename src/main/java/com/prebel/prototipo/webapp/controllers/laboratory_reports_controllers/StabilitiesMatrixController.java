@@ -30,7 +30,7 @@ public class StabilitiesMatrixController {
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<StabilitiesMatrixDTO> getStabilitiesMatrixById(@PathVariable Long id) {
-        Optional<StabilitiesMatrixDTO> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixById(id);
+        Optional<StabilitiesMatrixDTO> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixDTOById(id);
         return stabilitiesMatrix.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

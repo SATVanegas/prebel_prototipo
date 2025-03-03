@@ -7,7 +7,7 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
 import com.prebel.prototipo.webapp.services.utils.PdfReportService;
-
+import com.prebel.prototipo.webapp.services.utils.EmailServicePdf;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;

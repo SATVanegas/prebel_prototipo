@@ -1,4 +1,4 @@
-package com.prebel.prototipo.webapp.controllers.laboratory_reports_controllers;
+package com.prebel.prototipo.webapp.services.utils;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

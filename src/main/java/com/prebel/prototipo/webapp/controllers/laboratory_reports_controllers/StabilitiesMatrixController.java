@@ -44,13 +44,6 @@ public class StabilitiesMatrixController {
 
 
 
-    // Endpoint para obtener inspecciones en los próximos 7 días
-    @GetMapping("/upcoming-inspections")
-    public ResponseEntity<List<Inspection>> getUpcomingInspections() {
-        List<Inspection> upcomingInspections = stabilitiesMatrixService.getInspectionsDueInNext7Days();
-        return ResponseEntity.ok(upcomingInspections);
-    }
-
     @GetMapping("/product/{productId}")
     public ResponseEntity<Long> getStabilitiesMatrixIdByProductId(@PathVariable Long productId) {
         Optional<StabilitiesMatrix> stabilitiesMatrix = stabilitiesMatrixService.getStabilitiesMatrixByProductId(productId);

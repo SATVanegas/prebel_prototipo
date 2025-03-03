@@ -7,12 +7,15 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
 import com.prebel.prototipo.webapp.services.utils.PdfReportService;
+
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +26,16 @@ public class ProductController {
     private final ProductService productService;
     private final StabilitiesMatrixService stabilitiesMatrixService;
     private final PdfReportService pdfReportService;
-    public ProductController(ProductService productService, StabilitiesMatrixService stabilitiesMatrixService, PdfReportService pdfReportService) { this.productService = productService;
+    private final EmailServicePdf emailServicePdf;
+
+    public ProductController(ProductService productService,
+                             StabilitiesMatrixService stabilitiesMatrixService,
+                             PdfReportService pdfReportService,
+                             EmailServicePdf emailServicePdf) {
+        this.productService = productService;
         this.stabilitiesMatrixService = stabilitiesMatrixService;
         this.pdfReportService = pdfReportService;
+        this.emailServicePdf = emailServicePdf;
     }
 
     // Buscar por ID
@@ -36,7 +46,7 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crear un nuevo Condition
+    // Crear un nuevo Product
     @PostMapping
     public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDTO dto) {
         productService.createProduct(dto);
@@ -75,5 +85,15 @@ public class ProductController {
                 .body(pdfBytes);
     }
 
+    @GetMapping("/{id}/send-report")
+    public ResponseEntity<String> enviarReportePorCorreo(@PathVariable Long id, @RequestParam String email) {
+        try {
+            byte[] pdf = productService.generateReport(id);
+            emailServicePdf.enviarCorreoConAdjunto(email, "Reporte de Producto - Prebel", pdf);
 
+            return ResponseEntity.ok("Correo enviado exitosamente a " + email);
+        } catch (MessagingException | IOException e) {
+            return ResponseEntity.status(500).body("Error al enviar el correo: " + e.getMessage());
+        }
+    }
 }

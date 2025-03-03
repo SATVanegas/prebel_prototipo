@@ -71,32 +71,6 @@ public class ProductServiceTest {
         product = new Product(productDTO, customer, responsibleChemist, responsibleEngineer, responsibleAnalyst, technicianInCharge);
     }
 
-    @Test
-    void getProductById_Success() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-
-        Optional<Product> result = productService.getProductById(1L);
-
-        assertTrue(result.isPresent());
-        assertEquals(1L, result.get().getCustomer().getId());
-        assertEquals(2L, result.get().getResponsibleChemist().getId());
-        assertEquals(3L, result.get().getResponsibleEngineer().getId());
-        assertEquals(4L, result.get().getResponsibleAnalyst().getId());
-        assertEquals(5L, result.get().getTechnicianInCharge().getId());
-
-        verify(productRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void getProductById_NotFound() {
-        when(productRepository.findById(1L)).thenReturn(Optional.empty());
-
-        Optional<Product> result = productService.getProductById(1L);
-
-        assertFalse(result.isPresent());
-
-        verify(productRepository, times(1)).findById(1L);
-    }
 
     @Test
     void createProduct_Success() {

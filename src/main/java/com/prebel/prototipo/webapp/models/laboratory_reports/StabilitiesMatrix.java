@@ -3,6 +3,7 @@ package com.prebel.prototipo.webapp.models.laboratory_reports;
 import java.util.Date;
 import java.util.List;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
@@ -102,5 +103,8 @@ public class StabilitiesMatrix {
         this.qualification = dto.getQualification();
         this.validity = dto.getValidity();
         this.justificationRating = dto.getJustificationRating();
+    }
+
+    public StabilitiesMatrix(@Valid StabilitiesMatrixDTO dto, GetProductDTO product) {
     }
 }

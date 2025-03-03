@@ -68,6 +68,9 @@ public class Product {
     private Date startDate;
     private Date finishDate;
 
+    @OneToOne(mappedBy = "product")
+    private StabilitiesMatrix stabilitiesMatrix;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Test> tests;
 

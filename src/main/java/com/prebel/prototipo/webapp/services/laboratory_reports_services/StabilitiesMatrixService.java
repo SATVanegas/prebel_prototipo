@@ -1,7 +1,6 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
-import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
@@ -10,8 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,12 +74,12 @@ public class StabilitiesMatrixService {
         );
     }
 
-    public StabilitiesMatrix createStabilitiesMatrix(@Valid StabilitiesMatrixDTO dto) {
+    public void createStabilitiesMatrix(@Valid StabilitiesMatrixDTO dto) {
         Product product = productService.getProductById(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + dto.getProductId() + " no existe"));
 
         StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
-        return stabilitiesMatrixRepository.save(stabilitiesMatrix);
+        stabilitiesMatrixRepository.save(stabilitiesMatrix);
     }
 
     public Optional<StabilitiesMatrix> getStabilitiesMatrixByProductId(Long productId) {

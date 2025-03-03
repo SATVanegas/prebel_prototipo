@@ -46,7 +46,6 @@ public class StabilitiesMatrixServiceTest {
 
     @Test
     void createStabilitiesMatrix_Success() {
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(stabilitiesMatrixRepository.save(any(StabilitiesMatrix.class))).thenReturn(stabilitiesMatrix);
 
         stabilitiesMatrixService.createStabilitiesMatrix(stabilitiesMatrixDTO);

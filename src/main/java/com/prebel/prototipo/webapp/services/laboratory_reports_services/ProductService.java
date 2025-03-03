@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
@@ -31,6 +32,18 @@ public class ProductService {
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public GetProductDTO getProductDTOById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+        return mapToDTO(product);
+    }
+
+    private GetProductDTO mapToDTO(Product product) {
+        Long stabilityMatrixId = product.getStabilitiesMatrix() != null ? product.getStabilitiesMatrix().getId() : null;
+
+        return new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand(), stabilityMatrixId);
     }
 
     public void createProduct(@Valid ProductDTO dto) {

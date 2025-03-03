@@ -1,5 +1,6 @@
 package com.prebel.prototipo.webapp.models.laboratory_reports.tests;
 
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.test_request.TestDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
@@ -54,5 +55,8 @@ public class Test {
 
 
     public Test(@Valid TestDTO dto, Product product, Temperature temperature, Storage storage) {
+    }
+
+    public Test(@Valid TestDTO dto, GetProductDTO product, Temperature temperature, Storage storage) {
     }
 }

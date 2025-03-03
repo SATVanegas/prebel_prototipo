@@ -110,7 +110,6 @@ class TestServiceTest {
     @Test
     void testCreateTest() {
         // Configurar los mocks
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(temperatureService.getTemperatureById(2L)).thenReturn(Optional.of(temperature));
         when(storageService.getStorageById(3L)).thenReturn(Optional.of(storage));
         when(userService.getUserById(4L)).thenReturn(Optional.of(userOrganoleptic));
@@ -139,7 +138,6 @@ class TestServiceTest {
     @Test
     void testCreateTest_TemperatureNotFound() {
         // Configurar los mocks
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(temperatureService.getTemperatureById(2L)).thenReturn(Optional.empty());
 
         // Ejecutar y verificar la excepción
@@ -153,7 +151,6 @@ class TestServiceTest {
     @Test
     void testCreateTest_StorageNotFound() {
         // Configurar los mocks
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(temperatureService.getTemperatureById(2L)).thenReturn(Optional.of(temperature));
         when(storageService.getStorageById(3L)).thenReturn(Optional.empty());
 
@@ -168,7 +165,6 @@ class TestServiceTest {
     @Test
     void testCreateTest_UserNotFound() {
         // Configurar los mocks
-        when(productService.getProductById(1L)).thenReturn(Optional.of(product));
         when(temperatureService.getTemperatureById(2L)).thenReturn(Optional.of(temperature));
         when(storageService.getStorageById(3L)).thenReturn(Optional.of(storage));
         when(userService.getUserById(4L)).thenReturn(Optional.empty());

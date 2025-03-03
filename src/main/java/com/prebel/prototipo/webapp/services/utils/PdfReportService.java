@@ -1,6 +1,7 @@
 package com.prebel.prototipo.webapp.services.utils;
 
 import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -17,6 +18,7 @@ import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Storage;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
 import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test;
 import com.prebel.prototipo.webapp.models.role_module.User;
+import com.prebel.prototipo.webapp.services.laboratory_reports_services.ProductService;
 import org.springframework.stereotype.Service;
 import java.util.function.Function;
 import java.io.ByteArrayOutputStream;
@@ -216,4 +218,5 @@ public class PdfReportService {
     private Cell crearCeldaDeValor(String texto) {
         return new Cell().add(new Paragraph(texto != null && !texto.isEmpty() ? texto : "No registrado"));
     }
+
 }

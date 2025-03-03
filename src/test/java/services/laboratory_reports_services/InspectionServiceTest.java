@@ -61,7 +61,7 @@ public class InspectionServiceTest {
 
     @Test
     void createInspection_StabilitiesMatrixNotFound() {
-        when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.empty());
+        when(stabilitiesMatrixService.getStabilitiesMatrixDTOById(1L)).thenReturn(Optional.empty());
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             inspectionService.createInspection(inspectionDTO);
@@ -69,7 +69,7 @@ public class InspectionServiceTest {
 
         assertEquals("La matriz de estabilidad con ID 1 no existe", exception.getMessage());
 
-        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixById(1L);
+        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixDTOById(1L);
         verify(testService, never()).getTestById(anyLong());
         verify(inspectionRepository, never()).save(any(Inspection.class));
     }

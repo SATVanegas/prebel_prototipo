@@ -9,8 +9,6 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.Inspection;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.InspectionService;
-import com.prebel.prototipo.webapp.services.laboratory_reports_services.StabilitiesMatrixService;
 import com.prebel.prototipo.webapp.services.laboratory_reports_services.test_services.TestService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +55,7 @@ public class InspectionServiceTest {
 
     @Test
     void createInspection_StabilitiesMatrixNotFound() {
-        when(stabilitiesMatrixService.getStabilitiesMatrixById(1L)).thenReturn(Optional.empty());
+        when(stabilitiesMatrixService.getStabilitiesMatrixDTOById(1L)).thenReturn(Optional.empty());
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             inspectionService.createInspection(inspectionDTO);
@@ -65,7 +63,7 @@ public class InspectionServiceTest {
 
         assertEquals("La matriz de estabilidad con ID 1 no existe", exception.getMessage());
 
-        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixById(1L);
+        verify(stabilitiesMatrixService, times(1)).getStabilitiesMatrixDTOById(1L);
         verify(testService, never()).getTestById(anyLong());
         verify(inspectionRepository, never()).save(any(Inspection.class));
     }

@@ -54,7 +54,12 @@ public class Test {
     private String conclusion;
 
 
-    public Test(@Valid TestDTO dto, Product product, Temperature temperature, Storage storage) {
+    public Test(TestDTO dto, Product product, Temperature temperature, Storage storage) {
+        this.product = product;
+        this.temperature = temperature;
+        this.storage = storage;
+        this.observations = dto.getObservations();
+        this.conclusion = dto.getConclusion();
     }
 
     public Test(@Valid TestDTO dto, GetProductDTO product, Temperature temperature, Storage storage) {

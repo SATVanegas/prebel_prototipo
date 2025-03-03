@@ -27,9 +27,10 @@ public class TestController {
 
     // Crear un nuevo Test
     @PostMapping
-    public ResponseEntity<Long> createTest(@Valid @RequestBody TestDTO dto) {
-        Test createdTest = testService.createTest(dto);
-        return ResponseEntity.ok(createdTest.getId());
+    public ResponseEntity<Long> createTest(@RequestBody @Valid TestDTO testDTO) {
+        Test test = testService.createTest(testDTO);
+        Long testId = test.getId(); // Establecer el ID del Test creado en el DTO
+        return ResponseEntity.ok(testId);
     }
 
 }

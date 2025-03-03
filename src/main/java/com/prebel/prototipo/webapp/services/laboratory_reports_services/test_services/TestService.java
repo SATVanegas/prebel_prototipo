@@ -44,7 +44,6 @@ public class TestService {
     }
 
     public Test createTest(@Valid TestDTO dto) {
-        // Validar entidades relacionadas
         Product product = productService.getProductById(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + dto.getProductId() + " no existe"));
 
@@ -54,12 +53,8 @@ public class TestService {
         Storage storage = storageService.getStorageById(dto.getStorageId())
                 .orElseThrow(() -> new EntityNotFoundException("El almacenamiento con ID " + dto.getStorageId() + " no existe"));
 
-        // Crear Test
         Test test = new Test(dto, product, temperature, storage);
-
-        // Guardar en base de datos
-        testRepository.save(test);
-        return test;
+        return testRepository.save(test);
     }
 
     public Optional<TestDTO> getTestDTOById(Long id) {
@@ -74,6 +69,8 @@ public class TestService {
 
     private TestDTO convertToDTO(Test test) {
         TestDTO dto = new TestDTO();
+        dto.setConclusion(test.getConclusion());
+        dto.setObservations(test.getObservations());
         dto.setProductId(test.getProduct().getId());
         dto.setTemperatureId(test.getTemperature().getId());
         dto.setStorageId(test.getStorage().getId());

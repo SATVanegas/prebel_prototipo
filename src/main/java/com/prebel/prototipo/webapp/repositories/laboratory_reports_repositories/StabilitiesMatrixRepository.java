@@ -14,7 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StabilitiesMatrixRepository extends JpaRepository<StabilitiesMatrix, Long> {
 
-
-    Optional<StabilitiesMatrix> findByProductId(Long productId);
+    List<StabilitiesMatrix> findByProductId(Long productId);
 
 }

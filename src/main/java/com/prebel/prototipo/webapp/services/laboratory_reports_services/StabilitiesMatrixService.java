@@ -85,10 +85,12 @@ public class StabilitiesMatrixService {
         return stabilitiesMatrixRepository.save(stabilitiesMatrix);
     }
 
-    
-
     public Optional<StabilitiesMatrix> getStabilitiesMatrixByProductId(Long productId) {
-        return stabilitiesMatrixRepository.findByProductId(productId);
+        List<StabilitiesMatrix> matrices = stabilitiesMatrixRepository.findByProductId(productId);
+        if (matrices.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(matrices.get(0));
     }
 
     public List<StabilitiesMatrixDTO> getAllStabilitiesMatrixDTOs() {

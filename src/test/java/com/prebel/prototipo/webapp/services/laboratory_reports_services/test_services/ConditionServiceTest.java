@@ -49,7 +49,6 @@ class ConditionServiceTest {
         condition.setType(EnumTest.COLOR);
 
         testDTO = new TestDTO();
-        testDTO.setColorId(1L);
     }
 
     @Test
@@ -80,35 +79,4 @@ class ConditionServiceTest {
         verify(conditionRepository, times(1)).save(any(Condition.class));
     }
 
-    @Test
-    void testGetConditionsFromDTO_Success() {
-        when(conditionRepository.findById(1L)).thenReturn(Optional.of(condition));
-
-        List<Condition> result = conditionService.getConditionsFromDTO(testDTO);
-
-        assertEquals(1, result.size());
-        assertEquals(condition, result.getFirst());
-        verify(conditionRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testGetConditionsFromDTO_ConditionNotFound() {
-        when(conditionRepository.findById(1L)).thenReturn(Optional.empty());
-
-        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> conditionService.getConditionsFromDTO(testDTO));
-
-        assertTrue(thrown.getMessage().contains("La condición con ID 1 no existe"));
-        verify(conditionRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    void testGetConditionsFromDTO_WrongType() {
-        condition.setType(EnumTest.ODOR);
-        when(conditionRepository.findById(1L)).thenReturn(Optional.of(condition));
-
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> conditionService.getConditionsFromDTO(testDTO));
-
-        assertTrue(thrown.getMessage().contains("La condición con ID 1 no corresponde al tipo esperado"));
-        verify(conditionRepository, times(1)).findById(1L);
-    }
 }

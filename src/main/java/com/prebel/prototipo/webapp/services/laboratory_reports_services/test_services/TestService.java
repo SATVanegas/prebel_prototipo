@@ -51,15 +51,31 @@ public class TestService {
 
         Storage storage = storageService.getStorageById(dto.getStorageId())
                 .orElseThrow(() -> new EntityNotFoundException("El almacenamiento con ID " + dto.getStorageId() + " no existe"));
-        // Obtener condiciones validadas
-        List<Condition> conditions = conditionService.getConditionsFromDTO(dto);
 
         // Crear Test
-        Test test = new Test(dto, conditions, product, temperature, storage);
+        Test test = new Test(dto, product, temperature, storage);
 
         // Guardar en base de datos
         testRepository.save(test);
         return test;
+    }
+
+    public Optional<TestDTO> getTestDTOById(Long id) {
+        Optional<Test> testOpt = testRepository.findById(id);
+        if (testOpt.isEmpty()) {
+            System.out.println("Test not found with id " + id);
+            return Optional.empty();
+        }
+        Test test = testOpt.get();
+        return Optional.of(convertToDTO(test));
+    }
+
+    private TestDTO convertToDTO(Test test) {
+        TestDTO dto = new TestDTO();
+        dto.setProductId(test.getProduct().getId());
+        dto.setTemperatureId(test.getTemperature().getId());
+        dto.setStorageId(test.getStorage().getId());
+        return dto;
     }
 }
 

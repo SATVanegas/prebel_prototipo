@@ -67,8 +67,6 @@ class TestServiceTest {
         testDTO.setProductId(1L);
         testDTO.setTemperatureId(2L);
         testDTO.setStorageId(3L);
-        testDTO.setUserOrganolepticTestsId(4L);
-        testDTO.setUserPhysicochemicalTestsId(5L);
 
         product = new Product();
         temperature = new Temperature();
@@ -117,7 +115,6 @@ class TestServiceTest {
         when(storageService.getStorageById(3L)).thenReturn(Optional.of(storage));
         when(userService.getUserById(4L)).thenReturn(Optional.of(userOrganoleptic));
         when(userService.getUserById(5L)).thenReturn(Optional.of(userPhysicochemical));
-        when(conditionService.getConditionsFromDTO(testDTO)).thenReturn(conditions);
 
         // Ejecutar el método
         testService.createTest(testDTO);

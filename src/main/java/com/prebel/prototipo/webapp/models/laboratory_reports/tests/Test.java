@@ -4,6 +4,7 @@ import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.role_module.User;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,12 +52,7 @@ public class Test {
     private String observations;
     private String conclusion;
 
-    public Test(TestDTO dto,List<Condition> conditions, Product product, Temperature temperature, Storage storage) {
-        this.conditions = conditions;
-        this.product = product;
-        this.temperature = temperature;
-        this.storage = storage;
-        this.observations = dto.getObservations();
-        this.conclusion = dto.getConclusion();
+
+    public Test(@Valid TestDTO dto, Product product, Temperature temperature, Storage storage) {
     }
 }

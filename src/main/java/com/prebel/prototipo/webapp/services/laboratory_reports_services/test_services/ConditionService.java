@@ -32,40 +32,6 @@ public class ConditionService {
         return condition;
     }
 
-    public List<Condition> getConditionsFromDTO(TestDTO dto) {
-        List<Condition> conditions = new ArrayList<>();
-
-        if (dto.getColorId() != null) {
-            conditions.add(getValidCondition(dto.getColorId(), EnumTest.COLOR));
-        }
-        if (dto.getOdorId() != null) {
-            conditions.add(getValidCondition(dto.getOdorId(), EnumTest.ODOR));
-        }
-        if (dto.getAppearanceId() != null) {
-            conditions.add(getValidCondition(dto.getAppearanceId(), EnumTest.APPEARANCE));
-        }
-        if (dto.getPhId() != null) {
-            conditions.add(getValidCondition(dto.getPhId(), EnumTest.PH));
-        }
-        if (dto.getViscosityId() != null) {
-            conditions.add(getValidCondition(dto.getViscosityId(), EnumTest.VISCOSITY));
-        }
-        if (dto.getSpecificGravityId() != null) {
-            conditions.add(getValidCondition(dto.getSpecificGravityId(), EnumTest.SPECIFIC_GRAVITY));
-        }
-        if (dto.getTotalBacteriaCountId() != null) {
-            conditions.add(getValidCondition(dto.getTotalBacteriaCountId(), EnumTest.TOTAL_BACTERIA_COUNT));
-        }
-        if (dto.getFungiYeastCountId() != null) {
-            conditions.add(getValidCondition(dto.getFungiYeastCountId(), EnumTest.FUNGI_YEAST_COUNT));
-        }
-        if (dto.getPathogensId() != null) {
-            conditions.add(getValidCondition(dto.getPathogensId(), EnumTest.PATHOGENS));
-        }
-
-        return conditions;
-    }
-
     private Condition getValidCondition(Long conditionId, EnumTest expectedType) {
         Condition condition = conditionRepository.findById(conditionId)
                 .orElseThrow(() -> new EntityNotFoundException("La condición con ID " + conditionId + " no existe"));

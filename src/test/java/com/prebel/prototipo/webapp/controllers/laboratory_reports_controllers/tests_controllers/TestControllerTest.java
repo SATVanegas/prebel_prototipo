@@ -156,18 +156,6 @@ public class TestControllerTest {
         dto.setProductId(product.getId());
         dto.setTemperatureId(temperature.getId());
         dto.setStorageId(storage.getId());
-        dto.setUserOrganolepticTestsId(userOrganolepticTests.getId());
-        dto.setUserPhysicochemicalTestsId(userPhysicochemicalTests.getId());
-
-        dto.setColorId(conditions.get(0).getId());
-        dto.setOdorId(conditions.get(1).getId());
-        dto.setAppearanceId(conditions.get(2).getId());
-        dto.setPhId(conditions.get(3).getId());
-        dto.setViscosityId(conditions.get(4).getId());
-        dto.setSpecificGravityId(conditions.get(5).getId());
-        dto.setTotalBacteriaCountId(conditions.get(6).getId());
-        dto.setFungiYeastCountId(conditions.get(7).getId());
-        dto.setPathogensId(conditions.get(8).getId());
 
         dto.setObservations("Observación de prueba");
         dto.setConclusion("Conclusión de prueba");
@@ -175,7 +163,7 @@ public class TestControllerTest {
         // Crear el objeto Test a partir del DTO y las entidades
         com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test =
                 new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test(
-                        dto, conditions, product, temperature, storage);
+                        dto, product, temperature, storage);
 
         return List.of(test, dto);
     }

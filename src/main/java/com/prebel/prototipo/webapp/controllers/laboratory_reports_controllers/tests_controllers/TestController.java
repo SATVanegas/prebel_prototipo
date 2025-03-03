@@ -19,8 +19,8 @@ public class TestController {
 
     // Buscar por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Test> getTestById(@PathVariable Long id) {
-        Optional<Test> test = testService.getTestById(id);
+    public ResponseEntity<TestDTO> getTestDTOById(@PathVariable Long id) {
+        Optional<TestDTO> test = testService.getTestDTOById(id);
         return test.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

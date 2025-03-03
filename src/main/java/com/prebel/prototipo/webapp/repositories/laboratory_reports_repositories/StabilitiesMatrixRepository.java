@@ -15,10 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface StabilitiesMatrixRepository extends JpaRepository<StabilitiesMatrix, Long> {
 
 
-    @Query("SELECT i FROM Inspection i WHERE i.expectedDate BETWEEN :startDate AND :endDate AND i.realDate IS NULL")
-    List<Inspection> findInspectionsByExpectedDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
-
-
     Optional<StabilitiesMatrix> findByProductId(Long productId);
 
 }

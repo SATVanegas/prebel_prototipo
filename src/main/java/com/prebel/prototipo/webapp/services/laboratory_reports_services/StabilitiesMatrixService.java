@@ -81,16 +81,7 @@ public class StabilitiesMatrixService {
         return stabilitiesMatrixRepository.save(stabilitiesMatrix);
     }
 
-
-    public List<Inspection> getInspectionsDueInNext7Days() {
-        Calendar calendar = Calendar.getInstance();
-        Date startDate = calendar.getTime();
-
-        calendar.add(Calendar.DAY_OF_YEAR, 7);
-        Date endDate = calendar.getTime();
-
-        return inspectionRepository.findInspectionsByExpectedDateBetween(startDate, endDate);
-    }
+    
 
     public Optional<StabilitiesMatrix> getStabilitiesMatrixByProductId(Long productId) {
         return stabilitiesMatrixRepository.findByProductId(productId);

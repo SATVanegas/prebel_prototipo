@@ -1,10 +1,8 @@
 package com.prebel.prototipo.webapp.services.utils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+import com.prebel.prototipo.webapp.models.role_module.User;
 import org.springframework.stereotype.Service;
 
 import com.prebel.prototipo.webapp.models.laboratory_reports.EnumTest;
@@ -16,11 +14,11 @@ import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.
 public class DefaultProductService {
     private final ConditionRepository conditionRepository;
     private final Random random;
-    private static final List<String> MARCAS_DERMATOLOGICAS = List.of(
-            "La Roche-Posay", "CeraVe", "Vichy", "Bioderma", "Eucerin",
-            "Avene", "Neutrogena", "SkinCeuticals", "ISDIN", "Sesderma",
-            "Dermalogica", "Clinique", "Obagi", "Paula’s Choice", "The Ordinary"
-    );
+    private static final List<String> COSMETIC_PRODUCTS = Arrays.asList("Crema Hidratante Facial", "Sérum Antiarrugas", "Tónico Facial Refrescante", "Protector Solar SPF 50", "Base de Maquillaje Líquida", "Corrector de Ojeras", "Rubor Compacto", "Labial Mate", "Brillo Labial Hidratante", "Delineador de Ojos en Gel", "Sombras de Ojos Nude", "Máscara de Pestañas Voluminizadora", "Esmalte de Uñas en Gel", "Crema para Manos con Karité", "Aceite Corporal Nutritivo", "Loción Corporal Perfumada", "Jabón Facial Purificante", "Exfoliante Corporal de Café", "Shampoo Fortalecedor", "Acondicionador Hidratante", "Mascarilla Capilar Reparadora", "Spray Fijador para el Cabello", "Perfume Floral", "Desodorante Natural", "Bálsamo Labial con SPF", "Crema Anticelulítica", "Serum Capilar de Argán");
+    private static final List<String> MARCAS_DERMATOLOGICAS = List.of("La Roche-Posay", "CeraVe", "Vichy", "Bioderma", "Eucerin", "Avene", "Neutrogena", "SkinCeuticals", "ISDIN", "Sesderma", "Dermalogica", "Clinique", "Obagi", "Paula’s Choice", "The Ordinary");
+    private static final List<String> NAMES = Arrays.asList("Juan Pérez", "María Gómez", "Carlos Rodríguez", "Ana Fernández", "Luis Martínez");
+    private static final List<String> EMAILS = Arrays.asList("juan@example.com", "maria@example.com", "carlos@example.com", "ana@example.com", "luis@example.com");
+    private static final List<String> PHONE_NUMBERS = Arrays.asList("555-1234", "555-5678", "555-9101", "555-1213", "555-1415");
 
     public DefaultProductService(ConditionRepository conditionRepository) {
         this.conditionRepository = conditionRepository;
@@ -29,6 +27,17 @@ public class DefaultProductService {
 
     public Product crearProductoDePrueba() {
         Product product = new Product();
+        product.setProductDescription(obtenerNombreAleatorio());
+        product.setReference("REF-" + generarValorAleatorio(1000, 9999));
+        product.setBatch("Lote-" + generarValorAleatorio(1, 100));
+        product.setPackagingType("Botella");
+        product.setPackagingMaterial("Plástico");
+        product.setContainerColor("Transparente");
+        product.setLidMaterial("Polipropileno");
+        product.setLidColor("Blanco");
+        product.setFormulaNumber("13456728");
+        product.setProjectCode("PROJ-" + generarValorAleatorio(100, 999));
+        product.setProjectName("Proyecto " + generarValorAleatorio(1, 50));
         product.setBrand(obtenerMarcaAleatoria());
         product.setStudyType("Estabilidad acelerada");
         product.setConsecutive(generarValorAleatorio(1, 1000));
@@ -51,11 +60,21 @@ public class DefaultProductService {
     }
 
     private void asignarResponsables(Product product) {
-        product.setCustomer(null);
-        product.setResponsibleChemist(null);
-        product.setResponsibleEngineer(null);
-        product.setResponsibleAnalyst(null);
-        product.setTechnicianInCharge(null);
+        product.setCustomer(createRandomUser());
+        product.setResponsibleChemist(createRandomUser());
+        product.setResponsibleEngineer(createRandomUser());
+        product.setResponsibleAnalyst(createRandomUser());
+        product.setTechnicianInCharge(createRandomUser());
+    }
+
+    public User createRandomUser() {
+        User user = new User();
+        user.setName(NAMES.get(random.nextInt(NAMES.size())));
+        user.setEmail(EMAILS.get(random.nextInt(EMAILS.size())));
+        user.setNumber(PHONE_NUMBERS.get(random.nextInt(PHONE_NUMBERS.size())));
+        user.setPassword(String.valueOf(123));
+
+        return user;
     }
 
     private List<Test> crearTests(Product product, int cantidad) {
@@ -150,6 +169,10 @@ public class DefaultProductService {
             case FUNGI_YEAST_COUNT -> "Hongos y levaduras = " + random.nextInt(100) + " UFC/mL"; // Hasta 100 UFC/mL
             case PATHOGENS -> random.nextBoolean() ? "Presencia detectada" : "Ausencia confirmada";
         };
+    }
+
+    private String obtenerNombreAleatorio() {
+        return COSMETIC_PRODUCTS.get(random.nextInt(COSMETIC_PRODUCTS.size()));
     }
 
     private String obtenerMarcaAleatoria() {

@@ -3,7 +3,7 @@ package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.StabilitiesMatrixDTO;
 import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
 import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.InspectionRepository;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
 import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.StabilitiesMatrixRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -17,13 +17,11 @@ import java.util.stream.Collectors;
 public class StabilitiesMatrixService {
 
     private final StabilitiesMatrixRepository stabilitiesMatrixRepository;
-    private final InspectionRepository inspectionRepository;
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public StabilitiesMatrixService(StabilitiesMatrixRepository stabilitiesMatrixRepository, InspectionRepository inspectionRepository, ProductService productService) {
+    public StabilitiesMatrixService(StabilitiesMatrixRepository stabilitiesMatrixRepository, ProductRepository productRepository) {
         this.stabilitiesMatrixRepository = stabilitiesMatrixRepository;
-        this.inspectionRepository = inspectionRepository;
-        this.productService = productService;
+        this.productRepository = productRepository;
     }
 
     public Optional<StabilitiesMatrixDTO> getStabilitiesMatrixDTOById(Long id) {
@@ -75,7 +73,7 @@ public class StabilitiesMatrixService {
     }
 
     public void createStabilitiesMatrix(@Valid StabilitiesMatrixDTO dto) {
-        Product product = productService.getProductById(dto.getProductId())
+        Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("El producto con ID " + dto.getProductId() + " no existe"));
 
         StabilitiesMatrix stabilitiesMatrix = new StabilitiesMatrix(dto, product);
@@ -87,11 +85,11 @@ public class StabilitiesMatrixService {
         if (matrices.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(matrices.get(0));
+        return Optional.of(matrices.getFirst());
     }
 
     public List<StabilitiesMatrixDTO> getAllStabilitiesMatrixDTOs() {
-        List<StabilitiesMatrix> stabilitiesMatrices = (List<StabilitiesMatrix>) stabilitiesMatrixRepository.findAll();
+        List<StabilitiesMatrix> stabilitiesMatrices = stabilitiesMatrixRepository.findAll();
         return stabilitiesMatrices.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

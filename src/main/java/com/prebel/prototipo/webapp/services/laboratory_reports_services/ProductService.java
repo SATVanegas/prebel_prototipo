@@ -1,33 +1,52 @@
 package com.prebel.prototipo.webapp.services.laboratory_reports_services;
 
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
-import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
-import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
-import com.prebel.prototipo.webapp.models.laboratory_reports.tests.Temperature;
-import com.prebel.prototipo.webapp.models.role_module.User;
-import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
-import com.prebel.prototipo.webapp.services.role_module_services.UserService;
-import com.prebel.prototipo.webapp.services.utils.PdfReportService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.GetProductDTO;
+import com.prebel.prototipo.webapp.dtos.validations.laboratory_reports_requests.ProductDTO;
+import com.prebel.prototipo.webapp.models.laboratory_reports.Product;
+import com.prebel.prototipo.webapp.models.laboratory_reports.StabilitiesMatrix;
+import com.prebel.prototipo.webapp.repositories.laboratory_reports_repositories.ProductRepository;
+import com.prebel.prototipo.webapp.services.utils.DefaultProductService;
+import com.prebel.prototipo.webapp.services.utils.EmailServicePdf;
+import com.prebel.prototipo.webapp.services.utils.PdfReportService;
+
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
-    private final UserService userService;
-    private final PdfReportService pdfReportService;
 
-    public ProductService(ProductRepository productRepository, UserService userService, PdfReportService pdfReportService) {
+    private final ProductRepository productRepository;
+    private final PdfReportService pdfReportService;
+    private final DefaultProductService defaultProductService;
+    private final StabilitiesMatrixService stabilitiesMatrixService;
+    private final EmailServicePdf emailServicePdf;
+
+    public ProductService(
+            ProductRepository productRepository,
+            PdfReportService pdfReportService,
+            DefaultProductService defaultProductService,
+            StabilitiesMatrixService stabilitiesMatrixService,
+            EmailServicePdf emailServicePdf) {
         this.productRepository = productRepository;
-        this.userService = userService;
         this.pdfReportService = pdfReportService;
+        this.defaultProductService = defaultProductService;
+        this.stabilitiesMatrixService = stabilitiesMatrixService;
+        this.emailServicePdf = emailServicePdf;
+    }
+
+    // ===================== Métodos de Consulta =====================
+
+    public List<Product> getAllProducts() {
+        return (List<Product>) productRepository.findAll();
     }
 
     public Optional<Product> getProductById(Long id) {
@@ -40,20 +59,33 @@ public class ProductService {
         return mapToDTO(product);
     }
 
+    public List<GetProductDTO> getAllProductsWithStabilityMatrix() {
+        return getAllProducts().stream()
+                .map(product -> {
+                    Long stabilityMatrixId = stabilitiesMatrixService.getStabilitiesMatrixByProductId(product.getId())
+                            .map(StabilitiesMatrix::getId)
+                            .orElse(null);
+                    return new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand(), stabilityMatrixId);
+                })
+                .toList();
+    }
+
     private GetProductDTO mapToDTO(Product product) {
-        Long stabilityMatrixId = product.getStabilitiesMatrix() != null ? product.getStabilitiesMatrix().getId() : null;
+        Long stabilityMatrixId = product.getStabilitiesMatrix() != null
+                ? product.getStabilitiesMatrix().getId()
+                : null;
 
         return new GetProductDTO(product.getId(), product.getProductDescription(), product.getBrand(), stabilityMatrixId);
     }
+
+    // ===================== Métodos de Creación =====================
 
     public void createProduct(@Valid ProductDTO dto) {
         Product product = new Product(dto);
         productRepository.save(product);
     }
 
-    public List<Product> getAllProducts() {
-        return (List<Product>) productRepository.findAll();
-    }
+    // ===================== Métodos de Reportes =====================
 
     public byte[] generateReport(Long productId) {
         Product product = productRepository.findById(productId)
@@ -62,29 +94,21 @@ public class ProductService {
         return pdfReportService.createProductReport(product);
     }
 
-    public Product crearProductoDePrueba() {
-        Product product = new Product();
-        product.setProductDescription("Producto de prueba");
-        product.setReference("REF123");
-        product.setBatch("BATCH001");
+    public byte[] generateTestProductReport() {
+        return pdfReportService.createProductReport(defaultProductService.crearProductoDePrueba());
+    }
 
-        // Crear tests de prueba
-        com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test1 =
-                new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test();
-        test1.setId(1L);
-        Temperature temp1 = new Temperature();
-        temp1.setUnit("°C");
-        test1.setTemperature(temp1);
+    // ===================== Métodos de Envío de Correo =====================
 
-        com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test test2 = new com.prebel.prototipo.webapp.models.laboratory_reports.tests.Test();
-        test2.setId(2L);
-        Temperature temp2 = new Temperature();
-        temp2.setUnit("°F");
-        test2.setTemperature(temp2);
-
-        product.setTests(Arrays.asList(test1, test2));
-
-        return product;
+    public ResponseEntity<String> sendReportByEmail(Long productId, String email) {
+        try {
+            byte[] pdf = generateReport(productId);
+            emailServicePdf.enviarCorreoConAdjunto(email, "Reporte de Producto - Prebel", pdf);
+            return ResponseEntity.ok("Correo enviado exitosamente a " + email);
+        } catch (MessagingException | IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al enviar el correo: " + e.getMessage());
+        }
     }
 }
 
